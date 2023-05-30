@@ -12,6 +12,7 @@ app.use(cors())
 
 // DATABASE
 const url = process.env.MONGO_URI
+mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
 const gameSchema = new mongoose.Schema({
