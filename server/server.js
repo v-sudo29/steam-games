@@ -11,7 +11,8 @@ app.use(express.json())
 app.use(cors())
 
 // DATABASE
-const url = process.env.MONGO_URI
+const url = process.env.MONGODB_URI
+
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
