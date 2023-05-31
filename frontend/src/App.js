@@ -10,7 +10,6 @@ function App() {
   const genreFilters = useRef([
     'Base Building',
     'Colony Sim',
-    'Farming',
     'Farming Sim',
     'Indie',
     'Life Sim',
@@ -89,6 +88,8 @@ function App() {
             discount={game.discount}
             originalPrice={game.originalPrice}
             currentPrice={game.currentPrice}
+            rating={game.rating}
+            reviewsType={game.reviewsType}
             genreTags={genreTags}
           />
         )

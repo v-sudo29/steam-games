@@ -10,6 +10,10 @@ function Card(props) {
         <div className='original-price-container'>Original Price: <span className='original-price'>{props.originalPrice}</span></div>
         <div className='current-price-container'>Current Price: <span className='current-price'>{props.currentPrice}</span></div>
       </div>
+      <div className='rating-reviews-container'>
+        <div className='rating-container'>Rating: <span className='rating'>{props.rating}</span></div>
+        <div className='reviews-container'>Feedback: <span className='reviews'>{props.reviewsType}</span></div>
+      </div>
       <div className='genre-tags-container'>
         {props.genreTags}
       </div>

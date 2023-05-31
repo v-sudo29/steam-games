@@ -1,5 +1,6 @@
 :root {
   box-sizing: border-box;
+  --green: rgb(42, 162, 42);
 }
 
 #root {
@@ -62,7 +63,32 @@
 .current-price {
   font-size: 1.3rem;
   font-weight: 800;
-  color: rgb(42, 162, 42)
+  color: var(--green)
+}
+
+/* Rating and Reviews */
+.rating-reviews-container {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding: 0.5rem;
+}
+
+.rating, .reviews {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--green)
+}
+
+.reviews {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: rgb(54, 177, 199);
 }
 
 /* Genre Tags */
