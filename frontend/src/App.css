@@ -17,6 +17,15 @@
   padding: 2rem;
 }
 
+/* Search Filter Tags */
+.filter-tag {
+  cursor: pointer;
+}
+
+.filter-active {
+  background-color: green;
+}
+
 /* Game Cards */
 .search-results {
   display: flex;
