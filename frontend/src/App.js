@@ -1,33 +1,50 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './App.css';
 
 function App() {
   const [gamesData, setGamesData] = useState('empty')
   const [gameCards, setGameCards] = useState('empty')
+  const searchValue = useRef(null)
+
+  function handleSearch() {
+    console.log(searchValue.current.value)
+  }
 
   useEffect(() => {
     fetch('https://steam-games-server.onrender.com/')
       .then(res => res.json())
-      .then(data => console.log('success!!', data))
+      .then(data => {
+        setGamesData(data)
+        console.log(gamesData)
+      })
   }, [])
 
   useEffect(() => {
     if (gamesData !== 'empty') {
-      console.log(gamesData)
       setGameCards(gamesData.map(game => {
-        const genreCards = game.genres.map(genre => {
+        if (!game.imgUrl) {
+          return null
+        }
+        const gameGenres = game.genres ? game.genres : []
+        const genreTags = gameGenres.map(genre => {
           return (
-            <div className='genre-tag' key={`${game.appId} + ${genre}`}>
+            <div key={`${game.appId+genre}`} className='genre-tag'>
               {genre}
             </div>
           )
         })
+
         return (
           <div key={game.appId} className='game-card'>
             <h4>{game.name}</h4>
             <img src={game.imgUrl} alt="" />
-            <div className='genre-cards-container'>
-              {genreCards}
+            <div className='price-info-container'>
+              <div className='discount-container'>Discount: <span className='discount-percentage'>{game.discount}</span></div>
+              <div className='original-price-container'>Original Price: <span className='original-price'>{game.originalPrice}</span></div>
+              <div className='current-price-container'>Current Price: <span className='current-price'>{game.currentPrice}</span></div>
+            </div>
+            <div className='genre-tags-container'>
+              {genreTags}
             </div>
           </div>
         )
@@ -38,7 +55,13 @@ function App() {
   
   return (
     <div className="App">
-      {gamesData === 'empty' ? <h1>...Loading</h1> : <h1>{gameCards}</h1>}
+      <div className='search-bar'>
+        <input ref={searchValue} type="text" placeholder='Search'/>
+        <button onClick={handleSearch} type="button">Search</button>
+      </div>
+      <div className='search-results'>
+        {gamesData === 'empty' ? <h1>...Loading</h1> : <>{gameCards}</>}
+      </div>
     </div>
   );
 }
