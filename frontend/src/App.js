@@ -127,6 +127,8 @@ function App() {
             discount={game.discount}
             originalPrice={game.originalPrice}
             currentPrice={game.currentPrice}
+            rating={game.rating}
+            reviewsType={game.reviewsType}
             genreTags={genreTags}
           />
         )
