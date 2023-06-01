@@ -18,13 +18,18 @@
   padding: 2rem;
 }
 
-/* Search Filter Tags */
-.filter-tag {
+/* Genre Filter Tags */
+.search-genre-tag {
   cursor: pointer;
 }
 
-.filter-active {
+.genre-active {
   background-color: green;
+}
+
+/* Sort Tags */
+.sort-active {
+  background-color: yellow;
 }
 
 /* Game Cards */
