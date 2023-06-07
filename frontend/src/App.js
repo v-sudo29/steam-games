@@ -167,10 +167,11 @@ function App() {
     // SET BY SORT ONLY
     else if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
       const currentResultsCopy = [...gamesData]
+      let sortedResults = null
 
       // Sort through all sort types
       if (sortList.includes('Discount')) {
-        const sortedResults = currentResultsCopy.sort((a, b) => {
+        sortedResults = currentResultsCopy.sort((a, b) => {
           const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
           const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
 
@@ -182,66 +183,7 @@ function App() {
             return 0
           }
         })
-
-        setCurrentResults(sortedResults)
-        setGameCards(sortedResults.map(game => {
-          const genreTags = game.genres.map(genre => {
-            return (
-              <div key={`${game.appId+genre}`} className='genre-tag'>
-                {genre}
-              </div>
-            )
-          })
-          return (
-            <Card 
-              key={game.appId}
-              appId={game.appId}
-              name={game.name}
-              imgUrl={game.imgUrl}
-              discount={game.discount}
-              originalPrice={game.originalPrice}
-              currentPrice={game.currentPrice}
-              rating={game.rating}
-              reviewsType={game.reviewsType}
-              genreTags={genreTags}
-            />
-          )
-        }))
-      } 
-    }
-
-    // SET BY GENRES AND SORT
-    else if (genres.length !== 0 && gamesData !== null && sortList.length !== 0) {
-      console.log('activated')
-      const matchedGames = []
-      const gamesDataCopy = [...currentResults]
-      const genresCopy = [...genres]
-      let sortedResults = null
-
-      // FILTER BY GENRES
-      for (let i = 0; i < gamesDataCopy.length; i++) {
-        const genreExists = gamesDataCopy[i]['genres'].some(genre => genresCopy.includes(genre))
-        if (genreExists) {
-          matchedGames.push(gamesDataCopy[i])
-        } 
       }
-
-      // SORT BY SORT TYPE
-      if (sortList.includes('Discount')) {
-        sortedResults = matchedGames.sort((a, b) => {
-          const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
-          const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
-
-          if (newA > newB) {
-            return -1
-          } else if (newB > newA) {
-            return 1
-          } else {
-            return 0
-          }
-        }) 
-      }
-      console.log(sortedResults)
 
       setCurrentResults(sortedResults)
       setGameCards(sortedResults.map(game => {
@@ -269,6 +211,74 @@ function App() {
       }))
     }
 
+    // SET BY GENRES AND SORT
+    else if (genres.length !== 0 && gamesData !== null && sortList.length !== 0) {
+      console.log('Set by GENRES and SORT')
+      let gamesDataCopy = []
+
+      if (genres.length === 1) {
+        gamesDataCopy = [...currentResults]
+      } else if (genres.length > 1) {
+        gamesDataCopy = [...gamesData]
+      }
+      const matchedGames = []
+      const genresCopy = [...genres]
+      let sortedResults = null
+
+      // Filter by genres
+      for (let i = 0; i < gamesDataCopy.length; i++) {
+        for (let j = 0; j < genresCopy.length; j++) {
+          const genreExists = gamesDataCopy[i]['genres'].some(genre => genresCopy[j].includes(genre))
+
+          if (genreExists && !matchedGames.includes(gamesDataCopy[i])) {
+            matchedGames.push(gamesDataCopy[i])
+          }   
+        }
+      }
+
+      // SORT BY SORT TYPE
+      if (sortList.includes('Discount')) {
+        console.log(matchedGames)
+        console.log('sort list includes DISCOUNT!!')
+        sortedResults = matchedGames.sort((a, b) => {
+          const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
+          const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
+
+          if (newA > newB) {
+            return -1
+          } else if (newB > newA) {
+            return 1
+          } else {
+            return 0
+          }
+        }) 
+      } 
+
+      setCurrentResults(sortedResults)
+      setGameCards(sortedResults.map(game => {
+        const genreTags = game.genres.map(genre => {
+          return (
+            <div key={`${game.appId+genre}`} className='genre-tag'>
+              {genre}
+            </div>
+          )
+        })
+        return (
+          <Card 
+            key={game.appId}
+            appId={game.appId}
+            name={game.name}
+            imgUrl={game.imgUrl}
+            discount={game.discount}
+            originalPrice={game.originalPrice}
+            currentPrice={game.currentPrice}
+            rating={game.rating}
+            reviewsType={game.reviewsType}
+            genreTags={genreTags}
+          />
+        )
+      }))
+    }
 
   }, [genres, sortList])
 
