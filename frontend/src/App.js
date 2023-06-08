@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import SortTags from './components/SortTags';
 import GenreTags from './components/GenreTags';
 import Card from './components/Card';
+import useFetch from './hooks/useFetch';
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     'Rating',
     'Feedback',
   ])
+  const { response, error, isLoading } = useFetch('https://steam-games-server.onrender.com/')
 
   // FUNCTION: set default cards 
   function setDefaultCards() {
@@ -55,18 +57,13 @@ function App() {
     setCurrentResults(gamesData)
   }
 
-  // useEffect: FETCH SERVER DATA
+  // useEffect: Set data from fetch response
   useEffect(() => {
-    fetch('https://steam-games-server.onrender.com/')
-      .then(res => res.json())
-      .then(data => {
-
-        // Filter out data that don't have genres property
-        const newData = data.filter(game => game.genres ? game : null)
-        setGamesData(newData)
-        setCurrentResults(newData)
-      })
-  }, [])
+    if (response) {
+      setGamesData(response)
+      setCurrentResults(response)
+    } 
+  }, [response])
 
   // useEffect: SET DEFAULT GAME CARDS IF GENRES AND SORT EMPTY
   useEffect(() => {
@@ -294,7 +291,9 @@ function App() {
         setGenres={setGenres}
       />
       <div className='search-results'>
-        {gamesData === null ? <h1>...Loading</h1> : <>{gameCards}</>}
+        {isLoading && <h1>...Loading</h1>}
+        {error && <h1>{error}</h1>}
+        {response && gameCards}
       </div>
     </div>
   );
