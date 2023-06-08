@@ -8,8 +8,6 @@ function App() {
   const [gameCards, setGameCards] = useState(null)
   const [genres, setGenres] = useState([])
   const [sortList, setSortList] = useState([])
-
-  const searchValue = useRef(null)
   const genreFilters = useRef([
     'Base Building',
     'Colony Sim',
@@ -40,6 +38,7 @@ function App() {
         <Card
           key={game.appId}
           appId={game.appId}
+          url={game.url}
           name={game.name}
           imgUrl={game.imgUrl}
           discount={game.discount}
