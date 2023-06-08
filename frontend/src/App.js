@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import SortTags from './components/SortTags';
+import GenreTags from './components/GenreTags';
 import Card from './components/Card';
 import './App.css';
 
@@ -52,45 +53,6 @@ function App() {
       )
     }))
     setCurrentResults(gamesData)
-  }
-
-  // FUNCTION: Handle sort click
-  function handleSortClick(e) {
-    const currentSort = e.target
-    const currentSortText = e.target.innerText
-    const sortTags = document.querySelectorAll('.sorting-tag')
-
-    if (e.target.classList.contains('sort-active')) {
-      e.target.classList.remove('sort-active')
-      setSortList([])
-      sortTags.forEach(tag => tag.disabled = false)
-    } else {
-      e.target.classList.add('sort-active')
-      setSortList([currentSortText])
-      sortTags.forEach(tag => tag === currentSort ? null : tag.disabled = true)
-    }
-  }
-
-  // FUNCTION: Handle genre tag click
-  function handleGenreClick(e) {
-    const currentGenre = e.target.innerText
-
-    if (e.target.classList.contains('genre-active')) {
-      e.target.classList.remove('genre-active')
-      setGenres(prevGenres => {
-        return prevGenres.filter(genre => genre !== currentGenre ? genre : null)
-      })
-    }
-    
-    else {
-      e.target.classList.add('genre-active')
-
-      if (genres.length === 0) {
-        setGenres([currentGenre])
-      } else {
-        setGenres(prevGenres => [...prevGenres, currentGenre])
-      }
-    }
   }
 
   // useEffect: FETCH SERVER DATA
@@ -320,29 +282,17 @@ function App() {
 
   }, [genres, sortList])
 
-  // SET GENRE FILTER TAGS
-  const genreTags = genreFilters.current.map(genre => {
-    return (
-      <button 
-        key={`${genre}-search-genre-tag`} 
-        type='button'
-        className='search-genre-tag'
-        onClick={handleGenreClick}
-      >{genre}
-      </button>
-    )
-  })
-
   return (
     <div className="App">
       <SortTags 
         setSortList={setSortList}
         sortFilters={sortFilters}
       />
-      <div className='genre-filter-container'>
-        <div>Select multiple: </div>
-        {genreTags}
-      </div>
+      <GenreTags 
+        genreFilters={genreFilters}
+        genres={genres}
+        setGenres={setGenres}
+      />
       <div className='search-results'>
         {gamesData === null ? <h1>...Loading</h1> : <>{gameCards}</>}
       </div>
