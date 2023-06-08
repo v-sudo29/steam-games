@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import SortTags from './components/SortTags';
 import GenreTags from './components/GenreTags';
 import Card from './components/Card';
+import Genre from './components/Genre';
 import useFetch from './hooks/useFetch';
 import './App.css';
 
@@ -28,35 +29,6 @@ function App() {
   ])
   const { response, error, isLoading } = useFetch('https://steam-games-server.onrender.com/')
 
-  // FUNCTION: set default cards 
-  function setDefaultCards() {
-    setGameCards(gamesData.map(game => {
-      const genreTags = game.genres.map(genre => {
-        return (
-          <div key={`${game.appId+genre}`} className='genre-tag'>
-            {genre}
-          </div>
-        )
-      })
-      return (
-        <Card
-          key={game.appId}
-          appId={game.appId}
-          url={game.url}
-          name={game.name}
-          imgUrl={game.imgUrl}
-          discount={game.discount}
-          originalPrice={game.originalPrice}
-          currentPrice={game.currentPrice}
-          rating={game.rating}
-          reviewsType={game.reviewsType}
-          genreTags={genreTags}
-        />
-      )
-    }))
-    setCurrentResults(gamesData)
-  }
-
   // useEffect: Set data from fetch response
   useEffect(() => {
     if (response) {
@@ -65,10 +37,37 @@ function App() {
     } 
   }, [response])
 
-  // useEffect: SET DEFAULT GAME CARDS IF GENRES AND SORT EMPTY
+  // useEffect: Set default gameCards if sortList and genres are empty
   useEffect(() => {
-    if (currentResults !== null && genres.length === 0) {
+
+    function setDefaultCards() {
+      setGameCards(gamesData.map(game => {
+        const genreTags = game.genres.map(genre => {
+          return (
+            <Genre key={`${game.appId + genre}`} genre={genre}/>
+          )
+        })
+        return (
+          <Card
+            key={game.appId}
+            appId={game.appId}
+            url={game.url}
+            name={game.name}
+            imgUrl={game.imgUrl}
+            discount={game.discount}
+            originalPrice={game.originalPrice}
+            currentPrice={game.currentPrice}
+            rating={game.rating}
+            reviewsType={game.reviewsType}
+            genreTags={genreTags}
+          />
+        )
+      }))
+    }
+
+    if (gamesData !== null && genres.length === 0 && sortList.length === 0) {
       setDefaultCards()
+      setCurrentResults(gamesData)
     } 
   }, [gamesData, genres, sortList])
 
@@ -82,18 +81,14 @@ function App() {
       
       for (let i = 0; i < gamesDataCopy.length; i++) {
         const genreExists = gamesDataCopy[i]['genres'].some(genre => genres.includes(genre))
-        if (genreExists) {
-          matchedGames.push(gamesDataCopy[i])
-        } 
+        if (genreExists) matchedGames.push(gamesDataCopy[i])
       }
 
       setGameCards(matchedGames.map(game => {
         const gameGenres = game.genres ? game.genres : []
         const genreTags = gameGenres.map(genre => {
           return (
-            <div key={`${game.appId+genre}`} className='genre-tag'>
-              {genre}
-            </div>
+            <Genre key={`${game.appId + genre}`} genre={genre}/>
           )
         })
         return (
@@ -276,7 +271,6 @@ function App() {
         )
       }))
     }
-
   }, [genres, sortList])
 
   return (
@@ -293,7 +287,7 @@ function App() {
       <div className='search-results'>
         {isLoading && <h1>...Loading</h1>}
         {error && <h1>{error}</h1>}
-        {response && gameCards}
+        {gamesData && <>{gameCards}</>}
       </div>
     </div>
   );

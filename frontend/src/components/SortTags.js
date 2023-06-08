@@ -2,6 +2,7 @@ import React from 'react'
 
 function SortTags({setSortList, sortFilters}) {
 
+  // FUNCTION: Handle sort clicks
   const handleSortClick = (e) => {
     const currentSort = e.target
     const currentSortText = e.target.innerText
