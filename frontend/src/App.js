@@ -56,31 +56,27 @@ function App() {
 
   // FUNCTION: Handle sort click
   function handleSortClick(e) {
-    const currentSort = e.target.innerText
+    const currentSort = e.target
+    const currentSortText = e.target.innerText
+    const sortTags = document.querySelectorAll('.sorting-tag')
 
-    // Add class
     if (e.target.classList.contains('sort-active')) {
       e.target.classList.remove('sort-active')
-      setSortList(prevSorts => {
-        return prevSorts.filter(sort => sort !== currentSort ? sort : null)
-      })
+      setSortList([])
+      sortTags.forEach(tag => tag.disabled = false)
     } else {
       e.target.classList.add('sort-active')
-
-      if (sortList.length === 0) {
-        setSortList([currentSort])
-      } else {
-        setSortList(prevSorts => [...prevSorts, currentSort])
-      }
+      setSortList([currentSortText])
+      sortTags.forEach(tag => tag === currentSort ? null : tag.disabled = true)
     }
   }
 
-  // FUNCTION: HANDLE SEARCH BUTTON
+  // FUNCTION: Handle search submit
   function handleSearch() {
     console.log(searchValue.current.value)
   }
 
-  // FUNCTION: HANDLE GENRE CLICK
+  // FUNCTION: Handle genre tag click
   function handleGenreClick(e) {
     const currentGenre = e.target.innerText
 
@@ -89,7 +85,7 @@ function App() {
       setGenres(prevGenres => {
         return prevGenres.filter(genre => genre !== currentGenre ? genre : null)
       })
-    } 
+    }
     
     else {
       e.target.classList.add('genre-active')
@@ -102,7 +98,7 @@ function App() {
     }
   }
 
-  // FETCH SERVER DATA
+  // useEffect: FETCH SERVER DATA
   useEffect(() => {
     fetch('https://steam-games-server.onrender.com/')
       .then(res => res.json())
@@ -115,14 +111,14 @@ function App() {
       })
   }, [])
 
-  // SET DEFAULT GAME CARDS IF GENRES AND SORT EMPTY
+  // useEffect: SET DEFAULT GAME CARDS IF GENRES AND SORT EMPTY
   useEffect(() => {
     if (currentResults !== null && genres.length === 0) {
       setDefaultCards()
     } 
   }, [gamesData, genres, sortList])
 
-  // SET NEW GAME CARDS BY GENRES AND SORT
+  // useEffect: SET NEW GAME CARDS BY GENRES AND SORT
   useEffect(() => {
 
     // SET BY GENRES ONLY
@@ -164,11 +160,11 @@ function App() {
       setCurrentResults(matchedGames)
     } 
     
-    // SET BY SORT ONLY
+    // SET BY SORT ONLY (can only choose one sort)
     else if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
       const currentResultsCopy = [...gamesData]
       let sortedResults = null
-
+      
       // Sort through all sort types
       if (sortList.includes('Discount')) {
         sortedResults = currentResultsCopy.sort((a, b) => {
@@ -179,6 +175,19 @@ function App() {
             return -1
           } else if (newB > newA) {
             return 1
+          } else {
+            return 0
+          }
+        })
+      } else if (sortList.includes('Current Price')) {
+        sortedResults = currentResultsCopy.sort((a, b) => {
+          const newA = a.currentPrice.replace(/$/g, '')
+          const newB = b.currentPrice.replace(/$/g, '')
+
+          if (newA > newB) {
+            return 1
+          } else if (newB > newA) {
+            return -1
           } else {
             return 0
           }
@@ -213,7 +222,6 @@ function App() {
 
     // SET BY GENRES AND SORT
     else if (genres.length !== 0 && gamesData !== null && sortList.length !== 0) {
-      console.log('Set by GENRES and SORT')
       let gamesDataCopy = []
 
       if (genres.length === 1) {
@@ -238,8 +246,6 @@ function App() {
 
       // SORT BY SORT TYPE
       if (sortList.includes('Discount')) {
-        console.log(matchedGames)
-        console.log('sort list includes DISCOUNT!!')
         sortedResults = matchedGames.sort((a, b) => {
           const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
           const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
@@ -301,7 +307,7 @@ function App() {
       <button
         key={sort}
         type='button'
-        className='sorting-tag'
+        className={`sorting-tag ${sort}`}
         onClick={(e) => handleSortClick(e)}
       >{sort}
       </button>
@@ -315,9 +321,11 @@ function App() {
         <button onClick={handleSearch} type="button">Search</button>
       </div>
       <div className='sorting-container'>
+        <div>Choose one only: </div>
         {sortingTags}
       </div>
       <div className='genre-filter-container'>
+        <div>Select multiple: </div>
         {genreTags}
       </div>
       <div className='search-results'>
