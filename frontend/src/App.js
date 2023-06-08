@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import SortTags from './components/SortTags';
 import Card from './components/Card';
 import './App.css';
 
@@ -332,25 +333,12 @@ function App() {
     )
   })
 
-  // SET SORTING TAGS
-  const sortingTags = sortFilters.current.map(sort => {
-    return (
-      <button
-        key={sort}
-        type='button'
-        className={`sorting-tag ${sort}`}
-        onClick={(e) => handleSortClick(e)}
-      >{sort}
-      </button>
-    )
-  })
-
   return (
     <div className="App">
-      <div className='sorting-container'>
-        <div>Choose one only: </div>
-        {sortingTags}
-      </div>
+      <SortTags 
+        setSortList={setSortList}
+        sortFilters={sortFilters}
+      />
       <div className='genre-filter-container'>
         <div>Select multiple: </div>
         {genreTags}
