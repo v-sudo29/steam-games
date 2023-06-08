@@ -71,11 +71,6 @@ function App() {
     }
   }
 
-  // FUNCTION: Handle search submit
-  function handleSearch() {
-    console.log(searchValue.current.value)
-  }
-
   // FUNCTION: Handle genre tag click
   function handleGenreClick(e) {
     const currentGenre = e.target.innerText
@@ -353,10 +348,6 @@ function App() {
 
   return (
     <div className="App">
-      <div className='search-bar'>
-        <input ref={searchValue} type="text" placeholder='Search'/>
-        <button onClick={handleSearch} type="button">Search</button>
-      </div>
       <div className='sorting-container'>
         <div>Choose one only: </div>
         {sortingTags}
