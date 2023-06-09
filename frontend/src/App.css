@@ -33,7 +33,7 @@
 }
 
 /* Game Cards */
-.search-results {
+.game-results {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

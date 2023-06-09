@@ -292,7 +292,7 @@ function App() {
         genres={genres}
         setGenres={setGenres}
       />
-      <div className='search-results'>
+      <div className='game-results'>
         {gamesAreLoading && <h1>...Loading</h1>}
         {gamesError && <h1>{gamesError}</h1>}
         {gamesData && <>{gameCards}</>}
