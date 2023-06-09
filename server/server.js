@@ -28,6 +28,7 @@ const gameSchema = new mongoose.Schema({
 })
 
 const wishlistSchema = new mongoose.Schema({
+  wishlist: Boolean,
   appId: String,
   name: String,
   reviewsType: String,
