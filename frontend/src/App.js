@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Wishlist from './components/Wishlist';
 import SortTags from './components/SortTags';
 import GenreTags from './components/GenreTags';
-import Card from './components/Card';
+import ResultsCard from './components/ResultsCard';
 import Genre from './components/Genre';
 import Results from './components/Results';
 import useFetch from './hooks/useFetch';
@@ -57,17 +57,9 @@ function App() {
           )
         })
         return (
-          <Card
+          <ResultsCard
             key={game.appId}
-            appId={game.appId}
-            url={game.url}
-            name={game.name}
-            imgUrl={game.imgUrl}
-            discount={game.discount}
-            originalPrice={game.originalPrice}
-            currentPrice={game.currentPrice}
-            rating={game.rating}
-            reviewsType={game.reviewsType}
+            game={game}
             genreTags={genreTags}
           />
         )
@@ -101,16 +93,9 @@ function App() {
           )
         })
         return (
-          <Card 
+          <ResultsCard
             key={game.appId}
-            appId={game.appId}
-            name={game.name}
-            imgUrl={game.imgUrl}
-            discount={game.discount}
-            originalPrice={game.originalPrice}
-            currentPrice={game.currentPrice}
-            rating={game.rating}
-            reviewsType={game.reviewsType}
+            game={game}
             genreTags={genreTags}
           />
         )
@@ -174,16 +159,9 @@ function App() {
           )
         })
         return (
-          <Card 
+          <ResultsCard
             key={game.appId}
-            appId={game.appId}
-            name={game.name}
-            imgUrl={game.imgUrl}
-            discount={game.discount}
-            originalPrice={game.originalPrice}
-            currentPrice={game.currentPrice}
-            rating={game.rating}
-            reviewsType={game.reviewsType}
+            game={game}
             genreTags={genreTags}
           />
         )
@@ -265,16 +243,9 @@ function App() {
           )
         })
         return (
-          <Card 
+          <ResultsCard
             key={game.appId}
-            appId={game.appId}
-            name={game.name}
-            imgUrl={game.imgUrl}
-            discount={game.discount}
-            originalPrice={game.originalPrice}
-            currentPrice={game.currentPrice}
-            rating={game.rating}
-            reviewsType={game.reviewsType}
+            game={game}
             genreTags={genreTags}
           />
         )
