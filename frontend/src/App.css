@@ -18,6 +18,32 @@
   padding: 2rem;
 }
 
+/* Wishlist */
+.wishlist-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.wishlist-games-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wishlist-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 25rem;
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.wishlist-card-image {
+  cursor: pointer;
+}
+
 /* Genre Filter Tags */
 .search-genre-tag {
   cursor: pointer;
