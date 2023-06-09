@@ -1,12 +1,7 @@
 import React from 'react'
+import openNewTab from '../hooks/openNewTab'
 
 function Card(props) {
-
-  function openNewTab(url) {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null
-  }
-
   return (
     <div key={props.appId} className='game-card'>
       <h3>{props.name}</h3>

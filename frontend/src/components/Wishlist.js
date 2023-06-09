@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import openNewTab from '../hooks/openNewTab'
 
-function Wishlist({wishlist, gamesData}) {
+function Wishlist({wishlist, wishlistError, wishlistLoading, gamesData}) {
   const [wishlistCards, setWishlistCards] = useState(null)
-
-  function openNewTab(url) {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null
-  }
 
   useEffect(() => {
     if (wishlist && gamesData) {
@@ -34,9 +30,11 @@ function Wishlist({wishlist, gamesData}) {
   }, [wishlist, gamesData])
   return (
     <div className='wishlist-container'>
-      <h1>Wishlist</h1>
+      <h1>Wishlist Games On Sale!</h1>
       <div className='wishlist-games-container'>
-        { wishlist ?<>{wishlistCards}</> : <h1>...Loading</h1> }
+        { wishlist && wishlistCards }
+        { wishlistLoading &&  <h1>...Loading wishlist</h1>}
+        { wishlistError && <>{wishlistError}</>}
       </div>
     </div>
   )

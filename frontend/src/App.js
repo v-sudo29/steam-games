@@ -287,6 +287,8 @@ function App() {
     <div className="App">
       <Wishlist 
         wishlist={wishlist}
+        wishlistError={wishlistError}
+        wishlistLoading={wishlistLoading}
         gamesData={gamesData}
       />
       <SortTags 
