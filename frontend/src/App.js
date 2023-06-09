@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef } from 'react'
+import Wishlist from './components/Wishlist';
 import SortTags from './components/SortTags';
 import GenreTags from './components/GenreTags';
 import Card from './components/Card';
 import Genre from './components/Genre';
+import Results from './components/Results';
 import useFetch from './hooks/useFetch';
 import './App.css';
 
@@ -283,6 +285,10 @@ function App() {
 
   return (
     <div className="App">
+      <Wishlist 
+        wishlist={wishlist}
+        gamesData={gamesData}
+      />
       <SortTags 
         setSortList={setSortList}
         sortFilters={sortFilters}
@@ -292,11 +298,12 @@ function App() {
         genres={genres}
         setGenres={setGenres}
       />
-      <div className='game-results'>
-        {gamesAreLoading && <h1>...Loading</h1>}
-        {gamesError && <h1>{gamesError}</h1>}
-        {gamesData && <>{gameCards}</>}
-      </div>
+      <Results 
+        gamesAreLoading={gamesAreLoading}
+        gamesError={gamesError}
+        gamesData={gamesData}
+        gameCards={gameCards}
+      />
     </div>
   );
 }
