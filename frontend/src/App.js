@@ -6,6 +6,7 @@ import ResultsCard from './components/ResultsCard';
 import Genre from './components/Genre';
 import Results from './components/Results';
 import useFetch from './hooks/useFetch';
+import sortGames from './hooks/sortGames';
 import './App.css';
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } = useFetch('https://steam-games-server.onrender.com/')
   const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist')
 
-  // useEffect: Set data from fetch response
+  // useEffect: Set gamesData from fetch response
   useEffect(() => {
     if (gamesResponse) {
       setGamesData(gamesResponse)
@@ -41,15 +42,14 @@ function App() {
     } 
   }, [gamesResponse])
 
-  // useEffect: Set data from wishlist response
+  // useEffect: Set wishlist from fetch response
   useEffect(() => {
     if (wishlistResponse) setWishlist(wishlistResponse)
   }, [wishlistResponse])
 
   // useEffect: Set default gameCards if sortList and genres are empty
   useEffect(() => {
-
-    function setDefaultCards() {
+    const setDefaultCards = () => {
       setGameCards(gamesData.map(game => {
         const genreTags = game.genres.map(genre => {
           return (
@@ -75,7 +75,7 @@ function App() {
   // useEffect: SET NEW GAME CARDS BY GENRES AND SORT
   useEffect(() => {
 
-    // SET BY GENRES ONLY
+    // Set by GENRES only
     if (genres.length !== 0 && gamesData !== null && sortList.length === 0) {
       const matchedGames = []
       const gamesDataCopy = [...gamesData]
@@ -103,50 +103,20 @@ function App() {
       setCurrentResults(matchedGames)
     } 
     
-    // SET BY SORT ONLY (can only choose one sort)
+    // Set by SORT only (can only choose one sort at a time)
     else if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
       const currentResultsCopy = [...gamesData]
       let sortedResults = null
       
       // Sort through all sort types
       if (sortList.includes('Discount')) {
-        sortedResults = currentResultsCopy.sort((a, b) => {
-          const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
-          const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
-
-          if (newA > newB) return -1
-          else if (newB > newA) return 1
-          else return 0
-        })
+        sortedResults = sortGames(currentResultsCopy, 'Discount')
       } else if (sortList.includes('Current Price')) {
-        sortedResults = currentResultsCopy.sort((a, b) => {
-          const newA = a.currentPrice.replace(/$/g, '')
-          const newB = b.currentPrice.replace(/$/g, '')
-
-          if (newA > newB) return 1
-          else if (newB > newA) return -1
-          else return 0
-        })
+        sortedResults = sortGames(currentResultsCopy, 'Current Price')
       } else if (sortList.includes('Rating')) {
-        sortedResults = currentResultsCopy.sort((a, b) => {
-          const newA = a.rating.replace(/%/g, '')
-          const newB = b.rating.replace(/%/g, '')
-
-          if (newA > newB) return -1
-          else if (newB > newA) return 1
-          else return 0
-        })
+        sortedResults = sortGames(currentResultsCopy, 'Rating')
       } else if (sortList.includes('Feedback')) {
-        sortedResults = currentResultsCopy.sort((a, b) => {
-          const newA = a.reviewsType
-          const newB = b.reviewsType
-
-          if (newA === 'Overwhelmingly Positive' && newB !== 'Overwhelmingly Positive') return -1
-          else if (newB === 'Overwhelmingly Positive' && newA !== 'Overwhelmingly Positive') return 1
-          else if (newA === 'Very Positive' && newB !== 'Very Positive') return -1
-          else if (newB === 'Very Positive' && newA !== 'Very Positive') return 1
-          else return 0
-        })
+        sortedResults = sortGames(currentResultsCopy, 'Feedback')
       }
 
       setCurrentResults(sortedResults)
@@ -192,45 +162,15 @@ function App() {
         }
       }
 
-      // SORT BY SORT TYPE
+      // Sort by SORT type
       if (sortList.includes('Discount')) {
-        sortedResults = matchedGames.sort((a, b) => {
-          const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
-          const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
-
-          if (newA > newB) return -1
-          else if (newB > newA) return 1
-          else return 0
-        }) 
+        sortedResults = sortGames(matchedGames, 'Discount')
       } else if (sortList.includes('Current Price')) {
-        sortedResults = matchedGames.sort((a, b) => {
-          const newA = a.currentPrice.replace(/$/g, '')
-          const newB = b.currentPrice.replace(/$/g, '')
-
-          if (newA > newB) return 1
-          else if (newB > newA) return -1
-          else return 0
-        })
+        sortedResults = sortGames(matchedGames, 'Current Price')
       } else if (sortList.includes('Rating')) {
-        sortedResults = matchedGames.sort((a, b) => {
-          const newA = a.rating.replace(/%/g, '')
-          const newB = b.rating.replace(/%/g, '')
-
-          if (newA > newB) return -1
-          else if (newB > newA) return 1
-          else return 0
-        })
+        sortedResults = sortGames(matchedGames, 'Rating')
       } else if (sortList.includes('Feedback')) {
-        sortedResults = matchedGames.sort((a, b) => {
-          const newA = a.reviewsType
-          const newB = b.reviewsType
-
-          if (newA === 'Overwhelmingly Positive' && newB !== 'Overwhelmingly Positive') return -1
-          else if (newB === 'Overwhelmingly Positive' && newA !== 'Overwhelmingly Positive') return 1
-          else if (newA === 'Very Positive' && newB !== 'Very Positive') return -1
-          else if (newB === 'Very Positive' && newA !== 'Very Positive') return 1
-          else return 0
-        })
+        sortedResults = sortGames(matchedGames, 'Feedback')
       }
 
       setCurrentResults(sortedResults)

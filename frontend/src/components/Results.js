@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Results(props) {
+function Results({gamesAreLoading, gamesError, gamesData, gameCards}) {
   return (
     <div className='game-results'>
-      {props.gamesAreLoading && <h1>...Loading</h1>}
-      {props.gamesError && <h1>{props.gamesError}</h1>}
-      {props.gamesData && <>{props.gameCards}</>}
+      {gamesAreLoading && <h1>...Loading</h1>}
+      {gamesError && <h1>{gamesError}</h1>}
+      {gamesData && <>{gameCards}</>}
     </div>
   )
 }
