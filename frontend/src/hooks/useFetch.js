@@ -12,9 +12,12 @@ export default function useFetch(url) {
         const res = await fetch(url)
         const data = await res.json()
         
-        // Filter out data that don't have genres property
-        const newData = data.filter(game => game.genres ? game : null)
-        setResponse(newData)
+        // Filter out data that don't have genres property (fetching games)
+        if (data.length > 50) {
+          const newData = data.filter(game => game.genres ? game : null)
+          setResponse(newData)
+        } else setResponse(data)
+
       } catch (err) {
         setError(`${err} Could not fetch data`)
       } finally {
@@ -24,5 +27,5 @@ export default function useFetch(url) {
     fetchData()
   }, [url])
 
-  return { response, error, isLoading }
+  return { response: response, error: error, isLoading: isLoading }
 }

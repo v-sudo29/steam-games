@@ -7,6 +7,7 @@ import useFetch from './hooks/useFetch';
 import './App.css';
 
 function App() {
+  const [wishlist, setWishlist] = useState(null)
   const [gamesData, setGamesData] = useState(null)
   const [currentResults, setCurrentResults] = useState(null)
   const [gameCards, setGameCards] = useState(null)
@@ -27,15 +28,21 @@ function App() {
     'Rating',
     'Feedback',
   ])
-  const { response, error, isLoading } = useFetch('https://steam-games-server.onrender.com/')
+  const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } = useFetch('https://steam-games-server.onrender.com/')
+  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist')
 
   // useEffect: Set data from fetch response
   useEffect(() => {
-    if (response) {
-      setGamesData(response)
-      setCurrentResults(response)
+    if (gamesResponse) {
+      setGamesData(gamesResponse)
+      setCurrentResults(gamesResponse)
     } 
-  }, [response])
+  }, [gamesResponse])
+
+  // useEffect: Set data from wishlist response
+  useEffect(() => {
+    if (wishlistResponse) setWishlist(wishlistResponse)
+  }, [wishlistResponse])
 
   // useEffect: Set default gameCards if sortList and genres are empty
   useEffect(() => {
@@ -286,8 +293,8 @@ function App() {
         setGenres={setGenres}
       />
       <div className='search-results'>
-        {isLoading && <h1>...Loading</h1>}
-        {error && <h1>{error}</h1>}
+        {gamesAreLoading && <h1>...Loading</h1>}
+        {gamesError && <h1>{gamesError}</h1>}
         {gamesData && <>{gameCards}</>}
       </div>
     </div>
