@@ -27,7 +27,16 @@ const gameSchema = new mongoose.Schema({
   saleEndDate: String
 })
 
-const Game = mongoose.model('Game', gameSchema)
+const wishlistSchema = new mongoose.Schema({
+  appId: String,
+  name: String,
+  reviewsType: String,
+  originalPrice: String,
+  currentPrice: String,
+  discount: String,
+  url: String,
+  imgUrl: String
+})
 
 gameSchema.set('toJSON', {
   transform: (document, returnedObject) => {
@@ -36,11 +45,27 @@ gameSchema.set('toJSON', {
   }
 })
 
+wishlistSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+  }
+})
+
+const Game = mongoose.model('Game', gameSchema)
+const Wishlist = mongoose.model('Wishlist', wishlistSchema)
+
 // GET REQUESTS
 app.get('/', (request, response) => {
   Game.find({})
     .then(items => response.json(items))
     .catch(err => console.log(err))
+})
+
+app.get('/wishlist', (request, response) => {
+  Wishlist.find({})
+  .then(items => response.json(items))
+  .catch(err => console.log(err))
 })
 
 app.listen(3001, function() {
