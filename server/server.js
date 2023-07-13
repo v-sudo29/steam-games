@@ -22,9 +22,12 @@ const gameSchema = new mongoose.Schema({
   url: String,
   discount: String,
   currentPrice: String,
+  originalPrice: String,
   rating: String,
+  historicalLow: Boolean,
+  imgUrl: String,
+  genres: Array,
   saleEnds: String,
-  saleEndDate: String
 })
 
 const wishlistSchema = new mongoose.Schema({
