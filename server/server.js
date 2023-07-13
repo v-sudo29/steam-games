@@ -24,6 +24,7 @@ const gameSchema = new mongoose.Schema({
   currentPrice: String,
   originalPrice: String,
   rating: String,
+  reviewsType: String,
   historicalLow: Boolean,
   imgUrl: String,
   genres: Array,
