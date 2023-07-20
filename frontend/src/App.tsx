@@ -4,14 +4,16 @@ import SortTags from './components/SortTags';
 import GenreTags from './components/GenreTags';
 import Results from './components/Results';
 import useFetch from './hooks/useFetch';
+import { GameObject } from './interface/GameObject';
 import './App.css';
 
 function App() {
-  const [gamesData, setGamesData] = useState(null)
-  const [genres, setGenres] = useState([])
-  const [sortList, setSortList] = useState([])
-  const currentResults = useRef(null)
-  const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } = useFetch('https://steam-games-server.onrender.com/')
+  const [gamesData, setGamesData] = useState<GameObject[] | null>(null)
+  const [genres, setGenres] = useState<string[]>([])
+  const [sortList, setSortList] = useState<string[]>([])
+  const currentResults = useRef<{current: any}>(null)
+  const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
+    = useFetch('https://steam-games-server.onrender.com/')
 
   // useEffect: Set gamesData from fetch response
   useEffect(() => {

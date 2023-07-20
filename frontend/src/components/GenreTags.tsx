@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function GenreTags({ genres, setGenres }) {
+export default function GenreTags({ genres, setGenres } : { genres: string[], setGenres: React.Dispatch<React.SetStateAction<string[]>> }) {
   const genreFilters = [
     '2D',
     'Base Building',
@@ -15,7 +15,7 @@ export default function GenreTags({ genres, setGenres }) {
   ]
 
   // Handle genre tag click
-  const handleGenreClick = (e) => {
+  const handleGenreClick = (e: any): void => {
     const currentGenre = e.target.innerText
 
     if (e.target.classList.contains('genre-active')) {

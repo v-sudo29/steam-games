@@ -1,4 +1,6 @@
-export default function sortGames(gamesArr, sortType) {
+import { GameObject } from "../interface/GameObject"
+
+export default function sortGames(gamesArr: GameObject[], sortType: string) {
   if (sortType === 'Discount') {
      return gamesArr.sort((a, b) => {
       const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
@@ -40,5 +42,5 @@ export default function sortGames(gamesArr, sortType) {
       if (newB === 'Very Positive' && newA !== 'Very Positive') return 1
       return 0
     })
-  }
+  } return null
 }

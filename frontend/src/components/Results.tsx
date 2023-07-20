@@ -1,9 +1,23 @@
-import React from 'react'
 import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
+import { GameObject } from '../interface/GameObject'
 
-export default function Results({ gamesAreLoading, gamesError, gamesData, genres, sortList, currentResults }) {
-  let gameCards = null
+export default function Results({ 
+  gamesAreLoading, 
+  gamesError, 
+  gamesData, 
+  genres, 
+  sortList, 
+  currentResults 
+}: {
+  gamesAreLoading: boolean,
+  gamesError: string | null,
+  gamesData: GameObject[] | null,
+  genres: string[],
+  sortList: string[] ,
+  currentResults: {current: any}
+}) {
+  let gameCards: JSX.Element[] | null = null
 
   // Set DEFAULT CARDS if no sort and genres selected
   if (gamesData !== null && sortList.length === 0 && genres.length === 0) {
@@ -23,7 +37,7 @@ export default function Results({ gamesAreLoading, gamesError, gamesData, genres
     const gamesDataCopy = [...gamesData]
     
     for (let i = 0; i < gamesDataCopy.length; i++) {
-      const genreExists = gamesDataCopy[i]['genres'].some(genre => genres.includes(genre))
+      const genreExists = gamesDataCopy[i]['genres']?.some(genre => genres.includes(genre))
       if (genreExists) matchedGames.push(gamesDataCopy[i])
     }
 
@@ -36,7 +50,7 @@ export default function Results({ gamesAreLoading, gamesError, gamesData, genres
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
     const currentResultsCopy = [...gamesData]
-    let sortedResults = null
+    let sortedResults: GameObject[] | null
     
     // Sort through all sort types
     if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
@@ -44,27 +58,27 @@ export default function Results({ gamesAreLoading, gamesError, gamesData, genres
     if (sortList.includes('Rating')) sortedResults = sortGames(currentResultsCopy, 'Rating')
     if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
     
-    currentResults.current = sortedResults
-    gameCards = sortedResults.map(game => 
+    currentResults.current = sortedResults!
+    gameCards = sortedResults!.map(game => 
       <ResultsCard key={game.appId} game={game}/>
     )
   }
 
   // Set CARDS by GENRES AND SORT
   if (genres.length !== 0 && gamesData !== null && sortList.length !== 0) {
-    let gamesDataCopy = []
+    let gamesDataCopy: GameObject[] = []
 
     if (genres.length === 1) gamesDataCopy = [...currentResults.current]
     if (genres.length > 1) gamesDataCopy = [...gamesData]
 
-    const matchedGames = []
+    const matchedGames: GameObject[] = []
     const genresCopy = [...genres]
-    let sortedResults = null
+    let sortedResults: GameObject[] | null
 
     // Filter by genres
     for (let i = 0; i < gamesDataCopy.length; i++) {
       for (let j = 0; j < genresCopy.length; j++) {
-        const genreExists = gamesDataCopy[i]['genres'].some(genre => genresCopy[j].includes(genre))
+        const genreExists = gamesDataCopy[i]['genres']?.some(genre => genresCopy[j].includes(genre))
 
         if (genreExists && !matchedGames.includes(gamesDataCopy[i])) {
           matchedGames.push(gamesDataCopy[i])
@@ -78,8 +92,8 @@ export default function Results({ gamesAreLoading, gamesError, gamesData, genres
     if (sortList.includes('Rating')) sortedResults = sortGames(matchedGames, 'Rating')
     if (sortList.includes('Feedback')) sortedResults = sortGames(matchedGames, 'Feedback')
 
-    currentResults.current = sortedResults
-    gameCards = sortedResults.map(game => 
+    currentResults.current = sortedResults!
+    gameCards = sortedResults!.map(game => 
       <ResultsCard key={game.appId} game={game}/>
     )
   }

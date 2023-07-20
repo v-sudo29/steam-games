@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import openNewTab from '../hooks/openNewTab'
 import useFetch from '../hooks/useFetch'
+import { GameObject } from '../interface/GameObject'
 
-function Wishlist({ gamesData }) {
-  const [wishlist, setWishlist] = useState(null)
+function Wishlist({ gamesData }: { gamesData: GameObject[] | null }) {
+  const [wishlist, setWishlist] = useState<GameObject[] | null>(null)
   const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist')
   let wishlistCards = null
 
@@ -14,7 +15,7 @@ function Wishlist({ gamesData }) {
 
   // Show wishlist games that are in gamesData
   if (wishlist && gamesData) {
-    const foundGames = []
+    const foundGames: GameObject[] = []
 
     wishlist.forEach(game => gamesData.filter(currentGame => currentGame.name === game.name ? foundGames.push(currentGame) : null))
     wishlistCards = foundGames.map(game => {
@@ -48,6 +49,7 @@ function Wishlist({ gamesData }) {
       </div>
     </div>
   )
+  return null
 }
 
 export default Wishlist

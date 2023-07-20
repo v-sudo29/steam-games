@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
+import { GameObject } from '../interface/GameObject'
 
-export default function useFetch(url) {
-  const [response, setResponse] = useState(null)
-  const [error, setError] = useState(null)
+export default function useFetch(url: string) {
+  const [response, setResponse] = useState<GameObject[] | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -10,17 +11,20 @@ export default function useFetch(url) {
       setIsLoading(true)
       try {
         const res = await fetch(url)
-        const data = await res.json()
-        
+        const data: GameObject[] = await res.json()
+
+        console.log(data)
         // Filter out data that don't have genres property
         if (data.length > 10) {
-          const newData = data.filter(game => game.genres.length > 0 ? game : null)
+          const newData: GameObject[] = data.filter(game => game.genres && game.genres.length > 0 ? game : null)
           setResponse(newData)
         } else setResponse(data)
 
-      } catch (err) {
+      } 
+      catch (err) {
         setError(`${err} Could not fetch data`)
-      } finally {
+      } 
+      finally {
         setIsLoading(false)
       }
     }

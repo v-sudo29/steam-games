@@ -1,0 +1,15 @@
+export interface GameObject {
+  appId: string,
+  currentPrice: string,
+  discount: string,
+  genres?: string[],
+  historicalLow: boolean,
+  id: string,
+  imgUrl: string,
+  name: string,
+  originalPrice: string,
+  rating: string,
+  reviewsType: string,
+  saleEnds: string,
+  url: string,
+}
