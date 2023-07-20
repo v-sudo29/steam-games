@@ -70,27 +70,6 @@
   background-color: yellow;
 }
 
-/* Game Cards */
-.game-results {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.game-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  width: 25rem;
-  border: 1px solid black;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-.card-image {
-  cursor: pointer;
-}
-
 /* Price Info */
 .price-info-container {
   display: flex;
@@ -167,12 +146,14 @@
   height: 10rem;
   padding: 0;
   padding-right: 1rem;
+  border: 1px solid black;
 }
 
 .card-image {
   height: 10rem;
   width: 20rem;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .game-title {
@@ -182,9 +163,10 @@
 
 .game-info {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 10rem;
+  width: 14rem;
   gap: 1rem;
 }
 
@@ -197,17 +179,18 @@
 .game-discount-box {
   display: flex;
   flex-direction: column;
+  width: 7rem;
 }
 
 .game-discounted-price {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: green;
 }
 
 .game-discount {
   margin-top: 1rem;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   border: 1px solid black;
 }
@@ -220,4 +203,17 @@
 .game-original-price {
   color: grey;
   text-decoration: line-through;
+}
+
+.game-reviews-ratings-box {
+  display: flex;
+  gap: 1rem;
+}
+
+.game-reviewsType {
+  color: rgb(66, 182, 255);
+}
+
+.game-ratings {
+  color: green;
 }

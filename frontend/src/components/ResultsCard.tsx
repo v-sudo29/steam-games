@@ -20,6 +20,10 @@ function ResultsCard({ game } : { game: GameObject }) {
           <span className='game-discount'>{game.discount}</span>
           {game.historicalLow && <span className='game-historical-low'>Historical Low!</span> }
         </div>
+        <div className='game-reviews-ratings-box'>
+          <span className='game-reviewsType'>{game.reviewsType}</span>
+          <span className='game-ratings'>{game.rating}</span>
+        </div>
       </div>
     </div>
   )
