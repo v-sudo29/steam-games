@@ -135,6 +135,7 @@
 .game-results {
   display: flex;
   flex-direction: column;
+  padding: 0 20rem;
 }
 
 .game-card {
@@ -174,6 +175,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.game-original-price {
+  font-size: 0.8rem;
 }
 
 .game-discount-box {
