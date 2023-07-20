@@ -52,6 +52,11 @@
 }
 
 /* Genre Filter Tags */
+.genre-tags-container {
+  display: flex;
+  justify-content: center;
+}
+
 .search-genre-tag {
   cursor: pointer;
 }
@@ -156,14 +161,63 @@
 .game-card {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 10rem;
   padding: 0;
-  
+  padding-right: 1rem;
 }
 
 .card-image {
   height: 10rem;
   width: 20rem;
   object-fit: cover;
+}
+
+.game-title {
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  gap: 1rem;
+}
+
+.game-prices {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-discount-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-discounted-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: green;
+}
+
+.game-discount {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  border: 1px solid black;
+}
+
+.game-historical-low {
+  background-color: green;
+  color: #fff;
+}
+
+.game-original-price {
+  color: grey;
+  text-decoration: line-through;
 }

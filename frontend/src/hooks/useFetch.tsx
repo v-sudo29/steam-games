@@ -13,7 +13,6 @@ export default function useFetch(url: string) {
         const res = await fetch(url)
         const data: GameObject[] = await res.json()
 
-        console.log(data)
         // Filter out data that don't have genres property
         if (data.length > 10) {
           const newData: GameObject[] = data.filter(game => game.genres && game.genres.length > 0 ? game : null)

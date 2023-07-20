@@ -46,7 +46,9 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
   return (
     <div className='genre-filter-container'>
       <div>Select multiple: </div>
-      {genreTags}
+      <div className='genre-tags-container'>
+        {genreTags}
+      </div>
     </div>
   )
 }

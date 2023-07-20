@@ -10,7 +10,17 @@ function ResultsCard({ game } : { game: GameObject }) {
         onClick={() => openNewTab(game.url)} 
         alt={game.name} 
       />
-      <h3>{game.name}</h3>
+      <h3 className='game-title'>{game.name}</h3>
+      <div className='game-info'>
+        <div className='game-prices'>
+          <span className='game-discounted-price'>{game.currentPrice}</span>
+          <span className='game-original-price'>{game.originalPrice}</span>
+        </div>
+        <div className='game-discount-box'>
+          <span className='game-discount'>{game.discount}</span>
+          {game.historicalLow && <span className='game-historical-low'>Historical Low!</span> }
+        </div>
+      </div>
     </div>
   )
 }
