@@ -1,6 +1,12 @@
 import React from 'react'
 
-function SortTags({setSortList, sortFilters}) {
+export default function SortTags({setSortList}) {
+  const sortFilters = [
+    'Discount',
+    'Current Price',
+    'Rating',
+    'Feedback',
+  ]
 
   // FUNCTION: Handle sort clicks
   const handleSortClick = (e) => {
@@ -20,7 +26,7 @@ function SortTags({setSortList, sortFilters}) {
   }
 
     // SET SORTING TAGS
-    const sortingTags = sortFilters.current.map(sort => {
+    const sortingTags = sortFilters.map(sort => {
       return (
         <button
           key={sort}
@@ -39,5 +45,3 @@ function SortTags({setSortList, sortFilters}) {
     </div>
   )
 }
-
-export default SortTags

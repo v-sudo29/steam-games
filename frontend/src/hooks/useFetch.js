@@ -12,9 +12,9 @@ export default function useFetch(url) {
         const res = await fetch(url)
         const data = await res.json()
         
-        // Filter out data that don't have genres property (fetching games)
-        if (data.length > 50) {
-          const newData = data.filter(game => game.genres ? game : null)
+        // Filter out data that don't have genres property
+        if (data.length > 10) {
+          const newData = data.filter(game => game.genres.length > 0 ? game : null)
           setResponse(newData)
         } else setResponse(data)
 
