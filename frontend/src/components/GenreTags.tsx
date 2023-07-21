@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button, Box } from '@chakra-ui/react'
 
 export default function GenreTags({ genres, setGenres } : { genres: string[], setGenres: React.Dispatch<React.SetStateAction<string[]>> }) {
   const genreFilters = [
@@ -24,7 +25,9 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
       setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre))
     } else {
       e.target.classList.add('genre-active')
-
+      e.target.style = {
+        backgroundColor: 'green'
+      }
       if (genres.length === 0) setGenres([currentGenre])
       else setGenres(prevGenres => [...prevGenres, currentGenre])
     }
@@ -33,13 +36,13 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
   // SET GENRE FILTER TAGS
   const genreTags = genreFilters.map(genre => {
     return (
-      <button 
+      <Button
         key={`${genre}-search-genre-tag`} 
-        type='button'
+        as='button'
         className='search-genre-tag'
         onClick={handleGenreClick}
       >{genre}
-      </button>
+      </Button>
     )
   })
 

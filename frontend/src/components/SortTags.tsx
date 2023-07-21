@@ -1,4 +1,5 @@
 import React, { MouseEvent } from 'react'
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 export default function SortTags({ setSortList } : {  setSortList: React.Dispatch<React.SetStateAction<string[]>> }) {
   const sortFilters = [
@@ -29,20 +30,22 @@ export default function SortTags({ setSortList } : {  setSortList: React.Dispatc
     // SET SORTING TAGS
     const sortingTags = sortFilters.map(sort => {
       return (
-        <button
+        <Button
           key={sort}
           type='button'
           className={`sorting-tag ${sort}`}
           onClick={(e) => handleSortClick(e)}
         >{sort}
-        </button>
+        </Button>
       )
     })
 
   return (
     <div className='sorting-container'>
       <div>Choose one only: </div>
-      {sortingTags}
+      <ButtonGroup className='sortingTags-container'>
+        {sortingTags}
+      </ButtonGroup>
     </div>
   )
 }
