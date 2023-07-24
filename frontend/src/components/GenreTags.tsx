@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Box } from '@chakra-ui/react'
+import { Checkbox, Stack } from '@chakra-ui/react'
 
 export default function GenreTags({ genres, setGenres } : { genres: string[], setGenres: React.Dispatch<React.SetStateAction<string[]>> }) {
   const genreFilters = [
@@ -16,42 +16,39 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
   ]
 
   // Handle genre tag click
-  const handleGenreClick = (e: any): void => {
-    const currentGenre = e.target.innerText
+  const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    e.preventDefault()
+    const currentGenre = e.target as HTMLInputElement
 
-    if (e.target.classList.contains('genre-active')) {
-      e.target.classList.remove('genre-active')
-      
-      setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre))
-    } else {
-      e.target.classList.add('genre-active')
-      e.target.style = {
-        backgroundColor: 'green'
-      }
-      if (genres.length === 0) setGenres([currentGenre])
-      else setGenres(prevGenres => [...prevGenres, currentGenre])
+    if (currentGenre.classList.contains('genre-active')) {
+      currentGenre.classList.remove('genre-active')
+      if (genres.length === 1) {
+        setGenres([])
+      } else setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
+    } 
+    else {
+      currentGenre.classList.add('genre-active')
+      if (genres.length === 0) setGenres([currentGenre.value])
+      else setGenres(prevGenres => [...prevGenres, currentGenre.value])
     }
   }
 
   // SET GENRE FILTER TAGS
   const genreTags = genreFilters.map(genre => {
     return (
-      <Button
+      <Checkbox
         key={`${genre}-search-genre-tag`} 
-        as='button'
         className='search-genre-tag'
-        onClick={handleGenreClick}
+        value={genre}
+        onChange={(e) => handleGenreClick(e)}
       >{genre}
-      </Button>
+      </Checkbox>
     )
   })
 
   return (
-    <div className='genre-filter-container'>
-      <div>Select multiple: </div>
-      <div className='genre-tags-container'>
-        {genreTags}
-      </div>
-    </div>
+    <Stack mt='4.5rem' ml='-15rem' p='1rem 3rem'>
+      {genreTags}
+    </Stack>
   )
 }

@@ -1,6 +1,6 @@
 import { GameObject } from "../interface/GameObject"
 
-export default function sortGames(gamesArr: GameObject[], sortType: string) {
+export default function sortGames(gamesArr: GameObject[], sortType: string): GameObject[] | null {
   if (sortType === 'Discount') {
      return gamesArr.sort((a, b) => {
       const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
@@ -32,15 +32,15 @@ export default function sortGames(gamesArr: GameObject[], sortType: string) {
     })
   } 
   if (sortType === 'Feedback') {
-    return gamesArr.sort((a, b) => {
-      const newA = a.reviewsType
-      const newB = b.reviewsType
+    const overwhelmPosArr = []
+    const veryPosArr = []
+    const mostlyPosArr = []
 
-      if (newA === 'Overwhelmingly Positive' && newB !== 'Overwhelmingly Positive') return -1
-      if (newB === 'Overwhelmingly Positive' && newA !== 'Overwhelmingly Positive') return 1
-      if (newA === 'Very Positive' && newB !== 'Very Positive') return -1
-      if (newB === 'Very Positive' && newA !== 'Very Positive') return 1
-      return 0
-    })
-  } return null
+    overwhelmPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Overwhelmingly Positive'))
+    veryPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Very Positive'))
+    mostlyPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Mostly Positive'))
+
+    return [...overwhelmPosArr, ...veryPosArr, ...mostlyPosArr]
+  } 
+  return null
 }

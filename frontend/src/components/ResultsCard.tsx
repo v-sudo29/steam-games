@@ -1,14 +1,15 @@
 import openNewTab from '../hooks/openNewTab'
 import { GameObject } from '../interface/GameObject'
-import { Box, Card, CardBody, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { Box, Card, Heading, Image, Stack, Text } from '@chakra-ui/react'
 
 function ResultsCard({ game } : { game: GameObject }) {
   return (
     <Card 
       onClick={() => openNewTab(game.url)}
       overflow='hidden'
-      h='10rem' 
-      w='62rem'
+      h='6rem' 
+      maxW='45rem'
+      minW='30rem'
       variant='outline'
       direction='row'
       cursor='pointer'
@@ -22,14 +23,16 @@ function ResultsCard({ game } : { game: GameObject }) {
         src={game.imgUrl} 
         alt={game.name} 
         objectFit='cover'
-        width='20rem'
-        height='10rem'
+        width='15rem'
+        h='inherit'
       />
 
-      <Stack w='30rem' justify='center' p='1.5rem'>
-          <Heading fontSize='1.3rem' fontWeight='600'>{game.name}</Heading>
+      {/* GAME TITLE */}
+      <Stack w='20rem' justify='center' p='1.5rem'>
+          <Heading fontSize='1rem' fontWeight='600'>{game.name}</Heading>
       </Stack>
 
+      {/* GAME INFO */}
       <Stack 
         ml='auto' 
         justify='center' 
@@ -41,16 +44,16 @@ function ResultsCard({ game } : { game: GameObject }) {
 
         <Stack mr='3rem' mt='1rem' direction='row' align='center'>
           <Text as='s' color='gray' fontSize='0.8rem'>{game.originalPrice}</Text>
-          <Text fontWeight='bold' fontSize='3xl'>{game.currentPrice}</Text>
+          <Text fontWeight='bold' fontSize='2xl'>{game.currentPrice}</Text>
         </Stack>
         {game.historicalLow ? 
           <>
-            <Text color='white' bg='green' fontSize='0.7rem'>Historical Low!</Text>
+            <Text pos='relative' mb='-1.2rem' ml='0.5rem' bottom='0.6rem' color='white' bg='green' fontSize='0.5rem'>Historical Low!</Text>
             <Text fontWeight='500' color='blue.400' >{game.reviewsType}</Text>
           </>
           : 
-          <Box pos='relative' top='1rem'>
-            <Text fontWeight='500' color='blue.400' >{game.reviewsType}</Text>
+          <Box pos='relative' top='0rem'>
+            <Text fontWeight='500' color='blue.300' >{game.reviewsType}</Text>
           </Box>
         }
       </Stack>
@@ -58,7 +61,6 @@ function ResultsCard({ game } : { game: GameObject }) {
       <Stack pos='relative' h='2.5rem' ml='-3rem' justify='center' direction='row' w='4rem'>
         <Text borderRadius='sm' p='0.5rem' color='white' bg='green' fontWeight='600'>{game.discount}</Text>
       </Stack>
-
     </Card>
   )
 }

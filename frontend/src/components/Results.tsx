@@ -1,6 +1,7 @@
 import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
+import { useEffect } from 'react'
 
 export default function Results({ 
   gamesAreLoading, 
@@ -8,23 +9,40 @@ export default function Results({
   gamesData, 
   genres, 
   sortList, 
-  currentResults 
+  currentResults,
+  pageNumber,
+  setPageNumber
 }: {
   gamesAreLoading: boolean,
   gamesError: string | null,
   gamesData: GameObject[] | null,
   genres: string[],
   sortList: string[] ,
-  currentResults: {current: any}
+  currentResults: { current: GameObject[] | null },
+  pageNumber: number,
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 }) {
-  let gameCards: JSX.Element[] | null = null
+  let gameCards: (JSX.Element | null)[] | null = null
 
-  // Set DEFAULT CARDS if no sort and genres selected
-  if (gamesData !== null && sortList.length === 0 && genres.length === 0) {
-    gameCards = gamesData.map(game => 
-      <ResultsCard key={game.appId} game={game}/>
-    )
-    currentResults.current = gamesData
+
+  function resetPageNumber(): void {
+    setPageNumber(1)
+  }
+
+  useEffect(() => {
+    resetPageNumber()
+  }, [genres, sortList])
+
+  // Set DEFAULT GAME CARDS if no genre or sort selected
+  if (gamesData && genres.length === 0 && sortList.length === 0 && pageNumber === 1) {
+    const gamesDataCopy = gamesData
+
+    gameCards = gamesDataCopy.map((game, index) => {
+      if (index < 25) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
+    currentResults.current = gamesDataCopy
   }
 
   // -------------------------------------
@@ -32,7 +50,7 @@ export default function Results({
   // -------------------------------------
 
   // Set CARDS by GENRES ONLY
-  if (genres.length !== 0 && gamesData !== null && sortList.length === 0) {
+  if (gamesData && genres.length !== 0 && sortList.length === 0) {
     const matchedGames = []
     const gamesDataCopy = [...gamesData]
     
@@ -41,9 +59,11 @@ export default function Results({
       if (genreExists) matchedGames.push(gamesDataCopy[i])
     }
 
-    gameCards = (matchedGames.map(game =>
-      <ResultsCard key={game.appId} game={game}/>
-    ))    
+    gameCards = matchedGames.map((game, index) => {
+      if (index < 25) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
     currentResults.current = matchedGames
   } 
   
@@ -59,13 +79,15 @@ export default function Results({
     if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
     
     currentResults.current = sortedResults!
-    gameCards = sortedResults!.map(game => 
-      <ResultsCard key={game.appId} game={game}/>
-    )
+    gameCards = sortedResults!.map((game, index) => {
+      if (index < 25) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
   }
 
   // Set CARDS by GENRES AND SORT
-  if (genres.length !== 0 && gamesData !== null && sortList.length !== 0) {
+  if (genres.length !== 0 && gamesData !== null && sortList.length !== 0 && currentResults.current) {
     let gamesDataCopy: GameObject[] = []
 
     if (genres.length === 1) gamesDataCopy = [...currentResults.current]
@@ -93,9 +115,20 @@ export default function Results({
     if (sortList.includes('Feedback')) sortedResults = sortGames(matchedGames, 'Feedback')
 
     currentResults.current = sortedResults!
-    gameCards = sortedResults!.map(game => 
-      <ResultsCard key={game.appId} game={game}/>
-    )
+    gameCards = sortedResults!.map((game, index) => {
+      if (index < 25) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
+  }
+
+  // Display cards according to page number
+  if (pageNumber !== 1 && currentResults.current) {
+    gameCards = currentResults.current.map((game, index) => {
+      if (index > ((25 * pageNumber) - 25) && index < (25 * pageNumber)) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
   }
 
   return (
