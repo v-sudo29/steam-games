@@ -4,13 +4,15 @@ require('dotenv').config();
 const { CronJob } = require('cron')
 const Game = require('./models/Game')
 const Wishlist = require('./models/Wishlist')
-const wishlistScraper = require('../games-scraper/wishlist.js');
-const gameScraper = require('../games-scraper/index.js')
+const wishlistScraper = require('./games-scraper/wishlist.js');
+const gameScraper = require('./games-scraper/index.js')
 const mongoose = require('mongoose')
 
 // DATABASE
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
+
+const scheduleExpression = '56 * * * *' 
 
 async function updateWishlists() {
   const wishlistData = await wishlistScraper.run()
@@ -47,7 +49,7 @@ async function updateGames() {
 }
 
 console.log('Scheduler started')
-const fetchGamesAndWishlistJob = new CronJob('50 * * * *', async () => {
+const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
