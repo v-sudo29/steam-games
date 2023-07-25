@@ -165,7 +165,7 @@ async function scrapeSteam(games) {
     i++
   }).catch(err => console.log(err))
 
-  for (let i = 0; i < gamesArr.length; i++) {
+  for (let i = 0; i < 5; i++) {
     cluster.queue({url: gamesArr[i]['url'], index: i})
   }
   await cluster.idle()
@@ -184,13 +184,12 @@ module.exports.run = async () => {
   const games = [...OPgames, ...VPgames, ...Pgames, ...MPgames]
 
   const steamGames = await scrapeSteam(games)
-  console.log(steamGames)
-  // TODO: filter out incomplete games from steamGames arr
+  const filteredGames = steamGames.filter(game => Object.keys(game).length === 12)
 
   // fs.writeFile(`${DATE}-games.json`, JSON.stringify(steamGames), (err) => {
   //   if (err) throw err
   //   console.log('Successfully saved JSON file!')
   // })
   console.timeEnd('time')
-  return steamGames
+  return filteredGames
 }
