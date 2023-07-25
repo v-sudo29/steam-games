@@ -1,6 +1,11 @@
 require('dotenv').config()
 
+// START SCHEDULER
+require('./scheduler.js')
+
 // IMPORTS
+const Game = require('./models/Game')
+const Wishlist = require('./models/Wishlist')
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -15,50 +20,6 @@ const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
-
-const gameSchema = new mongoose.Schema({
-  appId: String,
-  name: String,
-  url: String,
-  discount: String,
-  currentPrice: String,
-  originalPrice: String,
-  rating: String,
-  reviewsType: String,
-  historicalLow: Boolean,
-  imgUrl: String,
-  genres: Array,
-  saleEnds: String,
-})
-
-const wishlistSchema = new mongoose.Schema({
-  wishlist: Boolean,
-  appId: String,
-  name: String,
-  reviewsType: String,
-  originalPrice: String,
-  currentPrice: String,
-  discount: String,
-  url: String,
-  imgUrl: String
-})
-
-gameSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-  }
-})
-
-wishlistSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-  }
-})
-
-const Game = mongoose.model('Game', gameSchema)
-const Wishlist = mongoose.model('Wishlist', wishlistSchema)
 
 // GET REQUESTS
 app.get('/', (request, response) => {
