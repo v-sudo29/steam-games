@@ -1,22 +1,24 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
-import { useState } from "react"
 import { GameObject } from "../interface/GameObject"
 
 export default function PageNumbers({ 
   pageNumber, 
   setPageNumber, 
   currentResults,
-  genres
+  genres,
+  expanded,
+  setExpanded
 }: { 
   pageNumber: number, 
   setPageNumber:React.Dispatch<React.SetStateAction<number>>,
   currentResults: {current: any},
   gamesData: GameObject[] | null
-  genres: string[]
+  genres: string[],
+  expanded: boolean,
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>
 }) 
 {
-  const [expanded, setExpanded] = useState<boolean>(false)
-  const totalPages = currentResults.current && Math.ceil(currentResults.current.length / 25)
+  const totalPages: number = currentResults.current && Math.ceil(currentResults.current.length / 25)
   let pagesJSX: JSX.Element[] = []
 
   function handleClick(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>): void {
@@ -26,6 +28,7 @@ export default function PageNumbers({
     const lastPageMinusFour = totalPages - 4
 
     setPageNumber(number)
+
     if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setExpanded(true)
     if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setExpanded(false)
   }
@@ -52,16 +55,16 @@ export default function PageNumbers({
     const lastPageMinusThree = totalPages - 3
 
     setPageNumber(prev => prev - 1)
-
+    
     if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setExpanded(true)
     if (totalPages > 10 && (number <= pageFive)) setExpanded(false)
   }
 
   // Show FIRST 5 PAGES
-  if (!expanded && totalPages !== 0 && pageNumber < 6) { 
+  if (!expanded && totalPages !== 0 && pageNumber <= 10) { 
     const pagesArr = []
 
-    if (totalPages > 1 && totalPages < 6) {
+    if (totalPages > 1 && totalPages <= 10) {
       for (let i = 1; i <= totalPages; i++) {
         pagesArr.push(
           <Text 
@@ -75,7 +78,7 @@ export default function PageNumbers({
       }
     }
 
-    if (totalPages > 5) {
+    if (totalPages > 10) {
       for (let i = 1; i <= totalPages; i++) {
         if (i < 6 || i === totalPages) pagesArr.push(
           <Text 
@@ -94,7 +97,7 @@ export default function PageNumbers({
   }
 
   // Show LAST 5 PAGES
-  if (!expanded && totalPages > 1 && ((pageNumber >= (totalPages - 5)) && (pageNumber <= totalPages))) {
+  if (!expanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
     const pagesArr = []
 
     for (let i = 1; i <= totalPages; i++) {

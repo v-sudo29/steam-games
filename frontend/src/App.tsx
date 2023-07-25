@@ -14,6 +14,7 @@ function App() {
   const [genres, setGenres] = useState<string[]>([])
   const [sortList, setSortList] = useState<string[]>([])
   const [pageNumber, setPageNumber] = useState<number>(1)
+  const [expanded, setExpanded] = useState<boolean>(false)
   const currentResults = useRef<GameObject[] | null>(null)
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
     = useFetch('https://steam-games-server.onrender.com/')
@@ -28,7 +29,7 @@ function App() {
       <Wishlist gamesData={gamesData}/>
       <Divider/>
       <Stack justify='center' direction='row'>
-        <GenreTags genres={genres} setGenres={setGenres}/>
+        <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/>
         <Stack>
           <SortTags setSortList={setSortList}/>
           <Results 
@@ -47,6 +48,8 @@ function App() {
             currentResults={currentResults}
             gamesData={gamesData}
             genres={genres}
+            expanded={expanded}
+            setExpanded={setExpanded}
           />
         </Stack>
       </Stack>

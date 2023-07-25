@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Checkbox, Stack } from '@chakra-ui/react'
 
-export default function GenreTags({ genres, setGenres } : { genres: string[], setGenres: React.Dispatch<React.SetStateAction<string[]>> }) {
+export default function GenreTags(
+  { genres, setGenres, setExpanded } : 
+  { genres: string[], 
+    setGenres: React.Dispatch<React.SetStateAction<string[]>>,
+    setExpanded: React.Dispatch<React.SetStateAction<boolean>>
+  }) {
   const genreFilters = [
     '2D',
     'Base Building',
@@ -33,6 +38,8 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
     }
   }
 
+  useEffect(() => setExpanded(false), [genres])
+
   // SET GENRE FILTER TAGS
   const genreTags = genreFilters.map(genre => {
     return (
@@ -47,7 +54,7 @@ export default function GenreTags({ genres, setGenres } : { genres: string[], se
   })
 
   return (
-    <Stack mt='4.5rem' ml='-15rem' p='1rem 3rem'>
+    <Stack mt='4.5grem' ml='-15rem' p='1rem 3rem'>
       {genreTags}
     </Stack>
   )
