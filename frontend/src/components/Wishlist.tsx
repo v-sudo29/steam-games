@@ -6,12 +6,15 @@ import { Heading } from '@chakra-ui/react'
 
 function Wishlist({ gamesData }: { gamesData: GameObject[] | null }) {
   const [wishlist, setWishlist] = useState<GameObject[] | null>(null)
-  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist')
+  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
   let wishlistCards: JSX.Element[] | null = null
 
   // useEffect: Set wishlist from fetch response
   useEffect(() => {
-    if (wishlistResponse) setWishlist(wishlistResponse)
+    if (wishlistResponse) {
+      setWishlist(wishlistResponse)
+      console.log(wishlistResponse)
+    }
   }, [wishlistResponse])
 
   // Show wishlist games that are in gamesData
