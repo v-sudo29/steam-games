@@ -37,7 +37,7 @@ async function getGames(url, reviewsType) {
 
   const page = await browser.newPage()
 
-  await page.goto(url, {waitUntil: 'load'})
+  await page.goto(url, { waitUntil: 'load', timeout: 0 })
   if (!await page.$(searchResultSelector)) {
     await browser.close()
     console.log('\nselector does not exist\n')
@@ -117,7 +117,7 @@ async function scrapeSteam(games) {
   await cluster.task(async ({ page, data: {url, index} }) => {
 
     // Go to detail page
-    await page.goto(`${url}`,{ waitUntil: 'load' })
+    await page.goto(`${url}`,{ waitUntil: 'load', timeout: 0 })
     const birthdaySelectorIsTrue = await page.evaluate(() => document.querySelector('.agegate_birthday_selector') ? true : false)
     const ageGateIsTrue = await page.evaluate(() => document.querySelector('#view_product_page_btn') ? true : false)
     const errorBoxExists = await page.evaluate(() => document.querySelector('#error_box') ? true : false)
