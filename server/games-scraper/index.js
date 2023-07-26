@@ -165,7 +165,7 @@ async function scrapeSteam(games) {
     i++
   }).catch(err => console.log(err))
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < gamesArr.length; i++) {
     cluster.queue({url: gamesArr[i]['url'], index: i})
   }
   await cluster.idle()
