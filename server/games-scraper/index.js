@@ -26,7 +26,7 @@ function delay(time) {
 
 async function getGames(url, reviewsType) {
   const browser = await puppeteer.launch({ 
-    headless: false, 
+    headless: 'new', 
     'args' : [
     '--no-sandbox',
     '--disable-setuid-sandbox'
