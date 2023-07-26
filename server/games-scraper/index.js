@@ -37,7 +37,7 @@ async function getGames(url, reviewsType) {
 
   const page = await browser.newPage()
 
-  await page.goto(url, { waitUntil: 'load', timeout: 0 })
+  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 0 })
   if (!await page.$(searchResultSelector)) {
     await browser.close()
     console.log('\nselector does not exist\n')
