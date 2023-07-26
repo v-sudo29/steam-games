@@ -36,6 +36,7 @@ async function getGames(url, reviewsType) {
   })
 
   const page = await browser.newPage()
+  await page.setDefaultNavigationTimeout(0)
 
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 0 })
   if (!await page.$(searchResultSelector)) {
@@ -185,10 +186,10 @@ async function scrapeSteam(games) {
 
 module.exports = async () => {
   console.time('time')
-  const OPgames = await getGames(`${OVERWHELMINGLY_POSITIVE_URL}`, 'Overwhelmingly Positive')
-  const VPgames = await getGames(`${VERY_POSITIVE_URL}`, 'Very Positive')
-  const Pgames = await getGames(`${POSITIVE_URL}`, 'Positive')
-  const MPgames = await getGames(`${MOSTLY_POSITIVE_URL}`, 'Mostly Positive')
+  const OPgames = await getGames(OVERWHELMINGLY_POSITIVE_URL, 'Overwhelmingly Positive')
+  const VPgames = await getGames(VERY_POSITIVE_URL, 'Very Positive')
+  const Pgames = await getGames(POSITIVE_URL, 'Positive')
+  const MPgames = await getGames(MOSTLY_POSITIVE_URL, 'Mostly Positive')
 
   const games = [...OPgames, ...VPgames, ...Pgames, ...MPgames]
 
