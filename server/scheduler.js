@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 // IMPORTS
-const wishlistScraper = require('./games-scraper/wishlist.js');
+const wishlistScraper = require('./games-scraper/wishlist.js')
 const gameScraper = require('./games-scraper/index.js')
 
 const { CronJob } = require('cron')
@@ -13,7 +13,7 @@ const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '53 * * * *'
+const scheduleExpression = '56 * * * *'
 
 async function updateWishlists() {
   const wishlistData = await wishlistScraper.run()

@@ -21,7 +21,13 @@ function delay(time) {
 
 let gamesArr = []
 module.exports.run = async function getWishListGames() {
-  const browser = await puppeteer.launch({ headless: 'new' })
+  const browser = await puppeteer.launch({ 
+    headless: 'new',
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  })
   const page = await browser.newPage()
 
   await page.goto(wishlist_url, {waitUntil: 'load'})
