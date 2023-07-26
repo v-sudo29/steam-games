@@ -1,22 +1,14 @@
-import dotenv from 'dotenv'
-import express from 'express'
-import cors from 'cors'
-import mongoose from 'mongoose'
-import fetchGamesAndWishlistJob from './scheduler.js'
-import Game from './models/Game.js'
-import Wishlist from './models/Wishlist.js'
-
-dotenv.config()
+require('dotenv').config()
 
 // START SCHEDULER
-fetchGamesAndWishlistJob.start()
+require('./scheduler.js')
 
 // IMPORTS
-// const Game = require('./models/Game')
-// const Wishlist = require('./models/Wishlist')
-// const express = require('express')
-// const cors = require('cors')
-// const mongoose = require('mongoose')
+const express = require('express')
+const cors = require('cors')
+const mongoose = require('mongoose')
+const Game = require('./models/Game')
+const Wishlist = require('./models/Wishlist')
 const app = express()
 
 // MIDDLEWARE

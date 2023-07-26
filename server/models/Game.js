@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+const mongoose = require('mongoose')
 
 const gameSchema = new mongoose.Schema({
   appId: String,
@@ -22,6 +22,4 @@ gameSchema.set('toJSON', {
   }
 })
 
-const Game = mongoose.model('Game', gameSchema)
-
-export default Game
+module.exports = mongoose.model('Game', gameSchema)

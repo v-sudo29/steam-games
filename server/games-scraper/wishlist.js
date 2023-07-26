@@ -1,8 +1,7 @@
-import dotenv from 'dotenv'
-import puppeteer from 'puppeteer-extra'
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+require('dotenv').config()
 
-dotenv.config()
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
 // const fs = require('fs');
 
@@ -22,7 +21,7 @@ function delay(time) {
 }
 
 let gamesArr = []
-const getWishlist = async () => {
+module.exports = async () => {
   const browser = await puppeteer.launch({ 
     headless: true,
     'args' : [
@@ -81,5 +80,3 @@ const getWishlist = async () => {
   await browser.close()
   return discountedGames
 }
-
-export default getWishlist

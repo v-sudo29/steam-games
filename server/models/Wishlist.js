@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+const mongoose = require('mongoose')
 
 const wishlistSchema = new mongoose.Schema({
   wishlist: Boolean,
@@ -19,6 +19,4 @@ wishlistSchema.set('toJSON', {
   }
 })
 
-const Wishlist = mongoose.model('Wishlist', wishlistSchema)
-
-export default Wishlist
+module.exports = mongoose.model('Wishlist', wishlistSchema)
