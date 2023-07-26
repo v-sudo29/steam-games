@@ -33,7 +33,7 @@ async function getGames(url, reviewsType) {
     '--disable-setuid-sandbox'
     ],
     ignoreHTTPSErrors: true,
-    executablePath: `/path/to/Chrome`
+    executablePath: '/usr/bin/chromium-browser'
   })
 
   const page = await browser.newPage()
@@ -110,7 +110,7 @@ async function scrapeSteam(games) {
     maxConcurrency: WORKERS_COUNT,
     puppeteerOptions: {
       headless: 'new',
-      executablePath: `/path/to/Chrome`
+      executablePath: '/usr/bin/chromium-browser'
     }
   })
   const gamesArr = games
