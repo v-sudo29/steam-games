@@ -4,11 +4,6 @@ require('dotenv').config();
 const wishlistScraper = require('./games-scraper/wishlist.js');
 const gameScraper = require('./games-scraper/index.js')
 
-const puppeteer = require('puppeteer-extra')
-const { Cluster } = require('puppeteer-cluster');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
-
 const { CronJob } = require('cron')
 const Game = require('./models/Game')
 const Wishlist = require('./models/Wishlist')
@@ -18,7 +13,7 @@ const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '35 * * * *'
+const scheduleExpression = '53 * * * *'
 
 async function updateWishlists() {
   const wishlistData = await wishlistScraper.run()
