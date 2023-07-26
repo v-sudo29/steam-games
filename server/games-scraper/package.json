@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "agent-base": "^7.1.0",
     "dotenv": "^16.1.2",
+    "https-proxy-agent": "^7.0.1",
     "puppeteer": "^20.9.0",
     "puppeteer-cluster": "^0.23.0",
     "puppeteer-extra": "^3.3.6",
