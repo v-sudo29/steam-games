@@ -32,7 +32,7 @@ const getWishlist = async () => {
   })
   const page = await browser.newPage()
 
-  await page.goto(wishlist_url, {waitUntil: 'load'})
+  await page.goto(`${wishlist_url}`, {waitUntil: 'load'})
   await page.waitForSelector(wishlistSelector)
 
   for (let i = 0; i < 3; i++) {
