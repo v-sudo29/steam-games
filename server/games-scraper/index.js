@@ -26,11 +26,12 @@ function delay(time) {
 
 async function getGames(url, reviewsType) {
   const browser = await puppeteer.launch({ 
-    headless: 'new', 
+    headless: true, 
     'args' : [
     '--no-sandbox',
     '--disable-setuid-sandbox'
-    ]
+    ],
+    ignoreHTTPSErrors: true
   })
   const page = await browser.newPage()
 
@@ -171,7 +172,7 @@ async function scrapeSteam(games) {
     i++
   }).catch(err => console.log(err))
 
-  for (let i = 0; i < gamesArr.length; i++) {
+  for (let i = 0; i < 5; i++) {
     cluster.queue({url: gamesArr[i]['url'], index: i})
   }
   await cluster.idle()
