@@ -1,9 +1,12 @@
-require('dotenv').config()
-const puppeteer = require('puppeteer-extra')
-const { Cluster } = require('puppeteer-cluster');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+import dotenv from 'dotenv'
+import puppeteer from 'puppeteer-extra'
+import { Cluster } from 'puppeteer-cluster'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+
+dotenv.config()
+
 puppeteer.use(StealthPlugin());
-const fs = require('fs');
+// const fs = require('fs');
 
 // Today's date
 let todaySplitted = (new Date).toString().split(' ')
@@ -181,7 +184,7 @@ async function scrapeSteam(games) {
   return gamesArr
 }
 
-module.exports.run = async () => {
+const gameScraper = async () => {
   console.time('time')
   const OPgames = await getGames(OVERWHELMINGLY_POSITIVE_URL, 'Overwhelmingly Positive')
   const VPgames = await getGames(VERY_POSITIVE_URL, 'Very Positive')
@@ -200,3 +203,5 @@ module.exports.run = async () => {
   console.timeEnd('time')
   return filteredGames
 }
+
+export default gameScraper
