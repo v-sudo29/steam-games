@@ -3,6 +3,8 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import fetchGamesAndWishlistJob from './scheduler.js'
+import Game from './models/Game.js'
+import Wishlist from './models/Wishlist.js'
 
 dotenv.config()
 
