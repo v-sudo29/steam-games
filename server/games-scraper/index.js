@@ -184,7 +184,7 @@ module.exports.run = async () => {
   const games = [...OPgames, ...VPgames, ...Pgames, ...MPgames]
 
   const steamGames = await scrapeSteam(games)
-  const filteredGames = steamGames.filter(game => Object.keys(game).length === 12)
+  const filteredGames = await steamGames.filter(game => Object.keys(game).length === 12)
 
   // fs.writeFile(`${DATE}-games.json`, JSON.stringify(steamGames), (err) => {
   //   if (err) throw err
