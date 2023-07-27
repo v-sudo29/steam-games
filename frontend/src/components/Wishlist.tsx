@@ -13,7 +13,6 @@ function Wishlist({ gamesData }: { gamesData: GameObject[] | null }) {
   useEffect(() => {
     if (wishlistResponse) {
       setWishlist(wishlistResponse)
-      console.log(wishlistResponse)
     }
   }, [wishlistResponse])
 

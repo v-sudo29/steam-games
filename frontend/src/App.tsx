@@ -17,7 +17,7 @@ function App() {
   const [expanded, setExpanded] = useState<boolean>(false)
   const currentResults = useRef<GameObject[] | null>(null)
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
-    = useFetch('https://steam-games-server.onrender.com/')
+    = useFetch('https://steam-games-server.onrender.com/', 'games')
 
   // useEffect: Set gamesData from fetch response
   useEffect(() => {
