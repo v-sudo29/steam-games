@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '*/3 * * * *'
+const scheduleExpression = '* * * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
@@ -55,7 +55,7 @@ const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
-  await updateGames()
+  // await updateGames()
   await mongoose.connection.close()
   console.log('Job finished')
 })

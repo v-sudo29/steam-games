@@ -3,7 +3,6 @@ require('dotenv').config()
 const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
-// const fs = require('fs');
 
 // Get today's date
 let todaySplitted = (new Date).toString().split(' ')
@@ -71,11 +70,6 @@ module.exports = async () => {
     })
     return gamesArr
   })
-
-  // fs.writeFile(`${DATE}-steam-wishlist.json`, JSON.stringify(discountedGames), (err) => {
-  //   if (err) throw err
-  //   console.log('Successfully saved JSON file!')
-  // })
 
   await browser.close()
   return discountedGames
