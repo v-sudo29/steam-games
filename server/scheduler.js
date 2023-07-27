@@ -7,12 +7,11 @@ const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
 const mongoose = require('mongoose')
 
-
 // DATABASE
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '* 10,18 * * *'
+const scheduleExpression = '*/15 * * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()

@@ -212,5 +212,4 @@ module.exports = async () => {
 
   const steamGames = await scrapeSteam(filtered)
   return steamGames
-  // return steamGames
 }
