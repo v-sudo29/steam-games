@@ -4,12 +4,6 @@ const puppeteer = require('puppeteer-extra')
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin());
 
-// Get today's date
-let todaySplitted = (new Date).toString().split(' ')
-const month = todaySplitted[1]
-const day = todaySplitted[2]
-
-const DATE = `${month}-${day}`
 const wishlist_url = process.env.WISHLIST_URL;
 const wishlistSelector = 'div.discount_pct';
 

@@ -9,15 +9,15 @@ const WORKERS_COUNT = 2
 const searchResultSelector = 'div.leftcol.large'
 
 const TWO_D_URL = process.env.TWO_D_URL
-const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL
-const COLONY_SIM_URL = process.env.COLONY_SIM_URL
-const CUTE_URL = process.env.CUTE_URL
-const INDIE_URL = process.env.INDIE_URL
-const FARMING_SIM_URL = process.env.FARMING_SIM_URL
-const FARMING_URL = process.env.FARMING_URL
-const LIFE_SIM_URL = process.env.LIFE_SIM_URL
-const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL
-const PLATFORMER_URL = process.env.PLATFORMER_URL
+// const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL
+// const COLONY_SIM_URL = process.env.COLONY_SIM_URL
+// const CUTE_URL = process.env.CUTE_URL
+// const INDIE_URL = process.env.INDIE_URL
+// const FARMING_SIM_URL = process.env.FARMING_SIM_URL
+// const FARMING_URL = process.env.FARMING_URL
+// const LIFE_SIM_URL = process.env.LIFE_SIM_URL
+// const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL
+// const PLATFORMER_URL = process.env.PLATFORMER_URL
 
 
 function delay(time) {
@@ -183,27 +183,27 @@ async function scrapeSteam(games) {
 module.exports = async () => {
   
   const twoDimGames = await getGames(TWO_D_URL, '2D')
-  const baseGames = await getGames(BASE_BUILDING_URL, 'Base Building')
-  const colonyGames = await getGames(COLONY_SIM_URL, 'Colony Sim')
-  const cuteGames = await getGames(CUTE_URL, 'Cute')
-  const indieGames = await getGames(INDIE_URL, 'Indie')
-  const farmingSimGames = await getGames(FARMING_SIM_URL, 'Farming Sim')
-  const farmingGames = await getGames(FARMING_URL, 'Farming')
-  const lifeSimGames = await getGames(LIFE_SIM_URL, 'Life Sim')
-  const pixelGames = await getGames(PIXEL_GRAPHICS_URL, 'Pixel Graphics')
-  const platformerGames = await getGames(PLATFORMER_URL, 'Platformer')
+  // const baseGames = await getGames(BASE_BUILDING_URL, 'Base Building')
+  // const colonyGames = await getGames(COLONY_SIM_URL, 'Colony Sim')
+  // const cuteGames = await getGames(CUTE_URL, 'Cute')
+  // const indieGames = await getGames(INDIE_URL, 'Indie')
+  // const farmingSimGames = await getGames(FARMING_SIM_URL, 'Farming Sim')
+  // const farmingGames = await getGames(FARMING_URL, 'Farming')
+  // const lifeSimGames = await getGames(LIFE_SIM_URL, 'Life Sim')
+  // const pixelGames = await getGames(PIXEL_GRAPHICS_URL, 'Pixel Graphics')
+  // const platformerGames = await getGames(PLATFORMER_URL, 'Platformer')
 
   const games = [
     ...twoDimGames,
-    ...baseGames,
-    ...colonyGames,
-    ...cuteGames,
-    ...indieGames,
-    ...farmingSimGames,
-    ...farmingGames,
-    ...lifeSimGames,
-    ...pixelGames,
-    ...platformerGames
+    // ...baseGames,
+    // ...colonyGames,
+    // ...cuteGames,
+    // ...indieGames,
+    // ...farmingSimGames,
+    // ...farmingGames,
+    // ...lifeSimGames,
+    // ...pixelGames,
+    // ...platformerGames
   ]
 
   // Filter duplicates
