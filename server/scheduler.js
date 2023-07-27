@@ -27,7 +27,7 @@ async function updateWishlists() {
   await mongoose.connection.db.createCollection('wishlists')
   
   // // Insert data into new wishlists collection
-  await Wishlist.insertMany(...wishlistData)
+  await Wishlist.insertMany(wishlistData)
     .then(() => console.log('Saved data into collection!'))
     .catch(error => console.log(error))  
 }
