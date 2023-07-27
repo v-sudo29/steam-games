@@ -205,12 +205,13 @@ module.exports = async () => {
     // ...pixelGames,
     // ...platformerGames
   ]
-
+  console.log(games)
+  return games
   // Filter duplicates
-  const names = games.map(({ name }) => name)
-  const filtered = games.filter(({ name }, index) => !names.includes(name, index + 1))
+  // const names = games.map(({ name }) => name)
+  // const filtered = games.filter(({ name }, index) => !names.includes(name, index + 1))
 
-  const steamGames = await scrapeSteam(filtered)
+  // const steamGames = await scrapeSteam(filtered)
 
-  return steamGames
+  // return steamGames
 }

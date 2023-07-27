@@ -16,7 +16,7 @@ function delay(time) {
 let gamesArr = []
 module.exports = async () => {
   const browser = await puppeteer.launch({ 
-    headless: true,
+    headless: 'new',
     'args' : [
       '--no-sandbox',
       '--disable-setuid-sandbox'
