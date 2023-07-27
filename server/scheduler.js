@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '*/3 * * * *'
+const scheduleExpression = '*/15 * * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
