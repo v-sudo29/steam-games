@@ -1,23 +1,24 @@
 require('dotenv').config()
-
 const puppeteer = require('puppeteer-extra')
-const { Cluster } = require('puppeteer-cluster')
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+const { Cluster } = require('puppeteer-cluster');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
-// const fs = require('fs');
 
-// Today's date
-let todaySplitted = (new Date).toString().split(' ')
-const month = todaySplitted[1]
-const day = todaySplitted[2]
-
-const DATE = `${month}-${day}`
 const WORKERS_COUNT = 2
-const OVERWHELMINGLY_POSITIVE_URL = process.env.OVERWHELMINGLY_POSITIVE_URL
-const VERY_POSITIVE_URL = process.env.VERY_POSITIVE_URL
-const POSITIVE_URL = process.env.POSITIVE_URL
-const MOSTLY_POSITIVE_URL = process.env.MOSTLY_POSITIVE_URL
-const searchResultSelector = 'div.hoverable-box';
+
+const searchResultSelector = 'div.leftcol.large'
+
+const TWO_D_URL = process.env.TWO_D_URL
+const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL
+const COLONY_SIM_URL = process.env.COLONY_SIM_URL
+const CUTE_URL = process.env.CUTE_URL
+const INDIE_URL = process.env.INDIE_URL
+const FARMING_SIM_URL = process.env.FARMING_SIM_URL
+const FARMING_URL = process.env.FARMING_URL
+const LIFE_SIM_URL = process.env.LIFE_SIM_URL
+const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL
+const PLATFORMER_URL = process.env.PLATFORMER_URL
+
 
 function delay(time) {
   return new Promise(function(resolve) { 
@@ -25,100 +26,95 @@ function delay(time) {
   });
 }
 
-async function getGames(url, reviewsType) {
-  const browser = await puppeteer.launch({ 
-    headless: true, 
-    'args' : [
-    '--no-sandbox',
-    '--disable-setuid-sandbox'
-    ],
-    ignoreHTTPSErrors: true,
-  })
-
+async function getGames(url, gameType) {
+  console.log(`Scraping ${gameType} games!`)
+  const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
-  await page.setDefaultNavigationTimeout(0)
 
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 0 })
+  await page.goto(url, { waitUntil: 'load' })
   if (!await page.$(searchResultSelector)) {
     await browser.close()
     console.log('\nselector does not exist\n')
     return []
   }
 
-  // Grab total pages number
-  const totalPages = await page.evaluate(() => {
-    const totalEntries = parseInt(document.querySelector('span.after-page-size-label') === null ? 
-      1 : document.querySelector('span.after-page-size-label').innerText.split(' ')[1])
-    const entriesPerPage = parseInt(document.querySelector('div.d-flex.flex-wrap.navigation-line-left span.value') === null ? 
-      1 : document.querySelector('div.d-flex.flex-wrap.navigation-line-left span.value').innerText)
-    const totalPages = (totalEntries === 0 && entriesPerPage === 0) ? 0 : Math.ceil(totalEntries/entriesPerPage)
-
-    return totalPages
+  // Get total results
+  const resultsNum = await page.evaluate(() => {
+    const totalResults = document.querySelector('div.search_results_count') === null 
+      ? document.querySelector('#search_results_filtered_warning_persistent').querySelector('div').innerText  
+      : document.querySelector('div.search_results_count').innerText 
+    
+    const totalNumber = parseInt(totalResults.split(' ')[0])
+    return totalNumber
   })
 
-  const gamesArr = []
-  let i = 1
+  // Get total scrolls
+  let totalScrolls = Math.ceil(resultsNum / 14)
 
-  // Get OVERWHELMINGLY POSITIVE games info 
-  while (i <= totalPages) {
-
-    // Grab info on page
-    const grabInfo = await page.evaluate((reviewsType) => {
-      const infoArr = []
-      const gameTags = document
-        .querySelector('div.d-flex.flex-wrap.relative.list-items.shadow-box-small-lighter')
-        .querySelectorAll('div.hoverable-box')
-  
-      gameTags.forEach(async (game) => {
-        const gameName = game.querySelector('button.game-options-trigger-btn').getAttribute('data-game-title')
-        const redirectLink = 'https://gg.deals' + game.querySelector('a.shop-link').getAttribute('href')
-        const discount = game.querySelector('span.discount.label').innerText
-        const currentPrice = game.querySelector('span.price-inner.game-price-new').innerText
-        const originalPrice = game.querySelector('span.price-label.price-old').innerText
-        const historicalLow = game.querySelector('span.historical.label') === null ? false : true
-
-        const obj = {
-          name: gameName,
-          url: redirectLink,
-          discount: discount,
-          currentPrice: currentPrice,
-          originalPrice: originalPrice,
-          reviewsType: reviewsType,
-          historicalLow: historicalLow,
-        }
-        infoArr.push(obj)
-      })
-      return infoArr
-    }, reviewsType)
-
-    // Push games info into gamesArr
-    gamesArr.push(...grabInfo)
-
-    // Go to next page or break from loop if no pages
-    if (totalPages === 1) break
-    i++
-    await page.goto(url + `&page=${i}`)
+  // Scroll to bottom
+  for (let i = 0; i < totalScrolls; i++) {
+    if (i === 0) await delay(800)
+    await page.evaluate(() => window.scrollBy(0, 800))
+    await delay(700)
   }
 
+  const gamesArr = []
+  let i = 0
+
+  // Grab info on page
+  const grabInfo = await page.evaluate(() => {
+    const infoArr = []
+    const gameTags = document
+      .querySelector('#search_resultsRows')
+      .querySelectorAll('a.search_result_row.ds_collapse_flag.app_impression_tracked')
+    
+
+    gameTags.forEach(async (game) => {
+      const gameName = game.querySelector('span.title').innerText
+      const redirectLink = game.getAttribute('href')
+      const discount = game.querySelector('div.discount_pct').innerText
+      const currentPrice = game.querySelector('div.discount_final_price').innerText
+      const originalPrice = game.querySelector('div.discount_original_price').innerText
+      const reviewsType = game.querySelector('span.search_review_summary.positive') ? 
+        game.querySelector('span.search_review_summary.positive').getAttribute('data-tooltip-html') 
+        : null
+      const rating = reviewsType.split('<br>')[1].split(' ')[0]
+
+      const obj = {
+        name: gameName,
+        url: redirectLink,
+        discount: discount,
+        currentPrice: currentPrice,
+        originalPrice: originalPrice,
+        reviewsType: reviewsType.split('<br>')[0],
+        rating: rating
+      }
+      infoArr.push(obj)
+    })
+    return infoArr
+  })
+
+  // Push games info into gamesArr
+  gamesArr.push(...grabInfo)
   await browser.close()
   return gamesArr
 }
 
 async function scrapeSteam(games) {
+  console.log('Starting steam games scraping!')
   const cluster = await Cluster.launch({
     concurrency: Cluster.CONCURRENCY_PAGE,
     maxConcurrency: WORKERS_COUNT,
     puppeteerOptions: {
-      headless: true,
+      headless: 'new',
     }
   })
   const gamesArr = games
-  const testArr = []
 
   await cluster.task(async ({ page, data: {url, index} }) => {
 
     // Go to detail page
-    await page.goto(`${url}`,{ waitUntil: 'load', timeout: 0 })
+    await page.goto(`${url}`,{ waitUntil: 'load' })
     const birthdaySelectorIsTrue = await page.evaluate(() => document.querySelector('.agegate_birthday_selector') ? true : false)
     const ageGateIsTrue = await page.evaluate(() => document.querySelector('#view_product_page_btn') ? true : false)
     const errorBoxExists = await page.evaluate(() => document.querySelector('#error_box') ? true : false)
@@ -128,6 +124,7 @@ async function scrapeSteam(games) {
       console.log('Error box exists')
       return
     }
+
     else if (birthdaySelectorIsTrue && ageGateIsTrue) {
       await page.select('#ageYear', '1995')
       await page.click('#view_product_page_btn')
@@ -140,13 +137,6 @@ async function scrapeSteam(games) {
 
     // Scrape original img url
     const imgUrl = await page.evaluate(() => document.querySelector('img.game_header_image_full').src)
-
-    // Scrape end date
-    const saleEnds = await page.evaluate(() => document.querySelector('p.game_purchase_discount_countdown').innerText
-      .split('Offer ends ')[1])
-
-    // Scrape rating
-    const rating = await page.evaluate(() => document.querySelector('div.summary_section span.game_review_summary').getAttribute('data-tooltip-html').split(' ')[0])
 
     // Scrape genres
     await page.click('div.app_tag.add_button')
@@ -161,8 +151,15 @@ async function scrapeSteam(games) {
       return genresArr
     })
     
-    // Scrape steam store game page url
+    // Game page url
     const storeUrl = await page.evaluate(() => document.querySelector('meta[property="og:url"]').getAttribute('content'))
+
+    // Scrape end date
+    const saleEnds = await page.evaluate(() => document.querySelector('p.game_purchase_discount_countdown').innerText
+    .split('Offer ends ')[1])
+
+    // Description
+    const description = await page.evaluate(() => document.querySelector('meta[property="og:description"]').getAttribute('content'))
 
     // Append info
     gamesArr[index]['appId'] = storeUrl.split('/')[4]
@@ -170,8 +167,7 @@ async function scrapeSteam(games) {
     gamesArr[index]['genres'] = genres
     gamesArr[index]['url'] = storeUrl
     gamesArr[index]['saleEnds'] = saleEnds
-    gamesArr[index]['rating'] = rating
-    
+    gamesArr[index]['description'] = description
     i++
   }).catch(err => console.log(err))
 
@@ -185,21 +181,36 @@ async function scrapeSteam(games) {
 }
 
 module.exports = async () => {
-  console.time('time')
-  const OPgames = await getGames(OVERWHELMINGLY_POSITIVE_URL, 'Overwhelmingly Positive')
-  const VPgames = await getGames(VERY_POSITIVE_URL, 'Very Positive')
-  const Pgames = await getGames(POSITIVE_URL, 'Positive')
-  const MPgames = await getGames(MOSTLY_POSITIVE_URL, 'Mostly Positive')
+  
+  const twoDimGames = await getGames(TWO_D_URL, '2D')
+  const baseGames = await getGames(BASE_BUILDING_URL, 'Base Building')
+  const colonyGames = await getGames(COLONY_SIM_URL, 'Colony Sim')
+  const cuteGames = await getGames(CUTE_URL, 'Cute')
+  const indieGames = await getGames(INDIE_URL, 'Indie')
+  const farmingSimGames = await getGames(FARMING_SIM_URL, 'Farming Sim')
+  const farmingGames = await getGames(FARMING_URL, 'Farming')
+  const lifeSimGames = await getGames(LIFE_SIM_URL, 'Life Sim')
+  const pixelGames = await getGames(PIXEL_GRAPHICS_URL, 'Pixel Graphics')
+  const platformerGames = await getGames(PLATFORMER_URL, 'Platformer')
 
-  const games = [...OPgames, ...VPgames, ...Pgames, ...MPgames]
+  const games = [
+    ...twoDimGames,
+    ...baseGames,
+    ...colonyGames,
+    ...cuteGames,
+    ...indieGames,
+    ...farmingSimGames,
+    ...farmingGames,
+    ...lifeSimGames,
+    ...pixelGames,
+    ...platformerGames
+  ]
 
-  const steamGames = await scrapeSteam(games)
-  const filteredGames = await steamGames.filter(game => Object.keys(game).length === 12)
+  // Filter duplicates
+  const names = games.map(({ name }) => name)
+  const filtered = games.filter(({ name }, index) => !names.includes(name, index + 1))
 
-  // fs.writeFile(`${DATE}-games.json`, JSON.stringify(steamGames), (err) => {
-  //   if (err) throw err
-  //   console.log('Successfully saved JSON file!')
-  // })
-  console.timeEnd('time')
-  return filteredGames
+  const steamGames = await scrapeSteam(filtered)
+
+  return steamGames
 }
