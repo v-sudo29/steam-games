@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { CronJob } = require('cron')
-// const gameScraper = require('./games-scraper/index.js')
+const gameScraper = require('./games-scraper/index.js')
 const getWishlist = require('./games-scraper/wishlist.js')
 const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
@@ -55,7 +55,7 @@ const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
-  // await updateGames()
+  await updateGames()
   await mongoose.connection.close()
   console.log('Job finished')
 })
