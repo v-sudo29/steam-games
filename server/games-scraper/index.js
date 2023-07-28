@@ -227,7 +227,7 @@ module.exports = async () => {
   const filtered = games.filter(({ name }, index) => !names.includes(name, index + 1))
 
   const steamGames = await scrapeSteam(filtered)
-  const filteredGames = steamGames.filter(game => Object.keys(game).length === 11)
+  const filteredGames = steamGames.filter(game => Object.keys(game).length === 12)
 
   return filteredGames
 }
