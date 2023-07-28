@@ -9,7 +9,6 @@ const gameSchema = new mongoose.Schema({
   originalPrice: String,
   rating: String,
   reviewsType: String,
-  historicalLow: Boolean,
   imgUrl: String,
   genres: Array,
   saleEnds: String,

@@ -225,7 +225,8 @@ module.exports = async () => {
   // Filter duplicates
   const names = games.map(({ name }) => name)
   const filtered = games.filter(({ name }, index) => !names.includes(name, index + 1))
+  const filteredAgain = filtered.filter(game => Object.keys(game).length === 11)
 
-  const steamGames = await scrapeSteam(filtered)
+  const steamGames = await scrapeSteam(filteredAgain)
   return steamGames
 }
