@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 const url = process.env.MONGODB_URI
 mongoose.set('strictQuery', false)
 
-const scheduleExpression = '*/30 * * * *'
+const scheduleExpression = '* 10,18 * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
@@ -60,7 +60,7 @@ console.log('Scheduler started');
 // })
 
 // fetchGamesAndWishlistJob.start()
-(async () => {
+(async () => {g
   console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
