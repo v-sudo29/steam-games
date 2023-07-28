@@ -7,7 +7,7 @@ const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
 const mongoose = require('mongoose')
 
-const scheduleExpression = '30 10 * * *'
+const scheduleExpression = '35 5 * * *'
 
 // DATABASE
 const url = process.env.MONGODB_URI
