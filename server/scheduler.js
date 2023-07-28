@@ -7,7 +7,7 @@ const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
 const mongoose = require('mongoose')
 
-const scheduleExpression = '18 10 * * *'
+const scheduleExpression = '30 10 * * *'
 
 // DATABASE
 const url = process.env.MONGODB_URI
@@ -49,8 +49,6 @@ async function updateGames() {
     .catch(error => console.log(error))  
 }
 
-console.log('Scheduler started');
-
 const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   console.log('Job started')
   await updateWishlists()
@@ -59,4 +57,4 @@ const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   console.log('Job finished')
 })
 
-fetchGamesAndWishlistJob.start()
+fetchGamesAndWishlistJob.start();
