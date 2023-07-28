@@ -55,5 +55,5 @@ const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   await updateGames()
   console.log('Job finished')
 })
-g
+
 fetchGamesAndWishlistJob.start();
