@@ -60,7 +60,7 @@ console.log('Scheduler started');
 // })
 
 // fetchGamesAndWishlistJob.start()
-(async () => {g
+(async () => {
   console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
