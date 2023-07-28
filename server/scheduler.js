@@ -7,7 +7,12 @@ const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
 const mongoose = require('mongoose')
 
-const scheduleExpression = '10 10 * * *'
+const scheduleExpression = '18 10 * * *'
+
+// DATABASE
+const url = process.env.MONGODB_URI
+mongoose.set('strictQuery', false)
+mongoose.connect(url)
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
@@ -47,12 +52,7 @@ async function updateGames() {
 console.log('Scheduler started');
 
 const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
-  // DATABASE
-  const url = process.env.MONGODB_URI
-  mongoose.set('strictQuery', false)
-
   console.log('Job started')
-  await mongoose.connect(url)
   await updateWishlists()
   await updateGames()
   await mongoose.connection.close()
