@@ -65,8 +65,7 @@ async function getGames(url, gameType) {
   const grabInfo = await page.evaluate(() => {
     const infoArr = []
     let gameTags = null
-    if (document.querySelector('#search_resultsRows').querySelectorAll('a.search_result_row.ds_collapse_flag.app_impression_tracked') 
-      === null) {
+    if (!document.querySelector('a.search_result_row.ds_collapse_flag.app_impression_tracked')) {
         return []
     }
     gameTags = document
