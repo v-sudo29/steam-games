@@ -50,13 +50,21 @@ async function updateGames() {
 
 console.log('Scheduler started')
 
-const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
-  console.log('Job started')
+// const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
+//   console.log('Job started')
+//   await mongoose.connect(url)
+//   await updateWishlists()
+//   await updateGames()
+//   await mongoose.connection.close()
+//   console.log('Job finished')
+// })
+
+// fetchGamesAndWishlistJob.start()
+(async () => {
+    console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
   await updateGames()
   await mongoose.connection.close()
   console.log('Job finished')
-})
-
-fetchGamesAndWishlistJob.start()
+})();
