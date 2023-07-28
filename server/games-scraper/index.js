@@ -19,7 +19,6 @@ const LIFE_SIM_URL = process.env.LIFE_SIM_URL
 const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL
 const PLATFORMER_URL = process.env.PLATFORMER_URL
 
-
 function delay(time) {
   return new Promise(function(resolve) { 
       setTimeout(resolve, time)
@@ -115,6 +114,20 @@ async function scrapeSteam(games) {
   const gamesArr = games
 
   await cluster.task(async ({ page, data: {url, index} }) => {
+    if (index === 51) console.log('Scraped 50 games')
+    if (index === 101) console.log('Scraped 100 games')
+    if (index === 151) console.log('Scraped 150 games')
+    if (index === 201) console.log('Scraped 200 games')
+    if (index === 251) console.log('Scraped 250 games')
+    if (index === 301) console.log('Scraped 300 games')
+    if (index === 351) console.log('Scraped 350 games')
+    if (index === 401) console.log('Scraped 400 games')
+    if (index === 451) console.log('Scraped 450 games')
+    if (index === 501) console.log('Scraped 500 games')
+    if (index === 551) console.log('Scraped 550 games')
+    if (index === 601) console.log('Scraped 600 games')
+    if (index === 651) console.log('Scraped 650 games')
+    
 
     // Go to detail page
     await page.goto(`${url}`,{ waitUntil: 'load' })
