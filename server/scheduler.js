@@ -48,7 +48,7 @@ async function updateGames() {
     .catch(error => console.log(error))  
 }
 
-console.log('Scheduler started')
+console.log('Scheduler started');
 
 // const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
 //   console.log('Job started')
@@ -61,7 +61,7 @@ console.log('Scheduler started')
 
 // fetchGamesAndWishlistJob.start()
 (async () => {
-    console.log('Job started')
+  console.log('Job started')
   await mongoose.connect(url)
   await updateWishlists()
   await updateGames()
