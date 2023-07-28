@@ -126,7 +126,7 @@ export default function Results({
   if (pageNumber !== 1 && currentResults.current) {
     gameCards = currentResults.current.map((game, index) => {
       if (index > ((25 * pageNumber) - 25) && index < (25 * pageNumber)) {
-        return <ResultsCard key={game.appId} game={game}/>
+        return <ResultsCard key={`${game.appId}-results`} game={game}/>
       } return null
     })
   }

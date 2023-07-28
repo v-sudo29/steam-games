@@ -64,10 +64,14 @@ async function getGames(url, gameType) {
   // Grab info on page
   const grabInfo = await page.evaluate(() => {
     const infoArr = []
-    const gameTags = document
+    let gameTags = null
+    if (document.querySelector('#search_resultsRows').querySelectorAll('a.search_result_row.ds_collapse_flag.app_impression_tracked') 
+      === null) {
+        return []
+    }
+    gameTags = document
       .querySelector('#search_resultsRows')
       .querySelectorAll('a.search_result_row.ds_collapse_flag.app_impression_tracked')
-    
 
     gameTags.forEach(async (game) => {
       const gameName = game.querySelector('span.title').innerText
