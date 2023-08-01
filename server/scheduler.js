@@ -9,11 +9,6 @@ const mongoose = require('mongoose')
 
 const scheduleExpression = '0 1,13 * * *'
 
-// DATABASE
-const url = process.env.MONGODB_URI
-mongoose.set('strictQuery', false)
-mongoose.connect(url)
-
 async function updateWishlists() {
   const wishlistData = await getWishlist()
   console.log(wishlistData)

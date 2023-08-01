@@ -1,8 +1,5 @@
 require('dotenv').config()
 
-// START SCHEDULER
-require('./scheduler.js')
-
 // IMPORTS
 const express = require('express')
 const cors = require('cors')
@@ -20,6 +17,9 @@ const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
+
+// START SCHEDULER
+require('./scheduler.js')
 
 // GET REQUESTS
 app.get('/', (request, response) => {
