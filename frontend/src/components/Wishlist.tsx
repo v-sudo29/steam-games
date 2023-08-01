@@ -6,7 +6,8 @@ import { Heading } from '@chakra-ui/react'
 
 function Wishlist({ gamesData }: { gamesData: GameObject[] | null }) {
   const [wishlist, setWishlist] = useState<GameObject[] | null>(null)
-  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
+  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = 
+    useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
   let wishlistCards: JSX.Element[] | null = null
 
   // useEffect: Set wishlist from fetch response
@@ -17,11 +18,11 @@ function Wishlist({ gamesData }: { gamesData: GameObject[] | null }) {
   }, [wishlistResponse])
 
   // Show wishlist games that are in gamesData
-  if (wishlist && gamesData) {
+  if (wishlist && gamesData && wishlistResponse) {
     const foundGames: GameObject[] = []
 
-    wishlist.forEach(game => gamesData.filter(currentGame => currentGame.name === game.name && foundGames.push(currentGame)))
-    wishlistCards = foundGames.map(game => <ResultsCard key={game.name} game={game}/>)
+    // wishlist.forEach(game => gamesData.filter(currentGame => currentGame.name === game.name && foundGames.push(currentGame)))
+    wishlistCards = wishlistResponse.map(game => <ResultsCard key={game.name} game={game}/>)
   }
 
   if (wishlistLoading || !wishlistCards) return <h1>...Loading wishlist</h1>
