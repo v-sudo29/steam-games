@@ -10,6 +10,7 @@ const searchResultSelector = 'div.leftcol.large'
 
 const TWO_D_URL = process.env.TWO_D_URL
 const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL
+const CARD_GAME_URL = process.env.CARD_GAME_URL
 const COLONY_SIM_URL = process.env.COLONY_SIM_URL
 const CUTE_URL = process.env.CUTE_URL
 const INDIE_URL = process.env.INDIE_URL
@@ -200,6 +201,7 @@ module.exports = async () => {
   
   const twoDimGames = await getGames(TWO_D_URL, '2D')
   const baseGames = await getGames(BASE_BUILDING_URL, 'Base Building')
+  const cardGames = await getGames(CARD_GAME_URL, 'Card Game')
   const colonyGames = await getGames(COLONY_SIM_URL, 'Colony Sim')
   const cuteGames = await getGames(CUTE_URL, 'Cute')
   const indieGames = await getGames(INDIE_URL, 'Indie')
@@ -212,6 +214,7 @@ module.exports = async () => {
   const games = [
     ...twoDimGames,
     ...baseGames,
+    ...cardGames,
     ...colonyGames,
     ...cuteGames,
     ...indieGames,

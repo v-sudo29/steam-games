@@ -7,7 +7,7 @@ const Wishlist = require('./models/Wishlist.js')
 const Game = require('./models/Game.js')
 const mongoose = require('mongoose')
 
-const scheduleExpression = '0 1,13 * * *'
+const scheduleExpression = '0 10,18 * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
@@ -49,6 +49,6 @@ const fetchGamesAndWishlistJob = new CronJob(scheduleExpression, async () => {
   await updateWishlists()
   await updateGames()
   console.log('Job finished')
-})
+}, null, false, 'America/Los_Angeles')
 
 fetchGamesAndWishlistJob.start();
