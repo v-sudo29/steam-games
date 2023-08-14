@@ -6,9 +6,11 @@ import {
   TabList
 } from "@chakra-ui/react"
 import FilterIcon from "../assets/FilterIcon"
+import ExitIcon from "../assets/ExitIcon"
 import { useState } from "react"
 
 export default function FilterTabs() {
+  const [filterActive, setFilterActive] = useState<boolean>(false)
   const [tabOneActive, setTabOneActive] = useState<boolean>(false)
   const [tabTwoActive, setTabTwoActive] = useState<boolean>(true)
   
@@ -26,13 +28,19 @@ export default function FilterTabs() {
     }
   }
 
+  const handleFilterBtnClick = () => {
+    setFilterActive(prev => !prev)
+  }
+
   return (
     <HStack gap='2rem'>
       <Button 
+        onClick={handleFilterBtnClick}
         bg='#2F3740' 
-        leftIcon={<FilterIcon/>}
+        leftIcon={filterActive ? <FilterIcon/> : <ExitIcon/>}
         color='#F5F5F5'
         p='0rem 2rem'
+        _hover={{ backgroundColor: '#3b454f' }}
       >
         Filter
       </Button>
