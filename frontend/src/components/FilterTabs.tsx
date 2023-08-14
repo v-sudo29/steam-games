@@ -7,23 +7,37 @@ import {
 } from "@chakra-ui/react"
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
-import { useState } from "react"
 
-export default function FilterTabs({ expanded, setExpanded } : { expanded: boolean, setExpanded: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [tabOneActive, setTabOneActive] = useState<boolean>(false)
-  const [tabTwoActive, setTabTwoActive] = useState<boolean>(true)
+interface FilterTabsInterface {
+  expanded: boolean,
+  setExpanded: React.Dispatch<React.SetStateAction<boolean>>,
+  gamesTabActive: boolean,
+  setGamesTabActive: React.Dispatch<React.SetStateAction<boolean>>,
+  wishlistTabActive: boolean,
+  setWishlistTabActive: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function FilterTabs({
+  expanded, 
+  setExpanded,
+  gamesTabActive,
+  setGamesTabActive,
+  wishlistTabActive,
+  setWishlistTabActive
+} : FilterTabsInterface) {
+
   
   const handleTabsChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const buttonElement = e.target as HTMLButtonElement
     const tabName = buttonElement.innerText
 
     if (tabName === 'All Games') {
-      setTabOneActive(true)
-      setTabTwoActive(false)
+      setGamesTabActive(true)
+      setWishlistTabActive(false)
     }
     else {
-      setTabTwoActive(true)
-      setTabOneActive(false)
+      setWishlistTabActive(true)
+      setGamesTabActive(false)
     }
   }
 
@@ -47,8 +61,8 @@ export default function FilterTabs({ expanded, setExpanded } : { expanded: boole
         <TabList>
           <Tab
             onClick={(e) => handleTabsChange(e)}
-            _selected={tabOneActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
-            _hover={!tabOneActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
+            _selected={gamesTabActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
+            _hover={!gamesTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'
             fontWeight='700'
             fontSize='1.3rem'
@@ -57,8 +71,8 @@ export default function FilterTabs({ expanded, setExpanded } : { expanded: boole
           </Tab>
           <Tab
             onClick={(e) => handleTabsChange(e)}
-            _selected={tabTwoActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
-            _hover={!tabTwoActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
+            _selected={wishlistTabActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
+            _hover={!wishlistTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'
             fontWeight='700'
             fontSize='1.3rem'

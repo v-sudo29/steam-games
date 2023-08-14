@@ -3,6 +3,22 @@ import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
 import { HStack } from '@chakra-ui/react'
+import useFetch from '../hooks/useFetch'
+
+interface ResultsInterface {
+  gamesAreLoading: boolean,
+  gamesError: string | null,
+  gamesData: GameObject[] | null,
+  genres: string[],
+  sortList: string[] ,
+  currentResults: { current: GameObject[] | null },
+  pageNumber: number,
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>,
+  gamesTabActive: boolean,
+  wishlistData: GameObject[] | null,
+  wishlistLoading: boolean,
+  wishlistError: string | null
+}
 
 export default function Results({ 
   gamesAreLoading, 
@@ -12,19 +28,14 @@ export default function Results({
   sortList, 
   currentResults,
   pageNumber,
-  setPageNumber
-}: {
-  gamesAreLoading: boolean,
-  gamesError: string | null,
-  gamesData: GameObject[] | null,
-  genres: string[],
-  sortList: string[] ,
-  currentResults: { current: GameObject[] | null },
-  pageNumber: number,
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>
-}) {
+  setPageNumber,
+  gamesTabActive,
+  wishlistData,
+  wishlistLoading,
+  wishlistError
+}: ResultsInterface ) {
   let gameCards: (JSX.Element | null)[] | null = null
-
+  let wishlistCards: (JSX.Element | null)[] | null = null
 
   function resetPageNumber(): void {
     setPageNumber(1)
@@ -132,11 +143,27 @@ export default function Results({
     })
   }
 
+  if (!gamesTabActive && wishlistData) {
+    wishlistCards = wishlistData.map(game => <ResultsCard key={game.name} game={game}/>)
+  }
+
+
   return (
-    <HStack align='space-between' flexWrap='wrap' className='game-results'>
-      {gamesAreLoading && <h1>...Loading</h1>}
-      {gamesError && <h1>{gamesError}</h1>}
-      {gameCards && <>{gameCards}</>}
-    </HStack>
+    <>
+      {gamesTabActive ? 
+        <HStack align='space-between' flexWrap='wrap' className='game-results'>
+          {gamesAreLoading && <h1>...Loading</h1>}
+          {gamesError && <h1>{gamesError}</h1>}
+          {gameCards && <>{gameCards}</>}
+        </HStack>
+      :
+        <HStack align='space-between' flexWrap='wrap'>
+          {wishlistLoading && <h1>...Loading</h1>}
+          {wishlistError && <h1>{wishlistError}</h1>}
+          {wishlistCards && <>{wishlistCards}</>}
+        </HStack>
+      }
+    </>
+    
   )
 }

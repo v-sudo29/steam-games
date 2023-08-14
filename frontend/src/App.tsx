@@ -1,12 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
-import Wishlist from './components/Wishlist';
-import SortTags from './components/SortTags';
-import GenreTags from './components/GenreTags';
-import Results from './components/Results';
-import PageNumbers from './components/PageNumbers';
 import useFetch from './hooks/useFetch';
 import { GameObject } from './interface/GameObject';
-import { Container, Stack } from '@chakra-ui/react'
+import { Container } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
 import FilterTabs from './components/FilterTabs';
@@ -14,18 +9,28 @@ import Content from './components/Content';
 
 function App() {
   const [gamesData, setGamesData] = useState<GameObject[] | null>(null)
+  const [wishlistData, setWishlistData] = useState<GameObject[] | null>(null)
   const [genres, setGenres] = useState<string[]>([])
   const [sortList, setSortList] = useState<string[]>([])
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [expanded, setExpanded] = useState<boolean>(false)
+  const [gamesTabActive, setGamesTabActive] = useState<boolean>(false)
+  const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(true)
+  
   const currentResults = useRef<GameObject[] | null>(null)
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
     = useFetch('https://steam-games-server.onrender.com/', 'games')
+  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = 
+  useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
 
   // useEffect: Set gamesData from fetch response
   useEffect(() => {
     if (gamesResponse) setGamesData(gamesResponse)
   }, [gamesResponse])
+
+  useEffect(() => {
+    if (wishlistResponse) setWishlistData(wishlistResponse)
+  }, [wishlistResponse])
 
   return (
     <Container
@@ -38,17 +43,18 @@ function App() {
       bg='#14191F'
       color='#F5F5F5'
     >
-      {/* <Wishlist gamesData={gamesData}/> */}
-      {/* <Divider/> */}
       <Header />
-      <FilterTabs 
+      <FilterTabs
         expanded={expanded}
         setExpanded={setExpanded}
+        gamesTabActive={gamesTabActive}
+        setGamesTabActive={setGamesTabActive}
+        wishlistTabActive={wishlistTabActive}
+        setWishlistTabActive={setWishlistTabActive}
       />
       <Content
         genres={genres}
         setGenres={setGenres}
-        expanded={expanded}
         gamesAreLoading={gamesAreLoading}
         gamesError={gamesError}
         gamesData={gamesData}
@@ -56,32 +62,13 @@ function App() {
         currentResults={currentResults}
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
+        expanded={expanded}
+        setExpanded={setExpanded}
+        gamesTabActive={gamesTabActive}
+        wishlistData={wishlistData}
+        wishlistLoading={wishlistLoading}
+        wishlistError={wishlistError}
       />
-      {/* <Stack justify='center' direction='row'> */}
-        {/* <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/> */}
-        {/* <Stack>
-          <SortTags setSortList={setSortList}/>
-          <Results 
-            gamesAreLoading={gamesAreLoading}
-            gamesError={gamesError}
-            gamesData={gamesData}
-            genres={genres}
-            sortList={sortList}
-            currentResults={currentResults}
-            pageNumber={pageNumber}
-            setPageNumber={setPageNumber}
-          />
-          <PageNumbers 
-            setPageNumber={setPageNumber}
-            pageNumber={pageNumber} 
-            currentResults={currentResults}
-            gamesData={gamesData}
-            genres={genres}
-            expanded={expanded}
-            setExpanded={setExpanded}
-          />
-        </Stack> */}
-      {/* </Stack> */}
     </Container>
   );
 }
