@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Checkbox, Stack } from '@chakra-ui/react'
+import { Checkbox, Stack, Text } from '@chakra-ui/react'
 
 export default function GenreTags(
   { genres, setGenres, setExpanded } : 
@@ -38,6 +38,7 @@ export default function GenreTags(
     }
   }
 
+  // TODO: make setExpanded functional
   useEffect(() => setExpanded(false), [genres])
 
   // SET GENRE FILTER TAGS
@@ -54,7 +55,8 @@ export default function GenreTags(
   })
 
   return (
-    <Stack mt='4.5grem' ml='-15rem' p='1rem 3rem'>
+    <Stack textAlign='left'>
+      <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
       {genreTags}
     </Stack>
   )
