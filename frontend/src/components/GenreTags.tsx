@@ -10,6 +10,7 @@ export default function GenreTags(
   const genreFilters = [
     '2D',
     'Base Building',
+    'Card Game',
     'Colony Sim',
     'Cute',
     'Farming',
@@ -27,9 +28,8 @@ export default function GenreTags(
 
     if (currentGenre.classList.contains('genre-active')) {
       currentGenre.classList.remove('genre-active')
-      if (genres.length === 1) {
-        setGenres([])
-      } else setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
+      if (genres.length === 1) setGenres([])
+      else setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
     } 
     else {
       currentGenre.classList.add('genre-active')
