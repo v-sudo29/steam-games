@@ -13,6 +13,7 @@ function App() {
   const [genres, setGenres] = useState<string[]>([])
   const [sortList, setSortList] = useState<string[]>([])
   const [pageNumber, setPageNumber] = useState<number>(1)
+  const [paginationExpanded, setPaginationExpanded] = useState<boolean>(false)
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gamesTabActive, setGamesTabActive] = useState<boolean>(false)
   const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(true)
@@ -64,7 +65,8 @@ function App() {
         pageNumber={pageNumber}
         setPageNumber={setPageNumber}
         expanded={expanded}
-        setExpanded={setExpanded}
+        paginationExpanded={paginationExpanded}
+        setPaginationExpanded={setPaginationExpanded}
         gamesTabActive={gamesTabActive}
         wishlistData={wishlistData}
         wishlistLoading={wishlistLoading}

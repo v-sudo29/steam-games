@@ -1,22 +1,24 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
 import { GameObject } from "../interface/GameObject"
 
-export default function PageNumbers({ 
-  pageNumber, 
-  setPageNumber, 
-  currentResults,
-  genres,
-  expanded,
-  setExpanded
-}: { 
+interface PageNumbersInterface {
   pageNumber: number, 
   setPageNumber:React.Dispatch<React.SetStateAction<number>>,
   currentResults: {current: any},
   gamesData: GameObject[] | null
   genres: string[],
-  expanded: boolean,
-  setExpanded: React.Dispatch<React.SetStateAction<boolean>>
-}) 
+  paginationExpanded: boolean,
+  setPaginationExpanded: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function PageNumbers({ 
+  pageNumber, 
+  setPageNumber, 
+  currentResults,
+  genres,
+  paginationExpanded,
+  setPaginationExpanded
+}: PageNumbersInterface ) 
 {
   const totalPages: number = currentResults.current && Math.ceil(currentResults.current.length / 25)
   let pagesJSX: JSX.Element[] = []
@@ -29,8 +31,8 @@ export default function PageNumbers({
 
     setPageNumber(number)
 
-    if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setExpanded(true)
-    if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setExpanded(false)
+    if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setPaginationExpanded(true)
+    if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setPaginationExpanded(false)
   }
 
   function incrementPageNumber(): void {
@@ -42,8 +44,8 @@ export default function PageNumbers({
 
     setPageNumber(prev => prev + 1)
 
-    if (totalPages > 10 && (number === pageFour || number === lastPageMinusFour)) setExpanded(true)
-    if (totalPages > 10 && (number >= lastPageMinusFour)) setExpanded(false)
+    if (totalPages > 10 && (number === pageFour || number === lastPageMinusFour)) setPaginationExpanded(true)
+    if (totalPages > 10 && (number >= lastPageMinusFour)) setPaginationExpanded(false)
   }
   
   function decrementPageNumber(): void {
@@ -56,12 +58,12 @@ export default function PageNumbers({
 
     setPageNumber(prev => prev - 1)
     
-    if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setExpanded(true)
-    if (totalPages > 10 && (number <= pageFive)) setExpanded(false)
+    if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setPaginationExpanded(true)
+    if (totalPages > 10 && (number <= pageFive)) setPaginationExpanded(false)
   }
 
   // Show FIRST 5 PAGES
-  if (!expanded && totalPages !== 0 && pageNumber <= 10) { 
+  if (!paginationExpanded && totalPages !== 0 && pageNumber <= 10) { 
     const pagesArr = []
 
     if (totalPages > 1 && totalPages <= 10) {
@@ -97,7 +99,7 @@ export default function PageNumbers({
   }
 
   // Show LAST 5 PAGES
-  if (!expanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
+  if (!paginationExpanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
     const pagesArr = []
 
     for (let i = 1; i <= totalPages; i++) {
@@ -116,7 +118,7 @@ export default function PageNumbers({
   }
 
   // Show EXPANDED PAGES
-  if (expanded) {
+  if (paginationExpanded) {
     const pagesArr = []
 
     for (let i = 1; i <=  totalPages; i++) {
@@ -139,7 +141,7 @@ export default function PageNumbers({
     <>
       {totalPages > 1 && 
         <Stack direction='row' gap='1rem' justify='end' align='center'>
-          {(!expanded && pageNumber === 1) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#60;</Box> :
+          {(!paginationExpanded && pageNumber === 1) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#60;</Box> :
             <Box 
               fontSize='1.4rem'
               cursor='pointer'
@@ -150,7 +152,7 @@ export default function PageNumbers({
 
           {pagesJSX.length > 0 && pagesJSX}
 
-          {(!expanded && pageNumber === totalPages) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#62;</Box> :
+          {(!paginationExpanded && pageNumber === totalPages) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#62;</Box> :
             <Box 
               fontSize='1.4rem' 
               cursor='pointer'

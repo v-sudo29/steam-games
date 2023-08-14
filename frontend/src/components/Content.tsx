@@ -19,11 +19,12 @@ interface ContentInterface {
   pageNumber: number,
   setPageNumber: React.Dispatch<React.SetStateAction<number>>,
   expanded: boolean,
-  setExpanded: React.Dispatch<React.SetStateAction<boolean>>,
   gamesTabActive: boolean,
   wishlistData: GameObject[] | null,
   wishlistError: string | null,
-  wishlistLoading: boolean
+  wishlistLoading: boolean,
+  paginationExpanded: boolean,
+  setPaginationExpanded: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function Content({
@@ -37,11 +38,12 @@ export default function Content({
   pageNumber,
   setPageNumber,
   expanded,
-  setExpanded,
   gamesTabActive,
   wishlistData,
   wishlistLoading,
-  wishlistError
+  wishlistError,
+  paginationExpanded,
+  setPaginationExpanded
 } : ContentInterface) {
 
   return (
@@ -74,8 +76,8 @@ export default function Content({
             currentResults={currentResults}
             gamesData={gamesData}
             genres={genres}
-            expanded={expanded}
-            setExpanded={setExpanded}
+            paginationExpanded={paginationExpanded}
+            setPaginationExpanded={setPaginationExpanded}
           />
         }
 
@@ -86,8 +88,8 @@ export default function Content({
             currentResults={currentResults}
             gamesData={gamesData}
             genres={genres}
-            expanded={expanded}
-            setExpanded={setExpanded}
+            paginationExpanded={paginationExpanded}
+            setPaginationExpanded={setPaginationExpanded}
           />
          }
       </VStack>
