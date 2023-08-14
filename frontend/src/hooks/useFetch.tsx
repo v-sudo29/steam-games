@@ -12,7 +12,6 @@ export default function useFetch(url: string, fetchType: string = '') {
       try {
         const res = await fetch(url)
         const data: GameObject[] = await res.json()
-        console.log(data)
         setResponse(data)
       } 
       catch (err) {

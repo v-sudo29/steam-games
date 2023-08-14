@@ -9,32 +9,32 @@ import { GameObject } from "../interface/GameObject"
 export default function Content(
   { genres,
     setGenres,
-    setExpanded,
     gamesAreLoading,
     gamesError,
     gamesData,
     sortList,
     currentResults,
     pageNumber,
-    setPageNumber
+    setPageNumber,
+    expanded
   } : 
   { genres: string[], 
     setGenres: React.Dispatch<React.SetStateAction<string[]>>,
-    setExpanded: React.Dispatch<React.SetStateAction<boolean>>,
     gamesAreLoading: boolean,
     gamesError: string | null,
     gamesData: GameObject[] | null,
     sortList: string[] ,
     currentResults: { current: GameObject[] | null },
     pageNumber: number,
-    setPageNumber: React.Dispatch<React.SetStateAction<number>>
+    setPageNumber: React.Dispatch<React.SetStateAction<number>>,
+    expanded: boolean
   }) {
   return (
     <HStack gap='1rem' mt='1rem' h='100%' w='100%' align='start'>
       <GenreTags 
         genres={genres}
         setGenres={setGenres}
-        setExpanded={setExpanded}
+        expanded={expanded}
       />
       <Results 
         gamesAreLoading={gamesAreLoading}

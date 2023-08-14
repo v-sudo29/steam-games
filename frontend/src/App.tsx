@@ -41,11 +41,14 @@ function App() {
       {/* <Wishlist gamesData={gamesData}/> */}
       {/* <Divider/> */}
       <Header />
-      <FilterTabs />
+      <FilterTabs 
+        expanded={expanded}
+        setExpanded={setExpanded}
+      />
       <Content
         genres={genres}
         setGenres={setGenres}
-        setExpanded={setExpanded}
+        expanded={expanded}
         gamesAreLoading={gamesAreLoading}
         gamesError={gamesError}
         gamesData={gamesData}

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { Checkbox, VStack, Text } from '@chakra-ui/react'
 
 export default function GenreTags(
-  { genres, setGenres, setExpanded } : 
+  { genres, setGenres, expanded } : 
   { genres: string[], 
     setGenres: React.Dispatch<React.SetStateAction<string[]>>,
-    setExpanded: React.Dispatch<React.SetStateAction<boolean>>
+    expanded: boolean
   }) {
   const genreFilters = [
     '2D',
@@ -38,9 +38,6 @@ export default function GenreTags(
     }
   }
 
-  // TODO: make setExpanded functional
-  useEffect(() => setExpanded(false), [genres])
-
   // SET GENRE FILTER TAGS
   const genreTags = genreFilters.map(genre => {
     return (
@@ -56,9 +53,15 @@ export default function GenreTags(
   })
 
   return (
-    <VStack minW='17rem' align='start'>
-      <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
-      {genreTags}
-    </VStack>
+    <>
+      {expanded ? (
+        <VStack minW='17rem' align='start'>
+          <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
+          {genreTags}
+        </VStack> 
+      ) 
+      : null
+      }
+    </>
   )
 }

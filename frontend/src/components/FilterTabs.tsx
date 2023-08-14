@@ -9,8 +9,7 @@ import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
 import { useState } from "react"
 
-export default function FilterTabs() {
-  const [filterActive, setFilterActive] = useState<boolean>(false)
+export default function FilterTabs({ expanded, setExpanded } : { expanded: boolean, setExpanded: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [tabOneActive, setTabOneActive] = useState<boolean>(false)
   const [tabTwoActive, setTabTwoActive] = useState<boolean>(true)
   
@@ -29,7 +28,7 @@ export default function FilterTabs() {
   }
 
   const handleFilterBtnClick = () => {
-    setFilterActive(prev => !prev)
+    setExpanded(prev => !prev)
   }
 
   return (
@@ -37,7 +36,7 @@ export default function FilterTabs() {
       <Button 
         onClick={handleFilterBtnClick}
         bg='#2F3740' 
-        leftIcon={filterActive ? <FilterIcon/> : <ExitIcon/>}
+        leftIcon={!expanded ? <FilterIcon/> : <ExitIcon/>}
         color='#F5F5F5'
         p='0rem 2rem'
         _hover={{ backgroundColor: '#3b454f' }}
