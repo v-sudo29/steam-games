@@ -6,10 +6,11 @@ import Results from './components/Results';
 import PageNumbers from './components/PageNumbers';
 import useFetch from './hooks/useFetch';
 import { GameObject } from './interface/GameObject';
-import { Divider, Stack } from '@chakra-ui/react'
+import { Container, Stack } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
 import FilterTabs from './components/FilterTabs';
+import Content from './components/Content';
 
 function App() {
   const [gamesData, setGamesData] = useState<GameObject[] | null>(null)
@@ -27,14 +28,28 @@ function App() {
   }, [gamesResponse])
 
   return (
-    <div className="App">
+    <Container
+      h='100vh'
+      maxW='100vw'
+      display='flex'
+      flexDir='column'
+      gap='1rem'
+      padding='2rem 2rem'
+      bg='#14191F'
+      color='#F5F5F5'
+    >
       {/* <Wishlist gamesData={gamesData}/> */}
       {/* <Divider/> */}
       <Header />
       <FilterTabs />
+      <Content
+        genres={genres}
+        setGenres={setGenres}
+        setExpanded={setExpanded}
+      />
       <Stack justify='center' direction='row'>
-        <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/>
-        <Stack>
+        {/* <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/> */}
+        {/* <Stack>
           <SortTags setSortList={setSortList}/>
           <Results 
             gamesAreLoading={gamesAreLoading}
@@ -55,9 +70,9 @@ function App() {
             expanded={expanded}
             setExpanded={setExpanded}
           />
-        </Stack>
+        </Stack> */}
       </Stack>
-    </div>
+    </Container>
   );
 }
 

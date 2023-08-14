@@ -55,7 +55,7 @@ export default function GenreTags(
   })
 
   return (
-    <Stack textAlign='left'>
+    <Stack h='inherit' pr='8rem' textAlign='left' border='1px solid white'>
       <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
       {genreTags}
     </Stack>
