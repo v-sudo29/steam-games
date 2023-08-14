@@ -51,7 +51,7 @@ export default function Content({
         setGenres={setGenres}
         expanded={expanded}
       />
-      <VStack>
+      <VStack h='100%' w='100%'>
         <Results 
           gamesAreLoading={gamesAreLoading}
           gamesError={gamesError}

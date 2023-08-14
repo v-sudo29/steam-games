@@ -2,8 +2,7 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
-import { HStack } from '@chakra-ui/react'
-import useFetch from '../hooks/useFetch'
+import { Grid, HStack } from '@chakra-ui/react'
 
 interface ResultsInterface {
   gamesAreLoading: boolean,
@@ -151,17 +150,27 @@ export default function Results({
   return (
     <>
       {gamesTabActive ? 
-        <HStack gap='1.5rem' flexWrap='wrap' className='game-results'>
+        <Grid 
+          w='100%'
+          h='100%'
+          templateColumns='repeat(auto-fit, minmax(17rem, 1fr))'
+          gridGap='1.5rem'
+        >
           {gamesAreLoading && <h1>...Loading</h1>}
           {gamesError && <h1>{gamesError}</h1>}
           {gameCards && <>{gameCards}</>}
-        </HStack>
+        </Grid>
       :
-        <HStack gap='1.5rem' flexWrap='wrap'>
+        <Grid
+          w='100%'
+          h='100%'
+          templateColumns='repeat(auto-fit, minmax(17rem, 1fr))'
+          gridGap='1.5rem'
+        >
           {wishlistLoading && <h1>...Loading</h1>}
           {wishlistError && <h1>{wishlistError}</h1>}
           {wishlistCards && <>{wishlistCards}</>}
-        </HStack>
+        </Grid>
       }
     </>
     

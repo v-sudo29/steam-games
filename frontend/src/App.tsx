@@ -35,7 +35,7 @@ function App() {
   return (
     <Container
       minH='100vh'
-      maxW='100vw'
+      maxW='90vw'
       display='flex'
       flexDir='column'
       gap='1rem'

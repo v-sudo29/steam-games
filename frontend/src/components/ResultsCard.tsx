@@ -14,9 +14,9 @@ function ResultsCard({ game } : { game: GameObject }) {
   return (
     <Card 
       onClick={() => openNewTab(game.url)}
+      flex='auto'
       overflow='hidden'
-      h='14rem' 
-      w='17rem'
+      // aspectRatio='8/5'
       variant='outline'
       direction='column'
       cursor='pointer'
@@ -35,9 +35,9 @@ function ResultsCard({ game } : { game: GameObject }) {
         borderRadius='0.4rem'
         src={game.imgUrl} 
         alt={game.name} 
+        aspectRatio={5/2}
         objectFit='cover'
         w='inherit'
-        h='6rem'
       />
 
       {/* GAME INFO */}
