@@ -151,13 +151,13 @@ export default function Results({
   return (
     <>
       {gamesTabActive ? 
-        <HStack align='space-between' flexWrap='wrap' className='game-results'>
+        <HStack gap='1.5rem' flexWrap='wrap' className='game-results'>
           {gamesAreLoading && <h1>...Loading</h1>}
           {gamesError && <h1>{gamesError}</h1>}
           {gameCards && <>{gameCards}</>}
         </HStack>
       :
-        <HStack align='space-between' flexWrap='wrap'>
+        <HStack gap='1.5rem' flexWrap='wrap'>
           {wishlistLoading && <h1>...Loading</h1>}
           {wishlistError && <h1>{wishlistError}</h1>}
           {wishlistCards && <>{wishlistCards}</>}
