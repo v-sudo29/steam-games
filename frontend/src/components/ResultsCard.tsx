@@ -35,7 +35,6 @@ function ResultsCard({ game } : { game: GameObject }) {
         borderRadius='0.4rem'
         src={game.imgUrl} 
         alt={game.name} 
-        aspectRatio={5/2}
         objectFit='cover'
         w='inherit'
       />
