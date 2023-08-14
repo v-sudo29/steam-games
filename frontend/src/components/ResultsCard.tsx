@@ -1,66 +1,65 @@
 import openNewTab from '../hooks/openNewTab'
 import { GameObject } from '../interface/GameObject'
-import { Box, Card, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { 
+  Card,
+  Heading,
+  HStack,
+  Image,
+  Stack,
+  Text,
+  VStack
+} from '@chakra-ui/react'
 
 function ResultsCard({ game } : { game: GameObject }) {
   return (
     <Card 
       onClick={() => openNewTab(game.url)}
       overflow='hidden'
-      h='6rem' 
-      maxW='45rem'
-      minW='30rem'
+      h='14rem' 
+      w='17rem'
       variant='outline'
-      direction='row'
+      direction='column'
       cursor='pointer'
       transition='ease 0.1s'
       _hover={{
         'backgroundColor': 'RGBA(0, 0, 0, 0.06)'
       }}
-      border='1px solid RGBA(0, 0, 0, 0.06)'
+      border='none'
+      borderRadius='0.8rem'
+      bg='#1C222C'
+      color='#F5F5F5'
+      p='1rem'
+      mb='0.5rem'
+      gap='0.9rem'
     >
-      <Image 
+      <Image
+        borderRadius='0.4rem'
         src={game.imgUrl} 
         alt={game.name} 
         objectFit='cover'
-        width='15rem'
-        h='inherit'
+        w='inherit'
+        h='6rem'
       />
 
-      {/* GAME TITLE */}
-      <Stack w='20rem' justify='center' p='1.5rem'>
-          <Heading fontSize='1rem' fontWeight='600'>{game.name}</Heading>
-      </Stack>
-
       {/* GAME INFO */}
-      <Stack 
-        ml='auto' 
-        justify='center' 
-        w='14rem'
-        direction='column'
-        align='center'
-        mr='1rem'
-      >
+      <HStack gap='1rem' align='start' h='100%'>
 
-        <Stack mr='3rem' mt='1rem' direction='row' align='center'>
-          <Text as='s' color='gray' fontSize='0.8rem'>{game.originalPrice}</Text>
-          <Text fontWeight='bold' fontSize='2xl'>{game.currentPrice}</Text>
+        {/* GAME TITLE AND CURRENT PRICE */}
+        <VStack h='100%' w='100%' align='start'>
+          <Heading fontSize='0.9rem' fontWeight='600'>{game.name}</Heading>
+          <Stack w='100%' mt='auto' direction='row' align='center'>
+            <Text fontWeight='bold' fontSize='1xl'>{game.currentPrice}</Text>
+            <Text as='s' color='#5D6168' fontSize='0.8rem'>{game.originalPrice}</Text>          
+          </Stack>
+        </VStack>
+
+        {/* GAME DISCOUNT */}
+        <Stack textAlign='center' pos='relative' align='center' direction='row' w='3.5rem'>
+          <Text p='0.1rem 0.2rem' w='inherit' borderRadius='0.3rem' color='#F5F5F5' bg='#2C984A' fontWeight='700'>{game.discount}</Text>
         </Stack>
-        {game.historicalLow ? 
-          <>
-            <Text pos='relative' mb='-1.2rem' ml='0.5rem' bottom='0.6rem' color='white' bg='green' fontSize='0.5rem'>Historical Low!</Text>
-            <Text fontWeight='500' color='blue.400' >{game.reviewsType}</Text>
-          </>
-          : 
-          <Box pos='relative' top='0rem'>
-            <Text fontWeight='500' color='blue.300' >{game.reviewsType}</Text>
-          </Box>
-        }
-      </Stack>
 
-      <Stack pos='relative' h='2.5rem' ml='-3rem' justify='center' direction='row' w='4rem'>
-        <Text borderRadius='sm' p='0.5rem' color='white' bg='green' fontWeight='600'>{game.discount}</Text>
-      </Stack>
+      </HStack>
+        
     </Card>
   )
 }

@@ -2,6 +2,7 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
+import { HStack } from '@chakra-ui/react'
 
 export default function Results({ 
   gamesAreLoading, 
@@ -132,10 +133,10 @@ export default function Results({
   }
 
   return (
-    <div className='game-results'>
+    <HStack align='space-between' justify='space-between' flexWrap='wrap' className='game-results'>
       {gamesAreLoading && <h1>...Loading</h1>}
       {gamesError && <h1>{gamesError}</h1>}
       {gameCards && <>{gameCards}</>}
-    </div>
+    </HStack>
   )
 }

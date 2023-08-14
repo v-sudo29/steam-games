@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Checkbox, Stack, Text } from '@chakra-ui/react'
+import { Checkbox, VStack, Text } from '@chakra-ui/react'
 
 export default function GenreTags(
   { genres, setGenres, setExpanded } : 
@@ -45,6 +45,7 @@ export default function GenreTags(
   const genreTags = genreFilters.map(genre => {
     return (
       <Checkbox
+        w='100%'
         key={`${genre}-search-genre-tag`} 
         className='search-genre-tag'
         value={genre}
@@ -55,9 +56,9 @@ export default function GenreTags(
   })
 
   return (
-    <Stack h='inherit' pr='8rem' textAlign='left' border='1px solid white'>
+    <VStack minW='17rem' align='start'>
       <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
       {genreTags}
-    </Stack>
+    </VStack>
   )
 }

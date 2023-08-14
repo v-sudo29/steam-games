@@ -29,7 +29,7 @@ function App() {
 
   return (
     <Container
-      h='100vh'
+      minH='100vh'
       maxW='100vw'
       display='flex'
       flexDir='column'
@@ -46,8 +46,15 @@ function App() {
         genres={genres}
         setGenres={setGenres}
         setExpanded={setExpanded}
+        gamesAreLoading={gamesAreLoading}
+        gamesError={gamesError}
+        gamesData={gamesData}
+        sortList={sortList}
+        currentResults={currentResults}
+        pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
       />
-      <Stack justify='center' direction='row'>
+      {/* <Stack justify='center' direction='row'> */}
         {/* <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/> */}
         {/* <Stack>
           <SortTags setSortList={setSortList}/>
@@ -71,7 +78,7 @@ function App() {
             setExpanded={setExpanded}
           />
         </Stack> */}
-      </Stack>
+      {/* </Stack> */}
     </Container>
   );
 }
