@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react"
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
+import { GameObject } from "../interface/GameObject"
 
 interface FilterTabsInterface {
   expanded: boolean,
@@ -15,6 +16,7 @@ interface FilterTabsInterface {
   setGamesTabActive: React.Dispatch<React.SetStateAction<boolean>>,
   wishlistTabActive: boolean,
   setWishlistTabActive: React.Dispatch<React.SetStateAction<boolean>>
+  wishlistData: GameObject[] | null
 }
 
 export default function FilterTabs({
@@ -23,7 +25,8 @@ export default function FilterTabs({
   gamesTabActive,
   setGamesTabActive,
   wishlistTabActive,
-  setWishlistTabActive
+  setWishlistTabActive,
+  wishlistData
 } : FilterTabsInterface) {
 
   
@@ -77,7 +80,7 @@ export default function FilterTabs({
             fontWeight='700'
             fontSize='1.3rem'
           >
-            My Wishlist (25)
+            My Wishlist ({wishlistData && wishlistData.length})
           </Tab>
         </TabList>
       </Tabs>

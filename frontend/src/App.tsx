@@ -51,6 +51,7 @@ function App() {
         setGamesTabActive={setGamesTabActive}
         wishlistTabActive={wishlistTabActive}
         setWishlistTabActive={setWishlistTabActive}
+        wishlistData={wishlistData}
       />
       <Content
         genres={genres}
