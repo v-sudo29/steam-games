@@ -23,7 +23,7 @@ export default function FilterTabs() {
           <Tab 
             _selected={{ color: '#F5F5F5' }}
             color='#5C5F63'
-            fontWeight='600'
+            fontWeight='700'
             fontSize='1.3rem'
           >
             All Games
@@ -31,7 +31,7 @@ export default function FilterTabs() {
           <Tab 
             _selected={{ color: '#F5F5F5' }}
             color='#5C5F63'
-            fontWeight='600'
+            fontWeight='700'
             fontSize='1.3rem'
           >
             My Wishlist (25)
