@@ -22,14 +22,13 @@ function ResultsCard({ game } : { game: GameObject }) {
       cursor='pointer'
       transition='ease 0.1s'
       _hover={{
-        'backgroundColor': 'RGBA(0, 0, 0, 0.06)'
+        backgroundColor: '#2d3544'
       }}
       border='none'
       borderRadius='0.8rem'
       bg='#1C222C'
       color='#F5F5F5'
       p='1rem'
-      mb='0.5rem'
       gap='0.9rem'
     >
       <Image

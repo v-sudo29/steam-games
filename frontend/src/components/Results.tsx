@@ -133,7 +133,7 @@ export default function Results({
   }
 
   return (
-    <HStack align='space-between' justify='space-between' flexWrap='wrap' className='game-results'>
+    <HStack align='space-between' flexWrap='wrap' className='game-results'>
       {gamesAreLoading && <h1>...Loading</h1>}
       {gamesError && <h1>{gamesError}</h1>}
       {gameCards && <>{gameCards}</>}
