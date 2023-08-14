@@ -16,7 +16,6 @@ function ResultsCard({ game } : { game: GameObject }) {
       onClick={() => openNewTab(game.url)}
       flex='auto'
       overflow='hidden'
-      // aspectRatio='8/5'
       variant='outline'
       direction='column'
       cursor='pointer'
