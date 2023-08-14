@@ -8,6 +8,8 @@ import useFetch from './hooks/useFetch';
 import { GameObject } from './interface/GameObject';
 import { Divider, Stack } from '@chakra-ui/react'
 import './App.css';
+import Header from './components/Header';
+import FilterTabs from './components/FilterTabs';
 
 function App() {
   const [gamesData, setGamesData] = useState<GameObject[] | null>(null)
@@ -26,8 +28,10 @@ function App() {
 
   return (
     <div className="App">
-      <Wishlist gamesData={gamesData}/>
-      <Divider/>
+      {/* <Wishlist gamesData={gamesData}/> */}
+      {/* <Divider/> */}
+      <Header />
+      <FilterTabs />
       <Stack justify='center' direction='row'>
         <GenreTags genres={genres} setGenres={setGenres} setExpanded={setExpanded}/>
         <Stack>
