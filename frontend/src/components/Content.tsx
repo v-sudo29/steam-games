@@ -24,7 +24,9 @@ interface ContentInterface {
   wishlistError: string | null,
   wishlistLoading: boolean,
   paginationExpanded: boolean,
-  setPaginationExpanded: React.Dispatch<React.SetStateAction<boolean>>
+  setPaginationExpanded: React.Dispatch<React.SetStateAction<boolean>>,
+  searchData: GameObject[] | null,
+  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>
 }
 
 export default function Content({
@@ -43,7 +45,9 @@ export default function Content({
   wishlistLoading,
   wishlistError,
   paginationExpanded,
-  setPaginationExpanded
+  setPaginationExpanded,
+  searchData,
+  setSearchData
 } : ContentInterface) {
 
   return (
@@ -78,6 +82,8 @@ export default function Content({
           wishlistData={wishlistData}
           wishlistLoading={wishlistLoading}
           wishlistError={wishlistError}
+          searchData={searchData}
+          setSearchData={setSearchData}
         />
 
         {(!gamesTabActive && wishlistData && wishlistData.length > 25) &&

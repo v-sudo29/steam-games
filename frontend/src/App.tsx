@@ -17,18 +17,20 @@ function App() {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [gamesTabActive, setGamesTabActive] = useState<boolean>(false)
   const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(true)
-  
+  const [searchData, setSearchData] = useState<GameObject[] | null>(null)
+
   const currentResults = useRef<GameObject[] | null>(null)
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
-    = useFetch('https://steam-games-server.onrender.com/all-games', 'games')
-  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = 
-  useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
+    = useFetch('https://steam-games-server.onrender.com/all-games')
+  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading }
+    = useFetch('https://steam-games-server.onrender.com/wishlist')
 
-  // useEffect: Set gamesData from fetch response
+  // Set gamesData from fetch response
   useEffect(() => {
     if (gamesResponse) setGamesData(gamesResponse)
   }, [gamesResponse])
 
+  // Set wishlistData from fetch response
   useEffect(() => {
     if (wishlistResponse) setWishlistData(wishlistResponse)
   }, [wishlistResponse])
@@ -44,7 +46,7 @@ function App() {
       bg='#14191F'
       color='#F5F5F5'
     >
-      <Header />
+      <Header setSearchData={setSearchData}/>
       <FilterTabs
         expanded={expanded}
         setExpanded={setExpanded}
@@ -71,6 +73,8 @@ function App() {
         wishlistData={wishlistData}
         wishlistLoading={wishlistLoading}
         wishlistError={wishlistError}
+        searchData={searchData}
+        setSearchData={setSearchData}
       />
     </Container>
   );

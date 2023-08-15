@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { GameObject } from '../interface/GameObject'
 
-export default function useFetch(url: string, fetchType: string = '') {
+export default function useFetch(url: string) {
   const [response, setResponse] = useState<GameObject[] | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)

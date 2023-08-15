@@ -2,7 +2,7 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
-import { Grid, HStack } from '@chakra-ui/react'
+import { Grid, Text } from '@chakra-ui/react'
 
 interface ResultsInterface {
   gamesAreLoading: boolean,
@@ -16,7 +16,9 @@ interface ResultsInterface {
   gamesTabActive: boolean,
   wishlistData: GameObject[] | null,
   wishlistLoading: boolean,
-  wishlistError: string | null
+  wishlistError: string | null,
+  searchData: GameObject[] | null,
+  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>
 }
 
 export default function Results({ 
@@ -31,7 +33,9 @@ export default function Results({
   gamesTabActive,
   wishlistData,
   wishlistLoading,
-  wishlistError
+  wishlistError,
+  searchData,
+  setSearchData
 }: ResultsInterface ) {
   let gameCards: (JSX.Element | null)[] | null = null
   let wishlistCards: (JSX.Element | null)[] | null = null
@@ -133,8 +137,21 @@ export default function Results({
     })
   }
 
+  // Set SEARCH GAME CARDS if searchData is not empty
+  if (searchData) {
+    console.log(searchData)
+    const searchDataCopy = [...searchData]
+
+    gameCards = searchDataCopy.map((game, index) => {
+      if (index < 25) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
+    currentResults.current = searchDataCopy
+  }
+
   // Display cards according to page number
-  if (pageNumber !== 1 && currentResults.current) {
+  if (pageNumber !== 1 && currentResults.current && currentResults.current.length > 0) {
     gameCards = currentResults.current.map((game, index) => {
       if (index > ((25 * pageNumber) - 26) && index < (25 * pageNumber)) {
         return <ResultsCard key={`${game.appId}-results`} game={game}/>
@@ -145,7 +162,6 @@ export default function Results({
   if (!gamesTabActive && wishlistData) {
     wishlistCards = wishlistData.map(game => <ResultsCard key={game.name} game={game}/>)
   }
-
 
   return (
     <>
@@ -158,7 +174,9 @@ export default function Results({
         >
           {gamesAreLoading && <h1>...Loading</h1>}
           {gamesError && <h1>{gamesError}</h1>}
-          {gameCards && <>{gameCards}</>}
+          {(gameCards && gameCards.length > 0) ? <>{gameCards}</> : 
+            <Text fontWeight='500'>No games found.</Text>
+          }
         </Grid>
       :
         <Grid
