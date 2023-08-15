@@ -4,6 +4,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const Game = require('./models/Game')
 const Wishlist = require('./models/Wishlist')
 const app = express()
@@ -35,7 +36,8 @@ app.get('/wishlist', (request, response) => {
 })
 
 app.get('/search', (req, res) => {
-  const gameName = req.body.name
+  const gameName = req.query.q
+
   Game.find({ 'name': { $regex: gameName, $options: 'i' } })
     .then(games => res.json(games))
     .catch(err => console.log(err))
