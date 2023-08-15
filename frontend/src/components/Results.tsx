@@ -153,7 +153,7 @@ export default function Results({
         <Grid 
           w='100%'
           h='100%'
-          templateColumns='repeat(auto-fit, minmax(17rem, 1fr))'
+          templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
           gridGap='1.5rem'
         >
           {gamesAreLoading && <h1>...Loading</h1>}
@@ -164,7 +164,7 @@ export default function Results({
         <Grid
           w='100%'
           h='100%'
-          templateColumns='repeat(auto-fit, minmax(17rem, 1fr))'
+          templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
           gridGap='1.5rem'
         >
           {wishlistLoading && <h1>...Loading</h1>}
