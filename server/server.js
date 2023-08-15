@@ -34,9 +34,8 @@ app.get('/wishlist', (request, response) => {
     .catch(err => console.log(err))
 })
 
-app.get('/search', async (req, res) => {
+app.get('/search', (req, res) => {
   const gameName = req.body.name
-
   Game.find({ 'name': { $regex: gameName, $options: 'i' } })
     .then(games => res.json(games))
     .catch(err => console.log(err))
