@@ -54,14 +54,16 @@ export default function GenreTags(
 
   return (
     <>
-      {expanded ? (
-        <VStack minW='17rem' align='start'>
-          <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
-          {genreTags}
-        </VStack> 
-      ) 
-      : null
-      }
+      <VStack 
+        pos='absolute'
+        opacity={expanded ? '100%' : '0%'}
+        minW='17rem' 
+        align='start'
+        transition='all 200ms ease'
+      >
+        <Text mb='1rem' fontWeight='600' color='#888888'>Select filters</Text>
+        {genreTags}
+      </VStack> 
     </>
   )
 }

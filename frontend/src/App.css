@@ -9,60 +9,12 @@
 :root {
   box-sizing: border-box;
   font-family: 'Rubik', sans-serif;
-  --green: rgb(42, 162, 42);
 }
 
 #root {
   min-width: 100vw;
   min-height: 100vh;
   background-color: #14191F;
-}
-
-/* Wishlist */
-.wishlist-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.wishlist-games-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.wishlist-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  width: 25rem;
-  border: 1px solid black;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-.wishlist-card-image {
-  cursor: pointer;
-}
-
-/* Genre Filter Tags */
-.genre-tags-container {
-  display: flex;
-  justify-content: center;
-}
-
-.genre-active {
-  background-color: green;
-}
-
-/* Sort Tags */
-.sort-active {
-  background-color: yellow;
-}
-
-/* Pagination */
-.active-page {
-  font-weight: 500;
-  text-decoration: underline;
 }
 
 /* Search Bar */

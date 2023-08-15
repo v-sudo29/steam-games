@@ -47,13 +47,24 @@ export default function Content({
 } : ContentInterface) {
 
   return (
-    <HStack gap='1rem' mt='1rem' h='100%' w='100%' align='start'>
+    <HStack 
+      gap='1rem'
+      mt='1rem'
+      h='100%'
+      w='100%'
+      align='start'
+    >
       <GenreTags 
         genres={genres}
         setGenres={setGenres}
         expanded={expanded}
       />
-      <VStack h='100%' w='100%'>
+      <VStack 
+        h='100%'
+        w='100%'
+        transition='margin-left 200ms ease'
+        ml={expanded ? '17rem' : '0rem'}
+      >
         <Results 
           gamesAreLoading={gamesAreLoading}
           gamesError={gamesError}
