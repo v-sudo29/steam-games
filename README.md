@@ -14,6 +14,7 @@ Checkout the live site: [Deployed Link](https://steam-discounts.onrender.com/)
 
 ## Technology
 - React front-end with ChakraUI for styling
+- TypeScript for static type checking
 - Node.js and Express backend
 - MongoDB database
 - Puppeteer headless browser for web scraping
