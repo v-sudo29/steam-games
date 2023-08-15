@@ -46,7 +46,11 @@ function App() {
       bg='#14191F'
       color='#F5F5F5'
     >
-      <Header setSearchData={setSearchData}/>
+      <Header 
+        setSearchData={setSearchData}
+        setGamesTabActive={setGamesTabActive}
+        setWishlistTabActive={setWishlistTabActive}
+      />
       <FilterTabs
         expanded={expanded}
         setExpanded={setExpanded}

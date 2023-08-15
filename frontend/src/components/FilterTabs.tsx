@@ -8,6 +8,7 @@ import {
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
 import { GameObject } from "../interface/GameObject"
+import { useEffect, useState } from "react"
 
 interface FilterTabsInterface {
   expanded: boolean,
@@ -28,8 +29,16 @@ export default function FilterTabs({
   setWishlistTabActive,
   wishlistData
 } : FilterTabsInterface) {
+  const [activeTab, setActiveTab] = useState<number>(1)
 
-  
+  useEffect(() => {
+    if (gamesTabActive) setActiveTab(0)
+  }, [gamesTabActive])
+
+  useEffect(() => {
+    if (wishlistTabActive) setActiveTab(1)
+  }, [wishlistTabActive])
+
   const handleTabsChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const buttonElement = e.target as HTMLButtonElement
     const tabName = buttonElement.innerText
@@ -37,10 +46,12 @@ export default function FilterTabs({
     if (tabName === 'All Games') {
       setGamesTabActive(true)
       setWishlistTabActive(false)
+      setActiveTab(0)
     }
     else {
       setWishlistTabActive(true)
       setGamesTabActive(false)
+      setActiveTab(1)
     }
   }
 
@@ -48,6 +59,7 @@ export default function FilterTabs({
     setExpanded(prev => !prev)
   }
 
+  useEffect(() => console.log(gamesTabActive))
   return (
     <HStack gap='2rem'>
       <Button 
@@ -60,7 +72,7 @@ export default function FilterTabs({
       >
         Filter
       </Button>
-      <Tabs defaultIndex={1} variant='unstyled'>
+      <Tabs index={activeTab} variant='unstyled'>
         <TabList>
           <Tab
             onClick={(e) => handleTabsChange(e)}

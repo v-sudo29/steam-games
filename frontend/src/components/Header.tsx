@@ -13,7 +13,13 @@ import axios from "axios"
 import { useRef, useState } from "react"
 import { GameObject } from "../interface/GameObject"
 
-export default function Header({ setSearchData } : { setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>> }) {
+interface HeaderInterface {
+  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
+  setGamesTabActive: React.Dispatch<React.SetStateAction<boolean>>,
+  setWishlistTabActive: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Header({ setSearchData, setGamesTabActive, setWishlistTabActive } : HeaderInterface) {
   const [emptyError, setEmptyError] = useState<boolean>(false)
   const searchRef = useRef<HTMLInputElement>(null)
 
@@ -22,10 +28,16 @@ export default function Header({ setSearchData } : { setSearchData: React.Dispat
         const searchParam = searchRef.current.value
 
         axios.get(`http://localhost:3001/search?q=${searchParam}`)
-          .then(res => setSearchData(res.data))
+          .then(res => {
+            setGamesTabActive(true)
+            setSearchData(res.data)
+            setWishlistTabActive(false)
+          })
           .catch(err => console.error(err))
-      }      
+        return
     }
+    if (e.key === 'Enter' && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
+  } 
   
   return (
     <Box mb='3rem'>
@@ -51,13 +63,16 @@ export default function Header({ setSearchData } : { setSearchData: React.Dispat
             fontSize='0.9rem'
             placeholder='Search for games...'
             _placeholder={{ color: '#535B65'}}
-            _focus={{ color: '#F5F5F5' }}
+            focusBorderColor={emptyError ? 'red.600' : '#F5F5F5'}
             border='none'
             bg='#2A3441'
             borderRadius='5rem'
             maxW='45rem'
             pl='3rem'
             onKeyDown={(e) => handleEnter(e)}
+            onChange={() => {
+              if ( searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
+            }}
           />
         </InputGroup>
       </HStack>
