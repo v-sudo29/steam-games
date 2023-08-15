@@ -20,7 +20,7 @@ function App() {
   
   const currentResults = useRef<GameObject[] | null>(null)
   const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
-    = useFetch('https://steam-games-server.onrender.com/', 'games')
+    = useFetch('https://steam-games-server.onrender.com/all-games', 'games')
   const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading } = 
   useFetch('https://steam-games-server.onrender.com/wishlist', 'wishlist')
 

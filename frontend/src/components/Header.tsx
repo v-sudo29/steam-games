@@ -11,6 +11,7 @@ import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
 
 export default function Header() {
+
   return (
     <Box mb='3rem'>
       <HStack justify='center'>

@@ -22,7 +22,7 @@ mongoose.connect(url)
 require('./scheduler.js')
 
 // GET REQUESTS
-app.get('/', (request, response) => {
+app.get('/all-games', (request, response) => {
   Game.find({})
     .then(items => response.json(items))
     .catch(err => console.log(err))
