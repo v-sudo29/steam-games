@@ -80,7 +80,7 @@ export default function FilterTabs({
             fontWeight='700'
             fontSize='1.3rem'
           >
-            My Wishlist ({wishlistData && wishlistData.length})
+            My Wishlist {wishlistData && `(${wishlistData.length})`}
           </Tab>
         </TabList>
       </Tabs>

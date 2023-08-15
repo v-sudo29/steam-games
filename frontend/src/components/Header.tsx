@@ -4,10 +4,8 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  HStack,
-  Text
+  HStack
  } from "@chakra-ui/react"
-
 
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
