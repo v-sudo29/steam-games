@@ -136,7 +136,7 @@ export default function Results({
   // Display cards according to page number
   if (pageNumber !== 1 && currentResults.current) {
     gameCards = currentResults.current.map((game, index) => {
-      if (index > ((25 * pageNumber) - 25) && index < (25 * pageNumber)) {
+      if (index > ((25 * pageNumber) - 26) && index < (25 * pageNumber)) {
         return <ResultsCard key={`${game.appId}-results`} game={game}/>
       } return null
     })
