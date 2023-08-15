@@ -30,8 +30,16 @@ app.get('/all-games', (request, response) => {
 
 app.get('/wishlist', (request, response) => {
   Wishlist.find({})
-  .then(items => response.json(items))
-  .catch(err => console.log(err))
+    .then(items => response.json(items))
+    .catch(err => console.log(err))
+})
+
+app.get('/search', async (req, res) => {
+  const gameName = req.body.name
+
+  Game.find({ 'name': { $regex: gameName, $options: 'i' } })
+    .then(games => res.json(games))
+    .catch(err => console.log(err))
 })
 
 app.listen(3001, function() {
