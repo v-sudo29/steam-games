@@ -30,7 +30,7 @@ export default function AllGamesCards() {
     const gamesDataCopy = gamesData
 
     gameCards = gamesDataCopy.map((game, index) => {
-      if (index < 25) {
+      if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
     })
@@ -52,7 +52,7 @@ export default function AllGamesCards() {
     }
 
     gameCards = matchedGames.map((game, index) => {
-      if (index < 25) {
+      if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
     })
@@ -72,7 +72,7 @@ export default function AllGamesCards() {
     
     currentResults.current = sortedResults!
     gameCards = sortedResults!.map((game, index) => {
-      if (index < 25) {
+      if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
     })
@@ -108,7 +108,7 @@ export default function AllGamesCards() {
 
     currentResults.current = sortedResults!
     gameCards = sortedResults!.map((game, index) => {
-      if (index < 25) {
+      if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
     })
@@ -119,7 +119,7 @@ export default function AllGamesCards() {
   //   const searchDataCopy = [...searchData]
 
   //   gameCards = searchDataCopy.map((game, index) => {
-  //     if (index < 25) {
+  //     if (index < 60) {
   //       return <ResultsCard key={game.appId} game={game}/>
   //     } return null
   //   })
@@ -129,7 +129,7 @@ export default function AllGamesCards() {
   // Display cards according to page number
   if (pageNumber !== 1 && currentResults.current && currentResults.current.length > 0) {
     gameCards = currentResults.current.map((game, index) => {
-      if (index > ((25 * pageNumber) - 26) && index < (25 * pageNumber)) {
+      if (index > ((60 * pageNumber) - 61) && index < (60 * pageNumber)) {
         return <ResultsCard key={`${game.appId}-results`} game={game}/>
       } return null
     })

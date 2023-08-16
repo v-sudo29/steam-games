@@ -22,7 +22,7 @@ export default function PageNumbers() {
   let pagesJSX: JSX.Element[] = []
 
   // TODO: set up pagination logic for wishlistGames
-  if (currentResults.current) totalPages = currentResults.current && Math.ceil(currentResults.current.length / 25)
+  if (currentResults.current) totalPages = currentResults.current && Math.ceil(currentResults.current.length / 60)
 
   function handleClick(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>): void {
     const pageElement = e.target as HTMLParagraphElement
@@ -34,6 +34,7 @@ export default function PageNumbers() {
 
     if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setPaginationExpanded(true)
     if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setPaginationExpanded(false)
+    window.scrollTo({top: 0})
   }
 
   function incrementPageNumber(): void {
