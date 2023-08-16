@@ -21,3 +21,12 @@
 .InputLeft {
   left: 3rem !important;
 }
+
+/* Game Title */
+.gameTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines */
+  -webkit-box-orient: vertical;
+}

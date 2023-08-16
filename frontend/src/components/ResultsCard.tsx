@@ -1,6 +1,7 @@
 import openNewTab from '../hooks/openNewTab'
 import { GameObject } from '../interface/GameObject'
 import { 
+  Box,
   Card,
   Heading,
   HStack,
@@ -43,7 +44,9 @@ function ResultsCard({ game } : { game: GameObject }) {
 
         {/* GAME TITLE AND CURRENT PRICE */}
         <VStack h='100%' w='100%' align='start'>
-          <Heading fontSize='0.9rem' fontWeight='600'>{game.name}</Heading>
+          <Box className='gameTitle' fontSize='0.9rem' fontWeight='600' maxH='3rem' height='auto'>
+            {game.name}
+          </Box>
           <Stack w='100%' mt='auto' direction='row' align='center'>
             <Text fontWeight='bold' fontSize='1xl'>{game.currentPrice}</Text>
             <Text as='s' color='#5D6168' fontSize='0.8rem'>{game.originalPrice}</Text>          
