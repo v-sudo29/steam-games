@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Checkbox, VStack, Text } from '@chakra-ui/react'
+import { useGenres } from '../context/GenresContext'
+import { useFilter } from '../context/FilterContext'
 
-export default function GenreTags(
-  { genres, setGenres, expanded } : 
-  { genres: string[], 
-    setGenres: React.Dispatch<React.SetStateAction<string[]>>,
-    expanded: boolean
-  }) {
+export default function GenreTags() {
   const genreFilters = [
     '2D',
     'Base Building',
@@ -20,6 +17,8 @@ export default function GenreTags(
     'Pixel Graphics',
     'Platformer'
   ]
+  const { expanded } = useFilter()
+  const { genres, setGenres } = useGenres()
 
   // Handle genre tag click
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {

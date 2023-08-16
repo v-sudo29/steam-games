@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { DefaultDataProvider } from './context/defaultDataContext';
+import { FilterProvider } from './context/FilterContext';
+import { GenresProvider } from './context/GenresContext';
+import { PageProvider } from './context/pageContext';
+import { SearchProvider } from './context/searchContext';
+import { SortListProvider } from './context/sortListContext';
+import { TabsProvider } from './context/tabsContext';
 import App from './App';
 
 const theme = extendTheme({
@@ -27,8 +34,22 @@ const theme = extendTheme({
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <DefaultDataProvider>
+      <FilterProvider>
+        <GenresProvider>
+          <PageProvider>
+            <SearchProvider>
+              <SortListProvider>
+                <TabsProvider>
+                  <ChakraProvider theme={theme}>
+                    <App />
+                  </ChakraProvider>
+                </TabsProvider>
+              </SortListProvider>
+            </SearchProvider>
+          </PageProvider>
+        </GenresProvider>
+      </FilterProvider>
+    </DefaultDataProvider>
   </React.StrictMode> 
 );

@@ -1,86 +1,57 @@
-import { useEffect, useState, useRef } from 'react'
-import useFetch from './hooks/useFetch';
-import { GameObject } from './interface/GameObject';
-import { Container } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme, } from '@chakra-ui/react'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { SearchProvider } from './context/searchContext';
+import { TabsProvider } from './context/tabsContext';
+import Layout from './layout/Layout';
+import ContentLayout from './layout/ContentLayout';
+import Home from './components/Home';
+import WishlistCards from './components/WishlistCards';
+import AllGamesCards from './components/AllGamesCards';
 import './App.css';
-import Header from './components/Header';
-import FilterTabs from './components/FilterTabs';
-import Content from './components/Content';
 
 function App() {
-  const [gamesData, setGamesData] = useState<GameObject[] | null>(null)
-  const [wishlistData, setWishlistData] = useState<GameObject[] | null>(null)
-  const [genres, setGenres] = useState<string[]>([])
-  const [sortList, setSortList] = useState<string[]>([])
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [paginationExpanded, setPaginationExpanded] = useState<boolean>(false)
-  const [expanded, setExpanded] = useState<boolean>(false)
-  const [gamesTabActive, setGamesTabActive] = useState<boolean>(false)
-  const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(true)
-  const [searchData, setSearchData] = useState<GameObject[] | null>(null)
-
-  const currentResults = useRef<GameObject[] | null>(null)
-  const { response: gamesResponse, error: gamesError, isLoading: gamesAreLoading } 
-    = useFetch('https://steam-games-server.onrender.com/all-games')
-  const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading }
-    = useFetch('https://steam-games-server.onrender.com/wishlist')
-
-  // Set gamesData from fetch response
-  useEffect(() => {
-    if (gamesResponse) setGamesData(gamesResponse)
-  }, [gamesResponse])
-
-  // Set wishlistData from fetch response
-  useEffect(() => {
-    if (wishlistResponse) setWishlistData(wishlistResponse)
-  }, [wishlistResponse])
+  const theme = extendTheme({
+    components: {
+      Checkbox: {
+        baseStyle: {
+          icon: {
+            color: 'white',
+          },
+          control: {
+            border: '1px',
+            borderColor: '#4A525C',
+            borderRadius: '0.15rem',
+            marginRight: '0.5rem'
+          },
+          label: {
+            fontWeight: '600'
+          }
+        },
+      },
+    },
+  })
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path='/' element={<Layout/>}>
+          <Route index element={<Home/>}/>
+          <Route element={<ContentLayout/>}>
+            <Route path='/wishlist' element={<WishlistCards/>}/>
+            <Route path='/all-games' element={<AllGamesCards/>}/>
+          </Route>
+        </Route>
+      </>
+    )
+  )
 
   return (
-    <Container
-      minH='100vh'
-      maxW='90vw'
-      display='flex'
-      flexDir='column'
-      gap='1rem'
-      padding='2rem 2rem'
-      bg='#14191F'
-      color='#F5F5F5'
-    >
-      <Header 
-        setSearchData={setSearchData}
-        setGamesTabActive={setGamesTabActive}
-        setWishlistTabActive={setWishlistTabActive}
-      />
-      <FilterTabs
-        expanded={expanded}
-        setExpanded={setExpanded}
-        gamesTabActive={gamesTabActive}
-        setGamesTabActive={setGamesTabActive}
-        wishlistTabActive={wishlistTabActive}
-        setWishlistTabActive={setWishlistTabActive}
-        wishlistData={wishlistData}
-      />
-      <Content
-        genres={genres}
-        setGenres={setGenres}
-        gamesAreLoading={gamesAreLoading}
-        gamesError={gamesError}
-        gamesData={gamesData}
-        sortList={sortList}
-        currentResults={currentResults}
-        pageNumber={pageNumber}
-        setPageNumber={setPageNumber}
-        expanded={expanded}
-        paginationExpanded={paginationExpanded}
-        setPaginationExpanded={setPaginationExpanded}
-        gamesTabActive={gamesTabActive}
-        wishlistData={wishlistData}
-        wishlistLoading={wishlistLoading}
-        wishlistError={wishlistError}
-        searchData={searchData}
-        setSearchData={setSearchData}
-      />
-    </Container>
+    <SearchProvider>
+      <TabsProvider>
+        <ChakraProvider theme={theme}>
+          <RouterProvider router={router}/>
+        </ChakraProvider>
+      </TabsProvider>
+    </SearchProvider>
   );
 }
 

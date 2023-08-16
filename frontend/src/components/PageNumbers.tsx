@@ -1,27 +1,28 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
-import { GameObject } from "../interface/GameObject"
+import { useDefaultData } from "../context/defaultDataContext"
+import { useGenres } from "../context/GenresContext"
+import { usePage } from "../context/pageContext"
+import { useLocation } from "react-router-dom"
 
-interface PageNumbersInterface {
-  pageNumber: number, 
-  setPageNumber:React.Dispatch<React.SetStateAction<number>>,
-  currentResults: {current: any},
-  gamesData: GameObject[] | null
-  genres: string[],
-  paginationExpanded: boolean,
-  setPaginationExpanded: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export default function PageNumbers({ 
-  pageNumber, 
-  setPageNumber, 
-  currentResults,
-  genres,
-  paginationExpanded,
-  setPaginationExpanded
-}: PageNumbersInterface ) 
-{
-  const totalPages: number = currentResults.current && Math.ceil(currentResults.current.length / 25)
+export default function PageNumbers() {
+  const { currentResults } = useDefaultData()
+  const { genres } = useGenres()
+  const { 
+    pageNumber, 
+    pageNumberWL, 
+    setPageNumber,
+    setPageNumberWL,
+    paginationExpanded, 
+    paginationExpandedWL, 
+    setPaginationExpanded,
+    setPaginationExpandedWL,
+  } = usePage()
+  const location = useLocation()
+  let totalPages: number = 0
   let pagesJSX: JSX.Element[] = []
+
+  // TODO: set up pagination logic for wishlistGames
+  if (currentResults.current) totalPages = currentResults.current && Math.ceil(currentResults.current.length / 25)
 
   function handleClick(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>): void {
     const pageElement = e.target as HTMLParagraphElement
@@ -139,29 +140,33 @@ export default function PageNumbers({
 
   return (
     <>
-      {totalPages > 1 && 
-        <Stack direction='row' gap='1rem' justify='end' align='center'>
-          {(!paginationExpanded && pageNumber === 1) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#60;</Box> :
-            <Box 
-              fontSize='1.4rem'
-              cursor='pointer'
-              onClick={decrementPageNumber}
-            >&#60;
-            </Box>
-          }
+      {location.pathname === '/all-games' && 
+        <>
+          {totalPages > 1 && 
+            <Stack direction='row' gap='1rem' justify='end' align='center'>
+              {(!paginationExpanded && pageNumber === 1) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#60;</Box> :
+                <Box 
+                  fontSize='1.4rem'
+                  cursor='pointer'
+                  onClick={decrementPageNumber}
+                >&#60;
+                </Box>
+              }
 
-          {pagesJSX.length > 0 && pagesJSX}
+              {pagesJSX.length > 0 && pagesJSX}
 
-          {(!paginationExpanded && pageNumber === totalPages) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#62;</Box> :
-            <Box 
-              fontSize='1.4rem' 
-              cursor='pointer'
-              onClick={incrementPageNumber}
-            >&#62;
-            </Box>
-          }
-        </Stack>
-      }  
+              {(!paginationExpanded && pageNumber === totalPages) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#62;</Box> :
+                <Box 
+                  fontSize='1.4rem' 
+                  cursor='pointer'
+                  onClick={incrementPageNumber}
+                >&#62;
+                </Box>
+              }
+            </Stack>
+          }  
+        </>
+      }
     </>
   )
 }

@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react"
 
 import GenreTags from "./GenreTags"
-import Results from "./Results"
+import Results from "./AllGamesCards"
 import PageNumbers from "./PageNumbers"
 import { GameObject } from "../interface/GameObject"
 
@@ -58,56 +58,21 @@ export default function Content({
       w='100%'
       align='start'
     >
-      <GenreTags 
-        genres={genres}
-        setGenres={setGenres}
-        expanded={expanded}
-      />
+      <GenreTags />
       <VStack 
         h='100%'
         w='100%'
         transition='margin-left 200ms ease'
         ml={expanded ? '17rem' : '0rem'}
       >
-        <Results 
-          gamesAreLoading={gamesAreLoading}
-          gamesError={gamesError}
-          gamesData={gamesData}
-          genres={genres}
-          sortList={sortList}
-          currentResults={currentResults}
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          gamesTabActive={gamesTabActive}
-          wishlistData={wishlistData}
-          wishlistLoading={wishlistLoading}
-          wishlistError={wishlistError}
-          searchData={searchData}
-          setSearchData={setSearchData}
-        />
+        <Results/>
 
         {(!gamesTabActive && wishlistData && wishlistData.length > 25) &&
-          <PageNumbers 
-            setPageNumber={setPageNumber}
-            pageNumber={pageNumber} 
-            currentResults={currentResults}
-            gamesData={gamesData}
-            genres={genres}
-            paginationExpanded={paginationExpanded}
-            setPaginationExpanded={setPaginationExpanded}
-          />
+          <PageNumbers />
         }
 
         {(gamesTabActive && gamesData && gamesData.length > 25) &&
-          <PageNumbers 
-            setPageNumber={setPageNumber}
-            pageNumber={pageNumber} 
-            currentResults={currentResults}
-            gamesData={gamesData}
-            genres={genres}
-            paginationExpanded={paginationExpanded}
-            setPaginationExpanded={setPaginationExpanded}
-          />
+          <PageNumbers />
          }
       </VStack>
     </HStack>

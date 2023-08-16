@@ -7,37 +7,18 @@ import {
 } from "@chakra-ui/react"
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
-import { GameObject } from "../interface/GameObject"
-import { useEffect, useState } from "react"
+import { useDefaultData } from "../context/defaultDataContext"
+import { useFilter } from "../context/FilterContext"
+import { useTabs } from "../context/tabsContext"
+import { useNavigate, useLocation } from "react-router-dom"
 
-interface FilterTabsInterface {
-  expanded: boolean,
-  setExpanded: React.Dispatch<React.SetStateAction<boolean>>,
-  gamesTabActive: boolean,
-  setGamesTabActive: React.Dispatch<React.SetStateAction<boolean>>,
-  wishlistTabActive: boolean,
-  setWishlistTabActive: React.Dispatch<React.SetStateAction<boolean>>
-  wishlistData: GameObject[] | null
-}
+export default function FilterTabs() {
+  const { wishlistData } = useDefaultData()
+  const { expanded, setExpanded } = useFilter()
+  const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
+  const navigate = useNavigate()
+  const location = useLocation()
 
-export default function FilterTabs({
-  expanded, 
-  setExpanded,
-  gamesTabActive,
-  setGamesTabActive,
-  wishlistTabActive,
-  setWishlistTabActive,
-  wishlistData
-} : FilterTabsInterface) {
-  const [activeTab, setActiveTab] = useState<number>(1)
-
-  useEffect(() => {
-    if (gamesTabActive) setActiveTab(0)
-  }, [gamesTabActive])
-
-  useEffect(() => {
-    if (wishlistTabActive) setActiveTab(1)
-  }, [wishlistTabActive])
 
   const handleTabsChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const buttonElement = e.target as HTMLButtonElement
@@ -46,12 +27,12 @@ export default function FilterTabs({
     if (tabName === 'All Games') {
       setGamesTabActive(true)
       setWishlistTabActive(false)
-      setActiveTab(0)
+      navigate('all-games')
     }
     else {
       setWishlistTabActive(true)
       setGamesTabActive(false)
-      setActiveTab(1)
+      navigate('wishlist')
     }
   }
 
@@ -59,7 +40,6 @@ export default function FilterTabs({
     setExpanded(prev => !prev)
   }
 
-  useEffect(() => console.log(gamesTabActive))
   return (
     <HStack gap='2rem'>
       <Button 
@@ -72,11 +52,11 @@ export default function FilterTabs({
       >
         Filter
       </Button>
-      <Tabs index={activeTab} variant='unstyled'>
+      <Tabs index={location.pathname === '/all-games' ? 0 : 1} variant='unstyled'>
         <TabList>
           <Tab
             onClick={(e) => handleTabsChange(e)}
-            _selected={gamesTabActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
+            _selected={{color: '#F5F5F5'}}
             _hover={!gamesTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'
             fontWeight='700'
@@ -86,7 +66,7 @@ export default function FilterTabs({
           </Tab>
           <Tab
             onClick={(e) => handleTabsChange(e)}
-            _selected={wishlistTabActive ? { color: '#F5F5F5' } : { color: '#5C5F63' }}
+            _selected={{color: '#F5F5F5'}}
             _hover={!wishlistTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'
             fontWeight='700'

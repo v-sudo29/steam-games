@@ -3,42 +3,18 @@ import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
 import { Grid, Text } from '@chakra-ui/react'
+import { useGenres } from '../context/GenresContext'
+import { usePage } from '../context/pageContext'
+import { useSortList } from '../context/sortListContext'
+import { useDefaultData } from '../context/defaultDataContext'
 
-interface ResultsInterface {
-  gamesAreLoading: boolean,
-  gamesError: string | null,
-  gamesData: GameObject[] | null,
-  genres: string[],
-  sortList: string[] ,
-  currentResults: { current: GameObject[] | null },
-  pageNumber: number,
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>,
-  gamesTabActive: boolean,
-  wishlistData: GameObject[] | null,
-  wishlistLoading: boolean,
-  wishlistError: string | null,
-  searchData: GameObject[] | null,
-  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>
-}
+export default function AllGamesCards() {
+  const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
+  const { genres } = useGenres()
+  const { pageNumber, setPageNumber } = usePage()
+  const { sortList } = useSortList()
 
-export default function Results({ 
-  gamesAreLoading, 
-  gamesError, 
-  gamesData, 
-  genres, 
-  sortList, 
-  currentResults,
-  pageNumber,
-  setPageNumber,
-  gamesTabActive,
-  wishlistData,
-  wishlistLoading,
-  wishlistError,
-  searchData,
-  setSearchData
-}: ResultsInterface ) {
   let gameCards: (JSX.Element | null)[] | null = null
-  let wishlistCards: (JSX.Element | null)[] | null = null
 
   function resetPageNumber(): void {
     setPageNumber(1)
@@ -137,18 +113,17 @@ export default function Results({
     })
   }
 
-  // Set SEARCH GAME CARDS if searchData is not empty
-  if (searchData) {
-    console.log(searchData)
-    const searchDataCopy = [...searchData]
+  // Set SEARCH GAME CARDS if searchData is not empty --- TODO: create searchCards component
+  // if (searchData) {
+  //   const searchDataCopy = [...searchData]
 
-    gameCards = searchDataCopy.map((game, index) => {
-      if (index < 25) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
-    })
-    currentResults.current = searchDataCopy
-  }
+  //   gameCards = searchDataCopy.map((game, index) => {
+  //     if (index < 25) {
+  //       return <ResultsCard key={game.appId} game={game}/>
+  //     } return null
+  //   })
+  //   currentResults.current = searchDataCopy
+  // }
 
   // Display cards according to page number
   if (pageNumber !== 1 && currentResults.current && currentResults.current.length > 0) {
@@ -159,38 +134,18 @@ export default function Results({
     })
   }
 
-  if (!gamesTabActive && wishlistData) {
-    wishlistCards = wishlistData.map(game => <ResultsCard key={game.name} game={game}/>)
-  }
-
   return (
-    <>
-      {gamesTabActive ? 
-        <Grid 
-          w='100%'
-          h='100%'
-          templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
-          gridGap='1.5rem'
-        >
-          {gamesAreLoading && <h1>...Loading</h1>}
-          {gamesError && <h1>{gamesError}</h1>}
-          {(gameCards && gameCards.length > 0) ? <>{gameCards}</> : 
-            <Text fontWeight='500'>No games found.</Text>
-          }
-        </Grid>
-      :
-        <Grid
-          w='100%'
-          h='100%'
-          templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
-          gridGap='1.5rem'
-        >
-          {wishlistLoading && <h1>...Loading</h1>}
-          {wishlistError && <h1>{wishlistError}</h1>}
-          {wishlistCards && <>{wishlistCards}</>}
-        </Grid>
+    <Grid 
+      w='100%'
+      h='100%'
+      templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
+      gridGap='1.5rem'
+    >
+      {gamesAreLoading && <h1>...Loading</h1>}
+      {gamesError && <h1>{gamesError}</h1>}
+      {(gameCards && gameCards.length > 0) ? <>{gameCards}</> : 
+        <Text fontWeight='500'>No games found.</Text>
       }
-    </>
-    
+    </Grid>
   )
 }
