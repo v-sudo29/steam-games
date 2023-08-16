@@ -1,8 +1,4 @@
-import {
-  Box, 
-  HStack,
-  VStack
-} from "@chakra-ui/react"
+import { HStack, VStack } from "@chakra-ui/react"
 import FilterTabs from "../components/FilterTabs"
 import GenreTags from "../components/GenreTags"
 import { useFilter } from "../context/FilterContext"
