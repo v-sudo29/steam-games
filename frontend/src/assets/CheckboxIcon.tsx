@@ -8,7 +8,7 @@ export default function CheckboxIcon(props: any) {
       <Icon
         w='0.55rem'
         transform={isChecked ? 'scale(1)' :'scale(0)'}
-        transition= '200ms transform ease-in-out'
+        transition= '150ms transform ease-in-out'
         viewBox="0 0 12 12" 
         {...rest}
       >
