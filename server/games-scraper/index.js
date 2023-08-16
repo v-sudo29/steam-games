@@ -100,6 +100,7 @@ async function getGames(url, gameType) {
   // Push games info into gamesArr
   gamesArr.push(...grabInfo)
   await browser.close()
+  console.log(gameType, gamesArr.length)
   return gamesArr
 }
 
