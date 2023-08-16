@@ -1,7 +1,7 @@
 import React from 'react'
 import { Checkbox, VStack, Text } from '@chakra-ui/react'
-import { useGenres } from '../context/GenresContext'
-import { useFilter } from '../context/FilterContext'
+import { useGenres } from '../context/genresContext'
+import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import CustomCheckbox from './CustomCheckbox'
 

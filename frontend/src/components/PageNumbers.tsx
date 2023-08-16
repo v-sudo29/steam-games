@@ -1,6 +1,6 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
 import { useDefaultData } from "../context/defaultDataContext"
-import { useGenres } from "../context/GenresContext"
+import { useGenres } from "../context/genresContext"
 import { usePage } from "../context/pageContext"
 import { useLocation } from "react-router-dom"
 

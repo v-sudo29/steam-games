@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { DefaultDataProvider } from './context/defaultDataContext';
-import { FilterProvider } from './context/FilterContext';
-import { GenresProvider } from './context/GenresContext';
+import { FilterProvider } from './context/filterContext';
+import { GenresProvider } from './context/genresContext';
 import { PageProvider } from './context/pageContext';
 import { SearchProvider } from './context/searchContext';
 import { SortListProvider } from './context/sortListContext';

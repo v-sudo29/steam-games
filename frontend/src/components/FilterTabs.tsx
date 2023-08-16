@@ -8,7 +8,7 @@ import {
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
 import { useDefaultData } from "../context/defaultDataContext"
-import { useFilter } from "../context/FilterContext"
+import { useFilter } from "../context/filterContext"
 import { useTabs } from "../context/tabsContext"
 import { useNavigate, useLocation } from "react-router-dom"
 import { isSafari } from "react-device-detect"
