@@ -30,6 +30,8 @@ function ResultsCard({ game } : { game: GameObject }) {
       color='#F5F5F5'
       p='1rem'
       gap='0.9rem'
+      h='100%'
+      w='100%'
     >
       <Image
         borderRadius='0.4rem'
