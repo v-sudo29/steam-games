@@ -21,7 +21,6 @@ export default function Layout() {
       padding='2rem 2rem'
       bg='#14191F'
       color='#F5F5F5'
-      border='2px solid white'
     >
       <Header 
         setSearchData={setSearchData}

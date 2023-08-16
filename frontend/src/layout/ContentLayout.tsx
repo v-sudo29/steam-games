@@ -8,13 +8,12 @@ import GenreTags from "../components/GenreTags"
 import { useFilter } from "../context/FilterContext"
 import { Outlet } from "react-router-dom"
 import PageNumbers from "../components/PageNumbers"
-import { isSafari } from "react-device-detect"
 
 export default function ContentLayout() {
   const { expanded } = useFilter()
 
   return (
-    <VStack align='start' flex='auto' border='1px solid red'>
+    <VStack align='start' flex='auto'>
       <FilterTabs/>
       <HStack 
         flex='auto'
@@ -23,11 +22,9 @@ export default function ContentLayout() {
         h='100%'
         w='100%'
         align='start'
-        border='1px solid green'
       >
         <GenreTags/>
         <VStack
-          border='1px solid white'
           h={'100%'}
           w={'100%'}
           transition='margin-left 200ms ease'
