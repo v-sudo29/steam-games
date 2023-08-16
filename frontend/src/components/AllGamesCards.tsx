@@ -137,16 +137,27 @@ export default function AllGamesCards() {
   const twentyFiveArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
   const skeletonCards = twentyFiveArr.map((index) => <SkeletonCard key={`${index}-all-games-skeleton-card`}/>)
 
-  return (
+  if (gamesAreLoading || !gameCards) return (
     <Grid 
       w='100%'
       h='100%'
       templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
       gridGap='1.5rem'
     >
-      {(gamesAreLoading || !gameCards || !(gameCards.length > 0) ) && <>{skeletonCards}</>}
-      {gamesError && <h1>{gamesError}</h1>}
-      {(gameCards && gameCards.length > 0) && <>{gameCards}</> }
+      {skeletonCards}
     </Grid>
   )
+  if (gamesError) return <h1>{gamesError}</h1>
+  if (gameCards && gameCards.length > 0) return (
+    <Grid 
+      w='100%'
+      h='100%'
+      templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
+      gridGap='1.5rem'
+    >
+      {gameCards}
+    </Grid>
+  )
+  if (gameCards.length === 0) return <>No games found.</>
+  return <></>
 }
