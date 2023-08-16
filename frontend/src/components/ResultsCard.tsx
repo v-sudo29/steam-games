@@ -1,21 +1,20 @@
-import openNewTab from '../hooks/openNewTab'
-import { GameObject } from '../interface/GameObject'
 import { 
   Box,
   Card,
-  Heading,
   HStack,
   Image,
   Stack,
   Text,
   VStack
 } from '@chakra-ui/react'
+import openNewTab from '../hooks/openNewTab'
+import { GameObject } from '../interface/GameObject'
+import { isSafari } from 'react-device-detect'
 
 function ResultsCard({ game } : { game: GameObject }) {
   return (
     <Card 
       onClick={() => openNewTab(game.url)}
-      flex='auto'
       overflow='hidden'
       variant='outline'
       direction='column'
@@ -30,8 +29,6 @@ function ResultsCard({ game } : { game: GameObject }) {
       color='#F5F5F5'
       p='1rem'
       gap='0.9rem'
-      h='100%'
-      w='100%'
     >
       <Image
         borderRadius='0.4rem'
@@ -39,6 +36,7 @@ function ResultsCard({ game } : { game: GameObject }) {
         alt={game.name} 
         objectFit='cover'
         w='inherit'
+        mb={isSafari ? '0.9rem' : '0'}
       />
 
       {/* GAME INFO */}
@@ -46,11 +44,17 @@ function ResultsCard({ game } : { game: GameObject }) {
 
         {/* GAME TITLE AND CURRENT PRICE */}
         <VStack h='100%' w='100%' align='start'>
-          <Box className='gameTitle' fontSize='0.9rem' fontWeight='600' height='auto'>
+          <Box 
+            className='gameTitle'
+            mb={isSafari ? '0.9rem' : '0'}
+            fontSize='0.9rem'
+            fontWeight='600'
+            height='auto'
+          >
             {game.name}
           </Box>
           <Stack w='100%' mt='auto' direction='row' align='center'>
-            <Text fontWeight='bold' fontSize='1xl'>{game.currentPrice}</Text>
+            <Text mr={isSafari ? '0.5rem' : 0} fontWeight='bold' fontSize='1xl'>{game.currentPrice}</Text>
             <Text as='s' color='#5D6168' fontSize='0.8rem'>{game.originalPrice}</Text>          
           </Stack>
         </VStack>

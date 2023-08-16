@@ -10,14 +10,18 @@ export default function Layout() {
 
   return (
     <Container
-      minH='100vh'
-      maxW='90vw'
       display='flex'
+      minH='100vh'
+      maxH='500vh'
+      minW='0vw'
+      maxW='90vw'
+      w='300rem'
       flexDir='column'
       gap='1rem'
       padding='2rem 2rem'
       bg='#14191F'
       color='#F5F5F5'
+      border='2px solid white'
     >
       <Header 
         setSearchData={setSearchData}

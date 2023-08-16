@@ -2,6 +2,7 @@ import { Grid } from "@chakra-ui/react"
 import { useDefaultData } from "../context/defaultDataContext"
 import ResultsCard from "./ResultsCard"
 import SkeletonCard from "./SkeletonCard"
+import { isSafari } from "react-device-detect"
 
 
 export default function WishlistCards() {
@@ -14,15 +15,17 @@ export default function WishlistCards() {
   const skeletonCards = twentyFiveArr.map((index) => <SkeletonCard key={`${index}-all-games-skeleton-card`}/>)
 
   return (
-    <Grid 
-      w='100%'
-      h='100%'
-      templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
-      gridGap='1.5rem'
-    >
-      {(wishlistLoading || !wishlistCards) && <>{skeletonCards}</>}
-      {wishlistError && <h1>{wishlistError}</h1>}
-      {wishlistCards && <>{wishlistCards}</>}
+    <Grid w='100%' h='100%'>
+      <Grid 
+        w='100%'
+        h={!isSafari ? '100%' :'min-content'}
+        templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
+        gridGap='1.5rem'
+      >
+        {(wishlistLoading || !wishlistCards) && <>{skeletonCards}</>}
+        {wishlistError && <h1>{wishlistError}</h1>}
+        {wishlistCards && <>{wishlistCards}</>}
+      </Grid>
     </Grid>
   )
 }

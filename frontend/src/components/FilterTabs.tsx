@@ -11,6 +11,7 @@ import { useDefaultData } from "../context/defaultDataContext"
 import { useFilter } from "../context/FilterContext"
 import { useTabs } from "../context/tabsContext"
 import { useNavigate, useLocation } from "react-router-dom"
+import { isSafari } from "react-device-detect"
 
 export default function FilterTabs() {
   const { wishlistData } = useDefaultData()
@@ -44,6 +45,8 @@ export default function FilterTabs() {
     <HStack gap='2rem'>
       <Button 
         onClick={handleFilterBtnClick}
+        mr={isSafari ? '2rem' : 0}
+        border='none'
         bg='#2F3740' 
         leftIcon={!expanded ? <FilterIcon/> : <ExitIcon/>}
         color='#F5F5F5'
@@ -56,6 +59,7 @@ export default function FilterTabs() {
         <TabList>
           <Tab
             onClick={(e) => handleTabsChange(e)}
+            border='none'
             _selected={{color: '#F5F5F5'}}
             _hover={!gamesTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'
@@ -66,6 +70,7 @@ export default function FilterTabs() {
           </Tab>
           <Tab
             onClick={(e) => handleTabsChange(e)}
+            border='none'
             _selected={{color: '#F5F5F5'}}
             _hover={!wishlistTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
             color='#5C5F63'

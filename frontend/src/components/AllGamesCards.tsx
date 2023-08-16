@@ -2,12 +2,13 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
-import { Grid } from '@chakra-ui/react'
+import { Grid, Stack } from '@chakra-ui/react'
 import { useGenres } from '../context/GenresContext'
 import { usePage } from '../context/pageContext'
 import { useSortList } from '../context/sortListContext'
 import { useDefaultData } from '../context/defaultDataContext'
 import SkeletonCard from './SkeletonCard'
+import { isSafari } from 'react-device-detect'
 
 export default function AllGamesCards() {
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
@@ -149,14 +150,17 @@ export default function AllGamesCards() {
   )
   if (gamesError) return <h1>{gamesError}</h1>
   if (gameCards && gameCards.length > 0) return (
-    <Grid 
-      w='100%'
-      h='100%'
-      templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
-      gridGap='1.5rem'
-    >
-      {gameCards}
+    <Grid w='100%' h='100%'>
+      <Grid 
+        w='100%'
+        h={!isSafari ? '100%' :'min-content'}
+        templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
+        gridGap='1.5rem'
+      >
+        {gameCards}
+      </Grid>
     </Grid>
+      
   )
   if (gameCards.length === 0) return <>No games found.</>
   return <></>
