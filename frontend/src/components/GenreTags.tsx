@@ -20,7 +20,7 @@ export default function GenreTags() {
   const { expanded } = useFilter()
   const { genres, setGenres } = useGenres()
 
-  // Handle genre tag click
+  // Handle genre tag click -- TODO: remove classlist
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     e.preventDefault()
     const currentGenre = e.target as HTMLInputElement

@@ -10,7 +10,7 @@ import {
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
 import axios from "axios"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { GameObject } from "../interface/GameObject"
 
 interface HeaderInterface {
@@ -37,7 +37,7 @@ export default function Header({ setSearchData, setGamesTabActive, setWishlistTa
         return
     }
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
-  } 
+  }
   
   return (
     <Box mb='3rem'>

@@ -1,19 +1,20 @@
 import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Grid, Text } from '@chakra-ui/react'
 import { useGenres } from '../context/GenresContext'
 import { usePage } from '../context/pageContext'
 import { useSortList } from '../context/sortListContext'
 import { useDefaultData } from '../context/defaultDataContext'
+import SkeletonCard from './SkeletonCard'
 
 export default function AllGamesCards() {
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
   const { genres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList } = useSortList()
-
+  const [doneFiltering, setDoneFiltering] = useState<boolean>(false)
   let gameCards: (JSX.Element | null)[] | null = null
 
   function resetPageNumber(): void {
@@ -134,18 +135,31 @@ export default function AllGamesCards() {
     })
   }
 
+  const twentyFiveArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+  
+  const skeletonCards = twentyFiveArr.map((index) => {
+    return (
+      <SkeletonCard key={`${index}-all-games-skeleton-card`}/>
+    )
+  })
+
+  useEffect(() => {
+    if (gameCards) {
+      setDoneFiltering(true)
+    }
+    console.log(doneFiltering)
+  }, [doneFiltering])
+
   return (
     <Grid 
       w='100%'
       h='100%'
-      templateColumns='repeat(auto-fill, minmax(14rem, 1fr))'
+      templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
       gridGap='1.5rem'
     >
-      {gamesAreLoading && <h1>...Loading</h1>}
+      {(gamesAreLoading && !gameCards) && <>{skeletonCards}</>}
       {gamesError && <h1>{gamesError}</h1>}
-      {(gameCards && gameCards.length > 0) ? <>{gameCards}</> : 
-        <Text fontWeight='500'>No games found.</Text>
-      }
+      {(gameCards && gameCards.length > 0) && <>{gameCards}</> }
     </Grid>
   )
 }
