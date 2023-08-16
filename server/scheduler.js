@@ -29,7 +29,7 @@ async function updateWishlists() {
 
 async function updateGames() {
   const gamesData = await gameScraper()
-  console.log(gamesData)
+  console.log(gamesData.length)
     // Drop games collection
   await mongoose.connection.db.dropCollection('games', function(err, result) {
     console.log('dropped collection!')
