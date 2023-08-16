@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { GameObject } from '../interface/GameObject'
 
 interface SearchObject {

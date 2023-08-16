@@ -1,64 +1,79 @@
-import { Card, Skeleton, SkeletonText, useBreakpointValue } from "@chakra-ui/react"
+import { Card, Skeleton, SkeletonText } from "@chakra-ui/react"
 
 export default function SkeletonCard() {
-  const skeletonHeight = useBreakpointValue({
-    base: '45%',
-    sm: '55%',
-    md: '45%'
-  })
+  const useSkeletonTextHeight = (): string => {
+    if (window.innerWidth < 480) return '0.5rem';
+    if (window.innerWidth < 640) return '0.6rem';
+    if (window.innerWidth < 768) return '0.8rem';
+    return '0.7rem';
+  }
 
-  const cardPaddingTop = useBreakpointValue({
-    base: '80%',
-    xs: '60%',
-    sm: '70%',
-    md: '75%'
-  })
+  const useSkeletonHeight = (): string => {
+    if (window.innerWidth < 480) return '55%'
+    if (window.innerWidth < 768) return '55%'
+    return '45%'
+  }
 
-  const skeletonTextMarginTop = useBreakpointValue({
-    base: '0rem',
-    sm: '1rem',
-    md: '0rem',
-  })
+  const useSkeletonTextMarginTop = (): string => {
+    if (window.innerWidth < 480) return '1.5rem'
+    if (window.innerWidth < 768) return '1.5rem'
+    return '0rem'
+  }
 
-  const skeletonTextHeight = useBreakpointValue({
-    base: '0.4rem',
-    xs: '0.6rem',
-    sm: '0.6rem',
-    md: '0.6rem',
-    lg: '0.8rem'
-  })
+  const useSkeletonTextSpacing = (): string => {
+    if (window.innerWidth < 480) return '0.5rem'
+    if (window.innerWidth < 700) return '0.8rem'
+    return '0.5rem'
+  }
 
-  const spacing = useBreakpointValue({
-    xs: '1rem',
-    s: '1rem',
-    md: '0.8rem',
-    lg: '0.5rem'
-  })
+  const useCardPaddingTop = (): string => {
+    if (window.innerWidth < 320) return '80%'
+    if (window.innerWidth < 480) return '80%'
+    if (window.innerWidth < 700) return '75%'
+    return '75%'
+  }
+
+  const useSkeletonTextNumLines = (): number => {
+    if (window.innerWidth < 320) return 3 
+    if (window.innerWidth < 632) return 3
+    if (window.innerWidth < 700) return 2
+    return 3
+  }
+
+  const responsiveTextHeight = useSkeletonTextHeight(); // no base value
+  const responsiveHeight = useSkeletonHeight()
+  const responsiveMarginTop = useSkeletonTextMarginTop()
+  const responsiveTextSpacing = useSkeletonTextSpacing()
+  const responsiveCardPaddingTop = useCardPaddingTop()
+  const responsiveNumLines = useSkeletonTextNumLines()
 
   return (
       <Card
         borderRadius='0.8rem'
         pos='relative'
         height='0'
-        pt={cardPaddingTop}
+        pt={responsiveCardPaddingTop}
+        bg='#1C222C'
       >
         <Skeleton 
           pos='absolute'
           top='6%'
-          left='4%'
-          h={skeletonHeight}
-          w='92%'
+          left='5%'
+          h={responsiveHeight}
+          w='90%'
           borderRadius='0.4rem'
+          startColor='#2F3740'
         />
         <SkeletonText
           pos='absolute'
           top='60%'
           left='5%'
           w='90%'
-          mt={skeletonTextMarginTop}
-          skeletonHeight={skeletonTextHeight}
-          noOfLines={3}
-          spacing={spacing}
+          mt={responsiveMarginTop}
+          skeletonHeight={responsiveTextHeight}
+          noOfLines={responsiveNumLines}
+          spacing={responsiveTextSpacing}
+          startColor='#2F3740'
         />
       </Card>
   )

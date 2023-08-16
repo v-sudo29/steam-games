@@ -1,8 +1,8 @@
 import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
 import { GameObject } from '../interface/GameObject'
-import { useEffect, useState } from 'react'
-import { Grid, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { Grid } from '@chakra-ui/react'
 import { useGenres } from '../context/GenresContext'
 import { usePage } from '../context/pageContext'
 import { useSortList } from '../context/sortListContext'
@@ -14,7 +14,6 @@ export default function AllGamesCards() {
   const { genres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList } = useSortList()
-  const [doneFiltering, setDoneFiltering] = useState<boolean>(false)
   let gameCards: (JSX.Element | null)[] | null = null
 
   function resetPageNumber(): void {
@@ -136,19 +135,7 @@ export default function AllGamesCards() {
   }
 
   const twentyFiveArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
-  
-  const skeletonCards = twentyFiveArr.map((index) => {
-    return (
-      <SkeletonCard key={`${index}-all-games-skeleton-card`}/>
-    )
-  })
-
-  useEffect(() => {
-    if (gameCards) {
-      setDoneFiltering(true)
-    }
-    console.log(doneFiltering)
-  }, [doneFiltering])
+  const skeletonCards = twentyFiveArr.map((index) => <SkeletonCard key={`${index}-all-games-skeleton-card`}/>)
 
   return (
     <Grid 
@@ -157,7 +144,7 @@ export default function AllGamesCards() {
       templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
       gridGap='1.5rem'
     >
-      {(gamesAreLoading && !gameCards) && <>{skeletonCards}</>}
+      {(gamesAreLoading || !gameCards || !(gameCards.length > 0) ) && <>{skeletonCards}</>}
       {gamesError && <h1>{gamesError}</h1>}
       {(gameCards && gameCards.length > 0) && <>{gameCards}</> }
     </Grid>
