@@ -3,6 +3,7 @@ import { Checkbox, VStack, Text } from '@chakra-ui/react'
 import { useGenres } from '../context/GenresContext'
 import { useFilter } from '../context/FilterContext'
 import { isSafari } from 'react-device-detect'
+import CustomCheckbox from './CustomCheckbox'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -41,15 +42,11 @@ export default function GenreTags() {
   // SET GENRE FILTER TAGS
   const genreTags = genreFilters.map(genre => {
     return (
-      <Checkbox
+      <CustomCheckbox
         key={`${genre}-search-genre-tag`} 
-        onChange={(e) => handleGenreClick(e)} 
-        className='search-genre-tag'
-        value={genre}
-        w='100%'
-        mb={isSafari ? '0.5rem' : 0}
-      >{genre}
-      </Checkbox>
+        genre={genre}
+        handleGenreClick={(e) => handleGenreClick(e)}
+      />
     )
   })
 
