@@ -44,7 +44,7 @@ function ResultsCard({ game } : { game: GameObject }) {
 
         {/* GAME TITLE AND CURRENT PRICE */}
         <VStack h='100%' w='100%' align='start'>
-          <Box className='gameTitle' fontSize='0.9rem' fontWeight='600' maxH='3rem' height='auto'>
+          <Box className='gameTitle' fontSize='0.9rem' fontWeight='600' height='auto'>
             {game.name}
           </Box>
           <Stack w='100%' mt='auto' direction='row' align='center'>
