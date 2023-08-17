@@ -1,8 +1,9 @@
-import React from 'react'
-import { Checkbox, VStack, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { VStack, Text, HStack } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
+import { Form } from 'react-router-dom'
 import CustomCheckbox from './CustomCheckbox'
 
 export default function GenreTags() {
@@ -21,6 +22,7 @@ export default function GenreTags() {
   ]
   const { expanded } = useFilter()
   const { genres, setGenres } = useGenres()
+  let genreTags: JSX.Element[] = []
 
   // Handle genre tag click -- TODO: remove classlist
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -34,21 +36,27 @@ export default function GenreTags() {
     } 
     else {
       currentGenre.classList.add('genre-active')
-      if (genres.length === 0) setGenres([currentGenre.value])
+      if (genres.length === 0) setGenres([currentGenre.value])  
       else setGenres(prevGenres => [...prevGenres, currentGenre.value])
     }
   }
 
+  const handleReset = (): void => {
+    const formElement = document.querySelector('.form') as HTMLFormElement
+    formElement.reset()
+  }
+
   // SET GENRE FILTER TAGS
-  const genreTags = genreFilters.map(genre => {
+  genreTags = genreFilters.map(genre => {
     return (
       <CustomCheckbox
-        key={`${genre}-search-genre-tag`} 
+        key={`${genre}-genre-tag`}
         genre={genre}
         handleGenreClick={(e) => handleGenreClick(e)}
       />
     )
   })
+
 
   return (
     <>
@@ -59,8 +67,23 @@ export default function GenreTags() {
         align='start'
         transition='all 200ms ease'
       >
-        <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
-        {genreTags}
+        <HStack gap='1rem'>
+          <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
+          {genres.length > 0 && 
+            <Text
+              onClick={handleReset}
+              cursor='pointer'
+              mb={isSafari ? '1.5rem' : '1rem'}
+              fontWeight='600'
+              color='#F5F5F5'
+            >
+              Clear
+            </Text>
+          }
+        </HStack>
+        <Form className='form'>
+          {genreTags}
+        </Form>
       </VStack> 
     </>
   )

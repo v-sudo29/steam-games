@@ -11,12 +11,15 @@ import { useDefaultData } from "../context/defaultDataContext"
 import { useFilter } from "../context/filterContext"
 import { useTabs } from "../context/tabsContext"
 import { useNavigate, useLocation } from "react-router-dom"
+import { useGenres } from "../context/genresContext"
 import { isSafari } from "react-device-detect"
 
 export default function FilterTabs() {
   const { wishlistData } = useDefaultData()
   const { expanded, setExpanded } = useFilter()
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
+  const { genres } = useGenres()
+
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -51,9 +54,10 @@ export default function FilterTabs() {
         leftIcon={!expanded ? <FilterIcon/> : <ExitIcon/>}
         color='#F5F5F5'
         p='0rem 2rem'
+        pr={genres.length > 0 ? '2rem' : '2rem'}
         _hover={{ backgroundColor: '#3b454f' }}
       >
-        Filter
+        Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
       </Button>
       <Tabs index={location.pathname === '/all-games' ? 0 : 1} variant='unstyled'>
         <TabList>
