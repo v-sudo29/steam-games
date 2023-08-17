@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { VStack, Text, HStack } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
@@ -56,7 +56,6 @@ export default function GenreTags() {
       />
     )
   })
-
 
   return (
     <>
