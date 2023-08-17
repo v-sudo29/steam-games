@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { VStack, Text, HStack } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form } from 'react-router-dom'
 import CustomCheckbox from './CustomCheckbox'
+import { flushSync } from 'react-dom'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -24,22 +25,28 @@ export default function GenreTags() {
   const { genres, setGenres } = useGenres()
   let genreTags: JSX.Element[] = []
 
-  // Handle genre tag click -- TODO: remove classlist
+  // Handle genre tag click -- TODO: remove classlist, change logic to handle inaccurate state changes
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     e.preventDefault()
     const currentGenre = e.target as HTMLInputElement
 
     if (currentGenre.classList.contains('genre-active')) {
       currentGenre.classList.remove('genre-active')
-      if (genres.length === 1) setGenres([])
-      else setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
+      if (genres.length === 1) flushSync(() => setGenres([]))
+      else flushSync(() => {
+        setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
+      })
     } 
     else {
       currentGenre.classList.add('genre-active')
-      if (genres.length === 0) setGenres([currentGenre.value])  
-      else setGenres(prevGenres => [...prevGenres, currentGenre.value])
+      if (genres.length === 0) flushSync(() => setGenres([currentGenre.value]))
+      else flushSync(() => setGenres(prevGenres => [...prevGenres, currentGenre.value]))
     }
   }
+
+  useEffect(() => {
+    console.log(genres)
+  }, [genres])
 
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
