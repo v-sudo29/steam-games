@@ -44,6 +44,7 @@ export default function GenreTags() {
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
     formElement.reset()
+    setGenres([])
   }
 
   // SET GENRE FILTER TAGS
