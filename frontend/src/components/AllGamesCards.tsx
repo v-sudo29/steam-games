@@ -157,6 +157,7 @@ export default function AllGamesCards() {
         templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
         gridGap='1.5rem'
         role='list'
+        aria-label='Search results'
       >
         {gameCards}
       </Grid>

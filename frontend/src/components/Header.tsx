@@ -10,8 +10,9 @@ import {
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
 import axios from "axios"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { GameObject } from "../interface/GameObject"
+import { useSearchParams } from "react-router-dom"
 
 interface HeaderInterface {
   setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
@@ -21,17 +22,22 @@ interface HeaderInterface {
 
 export default function Header({ setSearchData, setGamesTabActive, setWishlistTabActive } : HeaderInterface) {
   const [emptyError, setEmptyError] = useState<boolean>(false)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState<string | null>(searchParams.get('q'))
   const searchRef = useRef<HTMLInputElement>(null)
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value !== '') {
         const searchParam = searchRef.current.value
-
-        axios.get(`http://localhost:3001/search?q=${searchParam}`)
+        axios.get(`https://steam-games-server.onrender.com/search?q=${searchParam}`)
           .then(res => {
             setGamesTabActive(true)
             setSearchData(res.data)
             setWishlistTabActive(false)
+            setQuery(searchParam)
+            setSearchParams({
+              q: searchParam
+            })
           })
           .catch(err => console.error(err))
         return
@@ -39,6 +45,10 @@ export default function Header({ setSearchData, setGamesTabActive, setWishlistTa
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
   }
   
+  useEffect(() => {
+    if (query) console.log(query)
+  }, [query])
+
   return (
     <header style={{ marginBottom: '3rem' }}>
       <HStack justify='center'>

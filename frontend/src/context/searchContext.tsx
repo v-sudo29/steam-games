@@ -3,7 +3,7 @@ import { GameObject } from '../interface/GameObject'
 
 interface SearchObject {
   searchData: GameObject[] | null,
-  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>
+  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
 }
 
 const SearchContext = createContext<SearchObject>({} as SearchObject)
