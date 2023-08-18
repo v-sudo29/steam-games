@@ -48,6 +48,7 @@ export default function SkeletonCard() {
   const responsiveNumLines = useSkeletonTextNumLines()
 
   return (
+    <article aria-busy='true' aria-label='Loading'>
       <Card
         borderRadius='0.8rem'
         pos='relative'
@@ -55,7 +56,8 @@ export default function SkeletonCard() {
         pt={responsiveCardPaddingTop}
         bg='#1C222C'
       >
-        <Skeleton 
+        <Skeleton
+          role='img'
           pos='absolute'
           top='6%'
           left='5%'
@@ -76,5 +78,6 @@ export default function SkeletonCard() {
           startColor='#2F3740'
         />
       </Card>
+    </article>
   )
 }

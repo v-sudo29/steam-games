@@ -156,11 +156,11 @@ export default function AllGamesCards() {
         h={!isSafari ? '100%' :'min-content'}
         templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
         gridGap='1.5rem'
+        role='list'
       >
         {gameCards}
       </Grid>
     </Grid>
-      
   )
   if (gameCards.length === 0) return <>No games found.</>
   return <></>

@@ -70,7 +70,8 @@ export default function GenreTags() {
       <VStack 
         pos='absolute'
         opacity={expanded ? '100%' : '0%'}
-        minW='17rem' 
+        minW='12rem' 
+        maxW='17rem'
         align='start'
         transition='all 200ms ease'
       >
@@ -88,7 +89,7 @@ export default function GenreTags() {
             </Text>
           }
         </HStack>
-        <Form className='form'>
+        <Form id='filters' className='form' role="group" aria-label="Filter Options">
           {genreTags}
         </Form>
       </VStack> 

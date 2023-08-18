@@ -46,8 +46,10 @@ export default function FilterTabs() {
 
   return (
     <HStack gap='2rem'>
-      <Button 
+      <Button
         onClick={handleFilterBtnClick}
+        aria-expanded={expanded}
+        aria-controls='filters'
         mr={isSafari ? '2rem' : 0}
         border='none'
         bg='#2F3740' 

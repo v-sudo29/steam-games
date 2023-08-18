@@ -21,6 +21,8 @@ export default function WishlistCards() {
         h={!isSafari ? '100%' :'min-content'}
         templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
         gridGap='1.5rem'
+        role='list'
+        aria-label='Search results'
       >
         {(wishlistLoading || !wishlistCards) && <>{skeletonCards}</>}
         {wishlistError && <h1>{wishlistError}</h1>}
