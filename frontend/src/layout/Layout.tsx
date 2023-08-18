@@ -27,7 +27,9 @@ export default function Layout() {
         setGamesTabActive={setGamesTabActive}
         setWishlistTabActive={setWishlistTabActive}
       />
-      <Outlet/>
+      <main>
+        <Outlet/>
+      </main>
     </Container>
   )
 }
