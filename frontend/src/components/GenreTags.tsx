@@ -5,7 +5,6 @@ import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form } from 'react-router-dom'
 import CustomCheckbox from './CustomCheckbox'
-import { flushSync } from 'react-dom'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -25,28 +24,25 @@ export default function GenreTags() {
   const { genres, setGenres } = useGenres()
   let genreTags: JSX.Element[] = []
 
-  // Handle genre tag click -- TODO: remove classlist, change logic to handle inaccurate state changes
+  // Handle genre tag click
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     e.preventDefault()
-    const currentGenre = e.target as HTMLInputElement
 
-    if (currentGenre.classList.contains('genre-active')) {
-      currentGenre.classList.remove('genre-active')
-      if (genres.length === 1) flushSync(() => setGenres([]))
-      else flushSync(() => {
-        setGenres(prevGenres => prevGenres.filter(genre => genre !== currentGenre.value))
-      })
-    } 
-    else {
-      currentGenre.classList.add('genre-active')
-      if (genres.length === 0) flushSync(() => setGenres([currentGenre.value]))
-      else flushSync(() => setGenres(prevGenres => [...prevGenres, currentGenre.value]))
-    }
+    // Get filters container and checkboxes
+    const filtersContainer = document.getElementById('filters') as HTMLFormElement
+    const labelElements = filtersContainer.querySelectorAll('label')
+    const selectedFilters: string[] = []
+
+    // Push active filters to array
+    labelElements.forEach(label => {
+      const filterName = label.innerText
+      const inputChecked = (label.querySelector('input') as HTMLInputElement).checked
+      if (inputChecked) selectedFilters.push(filterName)
+    })
+
+    // Set genres state to selectedFilters array
+    setGenres(selectedFilters)
   }
-
-  useEffect(() => {
-    console.log(genres)
-  }, [genres])
 
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
