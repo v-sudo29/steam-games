@@ -8,7 +8,6 @@ export default function SortMenu() {
   const animateRef = useRef<boolean>()
   const { sortList, setSortList } = useSortList()
   const selected = sortList[0]
-
   animateRef.current = open
   const options = [
     'Discount',
@@ -44,6 +43,12 @@ export default function SortMenu() {
     setOpen(false)
   }
 
+  const closeSelectMenu = (e: MouseEvent): void => {
+    const element = e.target as HTMLElement
+    if (element.id !== 'selectedCard' && element.id !== 'carrotDown' && 
+      !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
+  }
+
   const optionCards = options.map(option => {
     if (option === selected) return null
     return (
@@ -61,12 +66,6 @@ export default function SortMenu() {
       </Box>
     )
   })
-
-  const closeSelectMenu = (e: MouseEvent): void => {
-    const element = e.target as HTMLElement
-    if (element.id !== 'selectedCard' && element.id !== 'carrotDown' && 
-      !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
-  }
 
   useEffect(() => {
     document.addEventListener('mousedown', closeSelectMenu)
