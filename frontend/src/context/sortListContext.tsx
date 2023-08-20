@@ -12,7 +12,7 @@ export const useSortList = () => {
 }
 
 export const SortListProvider = ({ children } : { children: ReactNode }) => {
-  const [sortList, setSortList] = useState<string[]>([])
+  const [sortList, setSortList] = useState<string[]>(['Discount'])
 
   const sortInfo = {
     sortList, setSortList

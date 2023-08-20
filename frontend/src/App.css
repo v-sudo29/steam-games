@@ -30,3 +30,8 @@
   -webkit-line-clamp: 2; /* number of lines */
   -webkit-box-orient: vertical;
 }
+
+/* Sort Menu */
+.sortMenu {
+  padding-left: '1rem'
+}

@@ -11,7 +11,7 @@ export default function SortTags({ setSortList } : {  setSortList: React.Dispatc
 
   // FUNCTION: Handle sort clicks
   const handleSortClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e?.preventDefault()
+    e.preventDefault()
     const currentSortBtn = e.target as HTMLButtonElement
     const currentSortText = currentSortBtn.innerText
     const sortTags = document.querySelectorAll('.sorting-tag') as NodeListOf<HTMLButtonElement>

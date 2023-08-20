@@ -4,7 +4,6 @@ import ResultsCard from "./ResultsCard"
 import SkeletonCard from "./SkeletonCard"
 import { isSafari } from "react-device-detect"
 
-
 export default function WishlistCards() {
   const { wishlistLoading, wishlistError, wishlistData } = useDefaultData()
   let wishlistCards: (JSX.Element | null)[] | null = null

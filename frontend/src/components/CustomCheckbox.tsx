@@ -11,8 +11,7 @@ export default function CustomCheckbox({ genre, handleGenreClick} : { genre: str
       className='checkbox'
       value={genre}
       w='100%'
-      mb='0.5rem'
-      
+      mb='0.5rem' 
     >
       {genre}
     </Checkbox>

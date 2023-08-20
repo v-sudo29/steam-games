@@ -13,6 +13,7 @@ import { useTabs } from "../context/tabsContext"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useGenres } from "../context/genresContext"
 import { isSafari } from "react-device-detect"
+import SortMenu from "./SortMenu"
 
 export default function FilterTabs() {
   const { wishlistData } = useDefaultData()
@@ -45,7 +46,7 @@ export default function FilterTabs() {
   }
 
   return (
-    <HStack gap='2rem'>
+    <HStack gap='2rem' w='100%'>
       <Button
         onClick={handleFilterBtnClick}
         aria-expanded={expanded}
@@ -87,6 +88,7 @@ export default function FilterTabs() {
           </Tab>
         </TabList>
       </Tabs>
+      <SortMenu/>
     </HStack>
   )
 }
