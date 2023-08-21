@@ -1,5 +1,6 @@
 import ResultsCard from './ResultsCard'
 import sortGames from '../hooks/sortGames'
+import SkeletonCard from './SkeletonCard'
 import { GameObject } from '../interface/GameObject'
 import { useEffect } from 'react'
 import { Grid } from '@chakra-ui/react'
@@ -7,14 +8,15 @@ import { useGenres } from '../context/genresContext'
 import { usePage } from '../context/pageContext'
 import { useSortList } from '../context/sortListContext'
 import { useDefaultData } from '../context/defaultDataContext'
-import SkeletonCard from './SkeletonCard'
 import { isSafari } from 'react-device-detect'
+import { useSearch } from '../context/searchContext'
 
 export default function AllGamesCards() {
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
   const { genres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList } = useSortList()
+  const { searchData, query } = useSearch()
   let gameCards: (JSX.Element | null)[] | null = null
 
   function resetPageNumber(): void {
@@ -115,16 +117,16 @@ export default function AllGamesCards() {
   }
 
   // Set SEARCH GAME CARDS if searchData is not empty --- TODO: create searchCards component
-  // if (searchData) {
-  //   const searchDataCopy = [...searchData]
+  if (searchData) {
+    const searchDataCopy = [...searchData]
 
-  //   gameCards = searchDataCopy.map((game, index) => {
-  //     if (index < 60) {
-  //       return <ResultsCard key={game.appId} game={game}/>
-  //     } return null
-  //   })
-  //   currentResults.current = searchDataCopy
-  // }
+    gameCards = searchDataCopy.map((game, index) => {
+      if (index < 60) {
+        return <ResultsCard key={game.appId} game={game}/>
+      } return null
+    })
+    currentResults.current = searchDataCopy
+  }
 
   // Display cards according to page number
   if (pageNumber !== 1 && currentResults.current && currentResults.current.length > 0) {

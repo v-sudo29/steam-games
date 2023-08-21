@@ -14,16 +14,17 @@ import { useNavigate, useLocation } from "react-router-dom"
 import { useGenres } from "../context/genresContext"
 import { isSafari } from "react-device-detect"
 import SortMenu from "./SortMenu"
+import { useSearch } from "../context/searchContext"
 
 export default function FilterTabs() {
   const { wishlistData } = useDefaultData()
   const { expanded, setExpanded } = useFilter()
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
   const { genres } = useGenres()
+  const { searchData, query } = useSearch()
 
   const navigate = useNavigate()
   const location = useLocation()
-
 
   const handleTabsChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const buttonElement = e.target as HTMLButtonElement
@@ -32,7 +33,10 @@ export default function FilterTabs() {
     if (tabName === 'All Games') {
       setGamesTabActive(true)
       setWishlistTabActive(false)
-      navigate('all-games')
+      if (searchData) {
+        navigate(`all-games?q=${query}`) // TODO: store url AND searchData in localStorage
+        return
+      } else navigate('all-games')
     }
     else {
       setWishlistTabActive(true)
@@ -41,9 +45,7 @@ export default function FilterTabs() {
     }
   }
 
-  const handleFilterBtnClick = () => {
-    setExpanded(prev => !prev)
-  }
+  const handleFilterBtnClick = () => setExpanded(prev => !prev)
 
   return (
     <HStack gap='2rem' w='100%'>
@@ -62,7 +64,7 @@ export default function FilterTabs() {
       >
         Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
       </Button>
-      <Tabs index={location.pathname === '/all-games' ? 0 : 1} variant='unstyled'>
+      <Tabs index={location.pathname.includes('all-games') ? 0 : 1} variant='unstyled'>
         <TabList>
           <Tab
             onClick={(e) => handleTabsChange(e)}

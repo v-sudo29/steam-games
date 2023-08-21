@@ -4,33 +4,36 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  HStack
+  HStack,
+  InputRightElement,
+  Text
  } from "@chakra-ui/react"
 
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
+import ExitIcon from "../assets/ExitIcon"
 import axios from "axios"
-import { useEffect, useRef, useState } from "react"
-import { GameObject } from "../interface/GameObject"
+import { useRef, useState } from "react"
 import { useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useSearch } from "../context/searchContext"
+import { useTabs } from "../context/tabsContext"
 
-interface HeaderInterface {
-  setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
-  setGamesTabActive: React.Dispatch<React.SetStateAction<boolean>>,
-  setWishlistTabActive: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export default function Header({ setSearchData, setGamesTabActive, setWishlistTabActive } : HeaderInterface) {
+export default function Header() {
   const [emptyError, setEmptyError] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState<string | null>(searchParams.get('q'))
+  const { searchData, setSearchData, query, setQuery } = useSearch()
+  const { setGamesTabActive, setWishlistTabActive } = useTabs()
   const searchRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
 
+  // Handle search when 'Enter' key is pressed
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value !== '') {
         const searchParam = searchRef.current.value
         axios.get(`https://steam-games-server.onrender.com/search?q=${searchParam}`)
           .then(res => {
+            navigate('/all-games')
             setGamesTabActive(true)
             setSearchData(res.data)
             setWishlistTabActive(false)
@@ -44,10 +47,14 @@ export default function Header({ setSearchData, setGamesTabActive, setWishlistTa
     }
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
   }
-  
-  useEffect(() => {
-    if (query) console.log(query)
-  }, [query])
+
+  // Handle clear search
+  const handleClearSearch = (): void => {
+    setSearchData(null)
+    
+    // Change url params to /all-games
+    navigate('/all-games')
+  }
 
   return (
     <header style={{ marginBottom: '3rem' }}>
@@ -59,7 +66,7 @@ export default function Header({ setSearchData, setGamesTabActive, setWishlistTa
         </Box>
         <section
           style={{ flexGrow: '3' }}>
-          <InputGroup role='search' display='flex' justifyContent='center'>
+          <InputGroup maxW='45rem' role='search' display='flex' justifyContent='center'>
             <InputLeftElement
               role='presentation'
               pos='relative'
@@ -69,24 +76,49 @@ export default function Header({ setSearchData, setGamesTabActive, setWishlistTa
             />
             <Input
               ref={searchRef}
-              aria-label='search'
               pos='relative'
+              aria-label='search'
               fontFamily='Rubik'
               fontWeight='semibold'
               fontSize='0.9rem'
               placeholder='Search for games...'
               _placeholder={{ color: '#535B65'}}
+              _focus={{
+                backgroundColor: '#E2E4E9',
+                color: '#41464B',
+                _placeholder: {
+                  color: '#7E828B'
+                }
+              }}
               focusBorderColor={emptyError ? 'red.600' : '#F5F5F5'}
               border='none'
               bg='#2A3441'
               borderRadius='5rem'
-              maxW='45rem'
               pl='3rem'
               onKeyDown={(e) => handleEnter(e)}
               onChange={() => {
                 if ( searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
               }}
             />
+            {searchData && (
+              <InputRightElement
+                display='flex'
+                justifyContent='end'
+                w='inherit'
+                pointerEvents='none'
+              >
+                <HStack
+                  bg='#8439FF'
+                  borderRadius='10rem'
+                  p='0.2rem 1rem'
+                  mr='0.3rem'
+                  pointerEvents='visible'
+                >
+                  <Text fontWeight='700'>{searchData && query}</Text>
+                  <Box onClick={handleClearSearch} cursor='pointer'><ExitIcon size={16}/></Box>
+                </HStack>
+              </InputRightElement>
+            )}
           </InputGroup>
         </section>
       </HStack>
