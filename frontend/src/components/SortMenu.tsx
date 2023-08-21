@@ -62,7 +62,7 @@ export default function SortMenu() {
           fontWeight: '600'
         }}
         cursor='pointer'
-        w='100%'
+        w='inherit'
         p='0.4rem 1.4rem'
       >
         {option}
@@ -76,7 +76,7 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='max-content'>
+    <Box ml='auto' w='11rem'>
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>
