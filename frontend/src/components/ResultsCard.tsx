@@ -59,7 +59,7 @@ function ResultsCard({ game } : { game: GameObject }) {
                 marginBottom: isSafari ? '0.9rem' : '0',
                 fontSize:'0.9rem',
                 fontWeight: '600',
-                height: 'auto',
+                height: '3rem'
               }}>
               {game.name}
             </figcaption>

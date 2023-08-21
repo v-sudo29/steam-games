@@ -12,7 +12,6 @@ export default function Layout() {
     <Container
       display='flex'
       minH='100vh'
-      maxH='500vh'
       minW='0vw'
       maxW='90vw'
       w='300rem'
@@ -22,11 +21,7 @@ export default function Layout() {
       bg='#14191F'
       color='#F5F5F5'
     >
-      <Header 
-        setSearchData={setSearchData}
-        setGamesTabActive={setGamesTabActive}
-        setWishlistTabActive={setWishlistTabActive}
-      />
+      <Header/>
       <main>
         <Outlet/>
       </main>

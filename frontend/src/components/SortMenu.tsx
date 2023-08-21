@@ -21,7 +21,7 @@ export default function SortMenu() {
       id='selectedCard'
       as='div'
       pos='relative'
-      w='9rem'
+      w='inherit'
       onClick={() => setOpen(prev => !prev)}
       cursor='pointer'
       rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
@@ -57,7 +57,10 @@ export default function SortMenu() {
         className='optionCard'
         onClick={(e) => handleSelection(e)}
         fontWeight='400'
-        _hover={{ background:'#3b454f' }}
+        _hover={{ 
+          background: '#3b454f',
+          fontWeight: '600'
+        }}
         cursor='pointer'
         w='100%'
         p='0.4rem 1.4rem'
@@ -73,7 +76,7 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='9rem'>
+    <Box ml='auto' w='9.5rem'>
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>
@@ -86,7 +89,7 @@ export default function SortMenu() {
         pos='absolute'
         zIndex='1'
         borderRadius='0.4rem'
-        bg='rgba(47, 55, 64, 0.92)'
+        bg='rgba(47, 55, 64, 0.85)'
         w='inherit'
         mt='0.7rem'
         align='start'
