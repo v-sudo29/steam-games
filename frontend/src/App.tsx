@@ -10,26 +10,6 @@ import AllGamesCards from './components/AllGamesCards';
 import './App.css';
 
 function App() {
-  const theme = extendTheme({
-    components: {
-      Checkbox: {
-        baseStyle: {
-          icon: {
-            color: 'white',
-          },
-          control: {
-            border: '1px',
-            borderColor: '#4A525C',
-            borderRadius: '0.15rem',
-            marginRight: '0.5rem'
-          },
-          label: {
-            fontWeight: '600'
-          }
-        },
-      },
-    },
-  })
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Layout/>}>
@@ -43,13 +23,7 @@ function App() {
   )
 
   return (
-    <SearchProvider>
-      <TabsProvider>
-        <ChakraProvider theme={theme}>
-          <RouterProvider router={router}/>
-        </ChakraProvider>
-      </TabsProvider>
-    </SearchProvider>
+    <RouterProvider router={router}/>
   );
 }
 
