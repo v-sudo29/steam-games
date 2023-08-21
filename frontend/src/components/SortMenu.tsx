@@ -76,7 +76,7 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='9.5rem'>
+    <Box ml='auto' w='max-content'>
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>
