@@ -11,7 +11,8 @@ interface DefaultDataObject {
   wishlistLoading: boolean,
   gamesError: string | null,
   wishlistError: string | null,
-  currentResults: React.MutableRefObject<GameObject[] | null>
+  currentResults: React.MutableRefObject<GameObject[] | null>,
+  currentResultsWL: React.MutableRefObject<GameObject[] | null>
 }
 
 const DefaultDataContext = createContext<DefaultDataObject>({} as DefaultDataObject)
@@ -28,6 +29,7 @@ export const DefaultDataProvider = ({ children } : { children: ReactNode }) => {
   const { response: wishlistResponse, error: wishlistError, isLoading: wishlistLoading }
     = useFetch('https://steam-games-server.onrender.com/wishlist')
   const currentResults = useRef<GameObject[] | null>(null)
+  const currentResultsWL = useRef<GameObject[] | null>(null)
 
   useEffect(() => {
     if (gamesResponse) setGamesData(gamesResponse)
@@ -46,7 +48,8 @@ export const DefaultDataProvider = ({ children } : { children: ReactNode }) => {
     wishlistLoading,
     gamesError,
     wishlistError,
-    currentResults
+    currentResults,
+    currentResultsWL
   }
 
   return (
