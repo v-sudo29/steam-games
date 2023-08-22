@@ -3,11 +3,15 @@ import CarrotDownIcon from "../assets/CarrotDownIcon"
 import { useEffect, useRef, useState } from "react"
 import { useSortList } from "../context/sortListContext"
 import { useSearchParams } from "react-router-dom"
+import { useSearch } from "../context/searchContext"
+import { useGenres } from "../context/genresContext"
 
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const { sortList, setSortList } = useSortList()
+  const { searchData, query } = useSearch()
+  const { genres } = useGenres()
   const animateRef = useRef<boolean>()
 
   const selected = sortList[0]
@@ -44,6 +48,14 @@ export default function SortMenu() {
     const divElement = e.target as HTMLDivElement
     const sortName = divElement.innerText
     setSortList([sortName])
+    // SEARCH, FILTER, and SORT used 
+    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
+
+    // FILTER and SORT used
+    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
+
+    // SORT used
+    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
     setOpen(false)
   }
 
