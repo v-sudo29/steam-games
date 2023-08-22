@@ -28,6 +28,7 @@ export default function TwoTabs() {
       navigate('wishlist')
     }
   }
+
   return (
     <>
       <Tabs index={location.pathname.includes('all-games') ? 0 : 1} variant='unstyled'>

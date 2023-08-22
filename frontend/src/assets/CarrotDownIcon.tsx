@@ -1,6 +1,10 @@
+import { useMobile } from "../context/useMobileContext"
+
 export default function CarrotDownIcon({ animate, setAnimate } : { animate: boolean, setAnimate: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const isMobile = useMobile()
+
   const carrotStyles = {
-    marginLeft: '0.6rem',
+    marginLeft: !isMobile ? '0.6rem' : '0rem',
     transition: '200ms ease',
     transform: animate ? 'rotate(180deg)' : ''
   }

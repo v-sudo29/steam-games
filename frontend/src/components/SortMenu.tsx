@@ -5,6 +5,7 @@ import { useSortList } from "../context/sortListContext"
 import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../context/searchContext"
 import { useGenres } from "../context/genresContext"
+import { useMobile } from "../context/useMobileContext"
 
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
@@ -12,6 +13,7 @@ export default function SortMenu() {
   const { sortList, setSortList, sortOptions } = useSortList()
   const { searchData, query } = useSearch()
   const { genres } = useGenres()
+  const isMobile = useMobile()
   const animateRef = useRef<boolean>()
 
   const selected = sortList[0]
@@ -28,7 +30,7 @@ export default function SortMenu() {
       rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
       fontWeight='600'
       border='none'
-      borderRadius='0.4rem'
+      borderRadius={!isMobile ? '0.4rem' : '2rem'}
       color='#F5F5F5'
       bg='#2F3740'
       _hover={{ backgroundColor: '#3b454f' }}
@@ -85,8 +87,7 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='9rem
-    '>
+    <Box ml='auto' w='9rem'>
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>

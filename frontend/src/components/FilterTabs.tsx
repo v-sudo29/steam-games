@@ -1,50 +1,35 @@
-import { 
-  Button,
-  HStack,
-  Tab,
-  Tabs,
-  TabList,
-  VStack
-} from "@chakra-ui/react"
-import { useDefaultData } from "../context/defaultDataContext"
-import { useTabs } from "../context/tabsContext"
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom"
+import { Box, HStack, VStack } from "@chakra-ui/react"
+import { useMobile } from "../context/useMobileContext"
 import SortMenu from "./SortMenu"
 import FilterButton from "./FilterButton"
 import TwoTabs from "./TwoTabs"
+import Logo from "../assets/Logo"
+import SearchIcon from "../assets/SearchIcon"
 
 export default function FilterTabs() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const { wishlistData } = useDefaultData()
-  const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
-
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const handleTabsChange = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    const buttonElement = e.target as HTMLButtonElement
-    const tabName = buttonElement.innerText
-
-    if (tabName === 'All Games') {
-      setGamesTabActive(true)
-      setWishlistTabActive(false)
-      navigate('all-games')
-    }
-    else {
-      setWishlistTabActive(true)
-      setGamesTabActive(false)
-      navigate('wishlist')
-    }
-  }
-
+  const isMobile = useMobile()
   return (
     <>
-    {/* MEDIA QUERY < 791 pixels */}
-      {window.innerWidth < 791 && 
-      <VStack>
-        <HStack>
-          <FilterButton/>
-          <SortMenu/>
+      {isMobile && 
+      <VStack align='start' w='100%'>
+        <HStack
+          p='0rem 1rem'
+          mb='1rem' 
+          gap='0.8rem'
+          w='100%'
+        >
+          <Box>
+            <Logo/>
+          </Box>
+          <Box>
+            <FilterButton/>
+          </Box>
+          <Box>
+            <SortMenu/>
+          </Box>
+          <Box ml='auto'>
+            <SearchIcon/>
+          </Box>
         </HStack>
         <HStack>
           <TwoTabs/>
@@ -52,9 +37,7 @@ export default function FilterTabs() {
       </VStack>
       }
 
-
-    {/* MEDIA QUERY > 790 pixels */}
-      {window.innerWidth > 790 && 
+      {!isMobile && 
         <HStack gap='2rem' w='100%'>
           <FilterButton/>
           <TwoTabs/>

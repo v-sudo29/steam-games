@@ -11,6 +11,7 @@ import { useDefaultData } from '../context/defaultDataContext'
 import { isSafari } from 'react-device-detect'
 import { useSearch } from '../context/searchContext'
 import { useSearchParams } from 'react-router-dom'
+import { useMobile } from '../context/useMobileContext'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -19,6 +20,7 @@ export default function AllGamesCards() {
   const { pageNumber, setPageNumber } = usePage()
   const { sortList, sortOptions } = useSortList()
   const { searchData, query } = useSearch()
+  const isMobile = useMobile()
   let gameCards: (JSX.Element | null)[] | null = null
 
   // On component render, write accurate url search params
@@ -171,8 +173,8 @@ export default function AllGamesCards() {
       <Grid 
         w='100%'
         h={!isSafari ? '100%' :'min-content'}
-        templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
-        gridGap='1.5rem'
+        templateColumns={!isMobile ? 'repeat(auto-fill, minmax(15rem, 1fr))' : 'repeat(auto-fill, minmax(13rem, 1fr))'}
+        gridGap={!isMobile ? '1.5rem' : '1rem'}
         role='list'
         aria-label='Search results'
       >

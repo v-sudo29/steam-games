@@ -10,12 +10,15 @@ import {
 import openNewTab from '../hooks/openNewTab'
 import { GameObject } from '../interface/GameObject'
 import { isSafari } from 'react-device-detect'
+import { useMobile } from '../context/useMobileContext'
 
 function ResultsCard({ game } : { game: GameObject }) {
+  const isMobile = useMobile()
   return (
-    <figure>
+    // <figure style={{ height: 'inherit', width: 'inherit' }}>
       <Card 
         onClick={() => openNewTab(game.url)}
+        display='flex'
         role="list item"
         overflow='hidden'
         variant='outline'
@@ -31,22 +34,25 @@ function ResultsCard({ game } : { game: GameObject }) {
         color='#F5F5F5'
         p='1rem'
         gap='0.9rem'
+        h='max-content'
       >
-        <Image
-          borderRadius='0.4rem'
-          src={game.imgUrl} 
-          alt={game.name} 
-          objectFit='cover'
-          w='inherit'
-          mb={isSafari ? '0.9rem' : '0'}
-          aria-label="Game cover art"
-        />
+        <Box h='100%' w='100%' flexGrow='2'>
+          <Image
+            borderRadius='0.4rem'
+            src={game.imgUrl} 
+            alt={game.name} 
+            objectFit='cover'
+            h='inherit'
+            mb={isSafari ? '0.9rem' : '0'}
+            aria-label="Game cover art"
+          />
+        </Box>
 
         {/* GAME INFO */}
-        <HStack gap='1rem' align='start' h='100%'>
+        <HStack gap='1rem' align='start' h='100%' flexGrow='1'>
 
           {/* GAME TITLE AND CURRENT PRICE */}
-          <VStack h='100%' w='100%' align='start'>
+          <VStack h='100%' w='100%' align='start' mr='1rem'>
             <Box 
               className='gameTitle'
               mb={isSafari ? '0.9rem' : '0'}
@@ -54,15 +60,15 @@ function ResultsCard({ game } : { game: GameObject }) {
               fontWeight='600'
               height='auto'
             >
-            <figcaption className='gameTitle' 
-              style={{
-                marginBottom: isSafari ? '0.9rem' : '0',
-                fontSize:'0.9rem',
-                fontWeight: '600',
-                height: '3rem'
-              }}>
-              {game.name}
-            </figcaption>
+              <figcaption className='gameTitle' 
+                style={{
+                  marginBottom: isSafari ? '0.9rem' : '0',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  height: '3rem'
+                }}>
+                {game.name}
+              </figcaption>
             </Box>
             <Stack w='100%' mt='auto' direction='row' align='center'>
               <Text
@@ -92,7 +98,7 @@ function ResultsCard({ game } : { game: GameObject }) {
         </HStack>
           
       </Card>
-    </figure>
+    // </figure>
     
   )
 }
