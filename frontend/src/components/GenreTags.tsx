@@ -9,6 +9,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useSearch } from '../context/searchContext'
 import { useSortList } from '../context/sortListContext'
+import { useMobile } from '../context/useMobileContext'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -29,6 +30,7 @@ export default function GenreTags() {
   const { searchData, query } = useSearch()
   const { sortList } = useSortList()
   const [searchParams, setSearchParams] = useSearchParams()
+  const isMobile = useMobile()
 
   const navigate = useNavigate()
   let genreTags: JSX.Element[] = []
@@ -103,6 +105,7 @@ export default function GenreTags() {
         maxW='17rem'
         align='start'
         transition='all 200ms ease'
+        ml={isMobile ? '1rem' : ''}
       >
         <HStack gap='1rem'>
           <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
