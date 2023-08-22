@@ -58,7 +58,7 @@ export default function SortMenu() {
       !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
   }
 
-  const optionCards = Object.keys(sortOptions).map(option => {
+  const optionCards = Object.values(sortOptions).map(option => {
     if (option === selected) return null
     return (
       <Box
