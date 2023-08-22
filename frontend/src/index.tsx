@@ -8,6 +8,7 @@ import { PageProvider } from './context/pageContext';
 import { SearchProvider } from './context/searchContext';
 import { SortListProvider } from './context/sortListContext';
 import { TabsProvider } from './context/tabsContext';
+import { MobileProvider } from './context/useMobileContext';
 import App from './App';
 
 const theme = extendTheme({
@@ -41,9 +42,11 @@ root.render(
             <SearchProvider>
               <SortListProvider>
                 <TabsProvider>
-                  <ChakraProvider theme={theme}>
-                    <App />
-                  </ChakraProvider>
+                  <MobileProvider>
+                    <ChakraProvider theme={theme}>
+                      <App />
+                    </ChakraProvider>
+                  </MobileProvider>
                 </TabsProvider>
               </SortListProvider>
             </SearchProvider>
