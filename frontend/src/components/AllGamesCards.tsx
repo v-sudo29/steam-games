@@ -77,21 +77,22 @@ export default function AllGamesCards() {
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
     const currentResultsCopy = [...gamesData]
-    let sortedResults: GameObject[] | null
+    let sortedResults: GameObject[] | null = null
     
-    console.log(currentResultsCopy)
     // Sort through all sort types
     if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
     if (sortList.includes('Current Price')) sortedResults = sortGames(currentResultsCopy, 'Current Price')
     if (sortList.includes('Rating')) sortedResults = sortGames(currentResultsCopy, 'Rating')
     if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
     
-    currentResults.current = sortedResults!
-    gameCards = sortedResults!.map((game, index) => {
+    if (sortedResults) {
+      currentResults.current = sortedResults
+      gameCards = sortedResults.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
     })
+    }
   }
 
   // Set CARDS by GENRES AND SORT
