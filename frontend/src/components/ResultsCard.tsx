@@ -15,7 +15,7 @@ import { useMobile } from '../context/useMobileContext'
 function ResultsCard({ game } : { game: GameObject }) {
   const isMobile = useMobile()
   return (
-    // <figure style={{ height: 'inherit', width: 'inherit' }}>
+    <figure style={{ height: 'inherit', width: 'inherit' }}>
       <Card 
         onClick={() => openNewTab(game.url)}
         display='flex'
@@ -63,7 +63,7 @@ function ResultsCard({ game } : { game: GameObject }) {
               <figcaption className='gameTitle' 
                 style={{
                   marginBottom: isSafari ? '0.9rem' : '0',
-                  fontSize: '0.9rem',
+                  fontSize: !isMobile ? '0.9rem' : '1rem',
                   fontWeight: '600',
                   height: '3rem'
                 }}>
@@ -98,8 +98,7 @@ function ResultsCard({ game } : { game: GameObject }) {
         </HStack>
           
       </Card>
-    // </figure>
-    
+    </figure>
   )
 }
 
