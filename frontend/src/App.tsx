@@ -1,12 +1,10 @@
-import { ChakraProvider, extendTheme, } from '@chakra-ui/react'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
-import { SearchProvider } from './context/searchContext';
-import { TabsProvider } from './context/tabsContext';
 import Layout from './layout/Layout';
 import ContentLayout from './layout/ContentLayout';
 import Home from './components/Home';
 import WishlistCards from './components/WishlistCards';
 import AllGamesCards from './components/AllGamesCards';
+import { SearchProvider } from './context/searchContext';
 import './App.css';
 
 function App() {

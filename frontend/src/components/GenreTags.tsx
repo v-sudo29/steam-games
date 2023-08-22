@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { VStack, Text, HStack } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form } from 'react-router-dom'
 import CustomCheckbox from './CustomCheckbox'
+import { useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -22,7 +24,19 @@ export default function GenreTags() {
   ]
   const { expanded } = useFilter()
   const { genres, setGenres } = useGenres()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
   let genreTags: JSX.Element[] = []
+
+  // Every time genres changes, update url params
+  useEffect(() => {
+    if (genres.length > 0) {
+
+      // Set search params to genres
+      setSearchParams({ filter: genres})
+    }
+
+  }, [genres])
 
   // Handle genre tag click
   const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -48,6 +62,8 @@ export default function GenreTags() {
     const formElement = document.querySelector('.form') as HTMLFormElement
     formElement.reset()
     setGenres([])
+    if (location.pathname.includes('all-games')) navigate('/all-games')
+    if (location.pathname.includes('wishlist')) navigate('/wishlist')
   }
 
   // SET GENRE FILTER TAGS

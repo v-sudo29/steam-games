@@ -51,7 +51,9 @@ export default function Header() {
   // Handle clear search
   const handleClearSearch = (): void => {
     setSearchData(null)
-    
+
+    if (searchRef.current) searchRef.current.value = ''
+
     // Change url params to /all-games
     navigate('/all-games')
   }
@@ -110,7 +112,7 @@ export default function Header() {
                 <HStack
                   bg='#8439FF'
                   borderRadius='10rem'
-                  p='0.2rem 1rem'
+                  p='0.25rem 1rem'
                   mr='0.3rem'
                   pointerEvents='visible'
                 >

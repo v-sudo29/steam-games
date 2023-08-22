@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { GameObject } from '../interface/GameObject'
+import { useLocation } from 'react-router-dom'
 
 interface SearchObject {
   searchData: GameObject[] | null,
@@ -17,6 +18,11 @@ export const useSearch = () => {
 export const SearchProvider = ({ children } : { children: ReactNode }) => {
   const [searchData, setSearchData] = useState<GameObject[] | null>(null)
   const [query, setQuery] = useState<string>('')
+  // const location = useLocation()
+
+  useEffect(() => {
+    console.log(searchData)
+  }, [searchData])
 
   const searchValues = {
     searchData,
