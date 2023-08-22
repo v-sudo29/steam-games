@@ -10,14 +10,27 @@ import { useSortList } from '../context/sortListContext'
 import { useDefaultData } from '../context/defaultDataContext'
 import { isSafari } from 'react-device-detect'
 import { useSearch } from '../context/searchContext'
+import { useSearchParams } from 'react-router-dom'
 
 export default function AllGamesCards() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
   const { genres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList } = useSortList()
   const { searchData, query } = useSearch()
   let gameCards: (JSX.Element | null)[] | null = null
+
+  useEffect(() => {
+    // SEARCH, FILTER, and SORT used 
+    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+
+    // FILTER and SORT used
+    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+
+    // SORT used
+    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+  }, [])
 
   function resetPageNumber(): void {
     setPageNumber(1)

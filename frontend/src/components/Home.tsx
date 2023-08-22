@@ -6,6 +6,7 @@ import { isSafari } from "react-device-detect"
 
 export default function Home() {
   const navigate = useNavigate()
+
   return (
     <VStack textAlign='center' mt='8rem' gap='2rem'>
       <Heading w='35rem' fontSize='5xl'>Find your next favorite game <Text color='#8439FF' as="span">on sale</Text></Heading>

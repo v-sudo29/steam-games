@@ -5,7 +5,7 @@ import { usePage } from "../context/pageContext"
 import { useLocation } from "react-router-dom"
 
 export default function PageNumbers() {
-  const { currentResults } = useDefaultData()
+  const { currentResults, wishlistData } = useDefaultData()
   const { genres } = useGenres()
   const { 
     pageNumber, 
@@ -21,51 +21,92 @@ export default function PageNumbers() {
   let totalPages: number = 0
   let pagesJSX: JSX.Element[] = []
 
-  // TODO: set up pagination logic for wishlistGames
-  if (currentResults.current) totalPages = currentResults.current && Math.ceil(currentResults.current.length / 60)
-
   function handleClick(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>): void {
     const pageElement = e.target as HTMLParagraphElement
     const number = parseInt(pageElement.innerText)
     const pageFive = 5
     const lastPageMinusFour = totalPages - 4
 
-    setPageNumber(number)
+    if (location.pathname.includes('all-games')) {
+      setPageNumber(number)
+      if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setPaginationExpanded(true)
+      if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setPaginationExpanded(false)
+    }
 
-    if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setPaginationExpanded(true)
-    if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setPaginationExpanded(false)
-    window.scrollTo({top: 0})
+    if (location.pathname.includes('wishlist')) {
+      setPageNumberWL(number)
+      if (totalPages > 10 && (number === pageFive || number === lastPageMinusFour)) setPaginationExpandedWL(true)
+      if (totalPages > 10 && (number < pageFive || number > lastPageMinusFour)) setPaginationExpandedWL(false)
+    }
+    window.scrollTo({ top: 0 })
   }
 
   function incrementPageNumber(): void {
-    if (pageNumber === totalPages) return
-    
-    const number = pageNumber
-    const pageFour = 4
-    const lastPageMinusFour = totalPages - 4
 
-    setPageNumber(prev => prev + 1)
+    if (location.pathname.includes('all-games')) {
+      if (pageNumber === totalPages) return
+      const number = pageNumber
+      const pageFour = 4
+      const lastPageMinusFour = totalPages - 4
 
-    if (totalPages > 10 && (number === pageFour || number === lastPageMinusFour)) setPaginationExpanded(true)
-    if (totalPages > 10 && (number >= lastPageMinusFour)) setPaginationExpanded(false)
+      setPageNumber(prev => prev + 1)
+      if (totalPages > 10 && (number === pageFour || number === lastPageMinusFour)) setPaginationExpanded(true)
+      if (totalPages > 10 && (number >= lastPageMinusFour)) setPaginationExpanded(false)
+      return
+    }
+
+    if (location.pathname.includes('wishlist')){
+      if (pageNumberWL === totalPages) return
+      const number = pageNumber
+      const pageFour = 4
+      const lastPageMinusFour = totalPages - 4
+
+      setPageNumberWL(prev => prev + 1)
+      if (totalPages > 10 && (number === pageFour || number === lastPageMinusFour)) setPaginationExpandedWL(true)
+      if (totalPages > 10 && (number >= lastPageMinusFour)) setPaginationExpandedWL(false)
+      return
+    }
   }
   
   function decrementPageNumber(): void {
-    if (pageNumber === 1) return
-    
-    const number = pageNumber
-    const pageFour = 4
-    const pageFive = 5
-    const lastPageMinusThree = totalPages - 3
 
-    setPageNumber(prev => prev - 1)
-    
-    if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setPaginationExpanded(true)
-    if (totalPages > 10 && (number <= pageFive)) setPaginationExpanded(false)
+    if (location.pathname.includes('all-games')) {
+      if (pageNumber === 1) return
+      const number = pageNumber
+      const pageFour = 4
+      const pageFive = 5
+      const lastPageMinusThree = totalPages - 3
+  
+      setPageNumber(prev => prev - 1)
+      if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setPaginationExpanded(true)
+      if (totalPages > 10 && (number <= pageFive)) setPaginationExpanded(false)
+      return
+    }
+
+    if (location.pathname.includes('wishlist')) {
+      if (pageNumberWL === 1) return
+      const number = pageNumber
+      const pageFour = 4
+      const pageFive = 5
+      const lastPageMinusThree = totalPages - 3
+  
+      setPageNumberWL(prev => prev - 1)
+      if (totalPages > 10 && (number === lastPageMinusThree || number === pageFour)) setPaginationExpandedWL(true)
+      if (totalPages > 10 && (number <= pageFive)) setPaginationExpandedWL(false)
+      return
+    }
+  }
+
+  // TODO: set up pagination logic for wishlistGames
+  if (location.pathname.includes('wishlist') && wishlistData) {
+    totalPages = Math.ceil(wishlistData.length / 60)
+  }
+  if (location.pathname.includes('all-games') && currentResults.current) {
+    totalPages =  Math.ceil(currentResults.current.length / 60)
   }
 
   // Show FIRST 5 PAGES
-  if (!paginationExpanded && totalPages !== 0 && pageNumber <= 10) { 
+  if (location.pathname.includes('all-games') && !paginationExpanded && totalPages !== 0 && pageNumber <= 10) { 
     const pagesArr = []
 
     if (totalPages > 1 && totalPages <= 10) {
@@ -100,8 +141,43 @@ export default function PageNumbers() {
     pagesJSX = pagesArr
   }
 
+  if (location.pathname.includes('wishlist') && !paginationExpandedWL && totalPages !== 0 && pageNumberWL <= 10) { 
+    const pagesArr = []
+
+    if (totalPages > 1 && totalPages <= 10) {
+      for (let i = 1; i <= totalPages; i++) {
+        pagesArr.push(
+          <Text 
+            key={`${i}-first-pages`}
+            onClick={(e) => handleClick(e)}
+            className={i === pageNumberWL ? 'active-page' : ''}
+            cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
+            fontSize='1.2rem'
+          >{i}
+          </Text>)
+      }
+    }
+
+    if (totalPages > 10) {
+      for (let i = 1; i <= totalPages; i++) {
+        if (i < 6 || i === totalPages) pagesArr.push(
+          <Text 
+            key={`${i}-first-pages`}
+            onClick={(e) => handleClick(e)}
+            className={i === pageNumberWL ? 'active-page' : ''}
+            cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
+            fontSize='1.2rem'
+          >{i}
+          </Text>)
+        if (i === totalPages - 1) pagesArr.push(<Text key={`${i}-first-pages`}>...</Text>)
+      }
+    }
+
+    pagesJSX = pagesArr
+  }
+
   // Show LAST 5 PAGES
-  if (!paginationExpanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
+  if (location.pathname.includes('all-games') && !paginationExpanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
     const pagesArr = []
 
     for (let i = 1; i <= totalPages; i++) {
@@ -118,9 +194,26 @@ export default function PageNumbers() {
     }
     pagesJSX = pagesArr
   }
+  if (location.pathname.includes('wishlist') && !paginationExpandedWL && totalPages > 10 && ((pageNumberWL > (totalPages - 4)) && (pageNumberWL <= totalPages))) {
+    const pagesArr = []
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === totalPages - 5) pagesArr.push(<Text key={`${i}-last-pages`}>...</Text>)
+      if (i === 1 || (i > (totalPages - 5) && i <= totalPages)) pagesArr.push(
+        <Text 
+          key={`${i}-last-pages`}
+          onClick={(e) => handleClick(e)}
+          className={i === pageNumberWL ? 'active-page' : ''}
+          cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
+          fontSize='1.2rem'
+        >{i}
+        </Text>)
+    }
+    pagesJSX = pagesArr
+  }
 
   // Show EXPANDED PAGES
-  if (paginationExpanded) {
+  if (location.pathname.includes('all-games') && paginationExpanded) {
     const pagesArr = []
 
     for (let i = 1; i <=  totalPages; i++) {
@@ -138,10 +231,28 @@ export default function PageNumbers() {
     }
     pagesJSX = pagesArr
   }
+  if (location.pathname.includes('wishlist') && paginationExpandedWL) {
+    const pagesArr = []
+
+    for (let i = 1; i <=  totalPages; i++) {
+      if (i === 2 || i === totalPages - 1) pagesArr.push(<Text key={`${i}-expanded-pages`}>...</Text>)
+      if (i === 1 || i === totalPages || i === (pageNumber - 1) || i === pageNumber || i === (pageNumber + 1)) pagesArr.push(
+        <Text 
+          key={`${i}-expanded-pages-${genres}`}
+          onClick={(e) => handleClick(e)}
+          className={i === pageNumberWL ? 'active-page' : ''}
+          cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
+          fontSize='1.2rem'
+        >{i}
+        </Text>
+      )
+    }
+    pagesJSX = pagesArr
+  }
 
   return (
     <>
-      {location.pathname === '/all-games' && 
+      {location.pathname.includes('all-games') && 
         <>
           {totalPages > 1 && 
             <Stack direction='row' gap='1rem' justify='end' align='center'>
@@ -167,6 +278,33 @@ export default function PageNumbers() {
             </Stack>
           }  
         </>
+      }
+      {location.pathname.includes('wishlist') &&
+      <>
+        {totalPages > 1 && 
+          <Stack direction='row' gap='1rem' justify='end' align='center'>
+            {(!paginationExpandedWL && pageNumberWL === 1) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#60;</Box> :
+              <Box 
+                fontSize='1.4rem'
+                cursor='pointer'
+                onClick={decrementPageNumber}
+              >&#60;
+              </Box>
+            }
+
+            {pagesJSX.length > 0 && pagesJSX}
+
+            {(!paginationExpandedWL && pageNumberWL === totalPages) ? <Box fontSize='1.4rem' color='gray.300' cursor='default'>&#62;</Box> :
+              <Box 
+                fontSize='1.4rem' 
+                cursor='pointer'
+                onClick={incrementPageNumber}
+              >&#62;
+              </Box>
+            }
+          </Stack>
+        }  
+      </>
       }
     </>
   )

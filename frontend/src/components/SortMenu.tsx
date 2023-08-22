@@ -2,13 +2,17 @@ import { Box, Button, Select, VStack } from "@chakra-ui/react"
 import CarrotDownIcon from "../assets/CarrotDownIcon"
 import { useEffect, useRef, useState } from "react"
 import { useSortList } from "../context/sortListContext"
+import { useSearchParams } from "react-router-dom"
 
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
-  const animateRef = useRef<boolean>()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { sortList, setSortList } = useSortList()
+  const animateRef = useRef<boolean>()
+
   const selected = sortList[0]
   animateRef.current = open
+
   const options = [
     'Discount',
     'Rating',

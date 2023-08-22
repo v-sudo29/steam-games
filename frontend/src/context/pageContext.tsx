@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react"
+import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 
 interface PageObject {
   pageNumber: number,
@@ -23,6 +23,10 @@ export const PageProvider = ({ children } : { children: ReactNode }) => {
   const [paginationExpanded, setPaginationExpanded] = useState<boolean>(false)
   const [paginationExpandedWL, setPaginationExpandedWL] = useState<boolean>(false)
 
+  useEffect(() => {
+    console.log(pageNumber)
+  }, [pageNumber])
+  
   const pageInfo = {
     pageNumber,
     pageNumberWL, 

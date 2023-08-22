@@ -10,18 +10,22 @@ import ExitIcon from "../assets/ExitIcon"
 import { useDefaultData } from "../context/defaultDataContext"
 import { useFilter } from "../context/filterContext"
 import { useTabs } from "../context/tabsContext"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom"
 import { useGenres } from "../context/genresContext"
 import { isSafari } from "react-device-detect"
 import SortMenu from "./SortMenu"
 import { useSearch } from "../context/searchContext"
+import { useEffect } from "react"
+import { useSortList } from "../context/sortListContext"
 
 export default function FilterTabs() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const { wishlistData } = useDefaultData()
   const { expanded, setExpanded } = useFilter()
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
   const { genres } = useGenres()
   const { searchData, query } = useSearch()
+  const { sortList } = useSortList()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -33,10 +37,7 @@ export default function FilterTabs() {
     if (tabName === 'All Games') {
       setGamesTabActive(true)
       setWishlistTabActive(false)
-      if (searchData) {
-        navigate(`all-games?q=${query}`) // TODO: store url AND searchData in localStorage
-        return
-      } else navigate('all-games')
+      navigate('all-games')
     }
     else {
       setWishlistTabActive(true)
