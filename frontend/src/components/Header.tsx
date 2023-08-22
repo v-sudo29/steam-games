@@ -9,6 +9,7 @@ import {
   Text
  } from "@chakra-ui/react"
 
+import { FaGithub } from "react-icons/fa"
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
 import ExitIcon from "../assets/ExitIcon"
@@ -133,6 +134,16 @@ export default function Header() {
             )}
           </InputGroup>
         </section>
+        <Box
+          cursor='pointer'
+          onClick={() => window.open('https://github.com/v-sudo29/steam_games','_blank')}
+          transition='color 200ms ease'
+          _hover={{
+            color: '#9b9b9b'
+          }}
+        >
+          <FaGithub size={25}/>
+        </Box>  
       </HStack>
     </header>
   )
