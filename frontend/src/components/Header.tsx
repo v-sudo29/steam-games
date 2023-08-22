@@ -71,14 +71,14 @@ export default function Header() {
 
   return (
     <header style={{ marginBottom: '3rem' }}>
-      <HStack justify='center'>
+      <HStack justify='space-between' gap='1rem'>
         <Box role='img' aria-label='Website logo'>
           <Link href='/'>
             <Logo/>
           </Link>
         </Box>
         <section
-          style={{ flexGrow: '3' }}>
+          style={{ flexGrow: '3', display: 'flex', justifyContent: 'center' }}>
           <InputGroup maxW='45rem' role='search' display='flex' justifyContent='center'>
             <InputLeftElement
               role='presentation'
