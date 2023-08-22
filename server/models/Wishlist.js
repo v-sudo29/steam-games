@@ -10,7 +10,8 @@ const wishlistSchema = new mongoose.Schema({
   discount: String,
   url: String,
   imgUrl: String,
-  rating: String
+  rating: String,
+  genres: Array
 })
 
 wishlistSchema.set('toJSON', {

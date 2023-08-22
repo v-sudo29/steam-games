@@ -49,6 +49,10 @@ module.exports = async () => {
         const url = tag.querySelector('a.title').href
         const imgUrl = tag.querySelector('a.capsule img').src
         const rating = tag.querySelector('div.value.game_review_summary').dataset.tooltipText
+        const genreTags = tag.querySelectorAll('.tag')
+        const genresArr = []
+
+        genreTags.forEach(element => genresArr.push(element.innerText))
 
         gamesArr.push({
           wishlist: true,
@@ -60,7 +64,8 @@ module.exports = async () => {
           discount: discount,
           url: url,
           imgUrl: imgUrl,
-          rating: rating.split(' ')[0]
+          rating: rating.split(' ')[0],
+          genres: [...genresArr]
         })
       }
     })
