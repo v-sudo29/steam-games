@@ -22,6 +22,7 @@ export default function AllGamesCards() {
   let gameCards: (JSX.Element | null)[] | null = null
 
   useEffect(() => {
+    console.log('re-rendered')
     // SEARCH, FILTER, and SORT used 
     if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
 

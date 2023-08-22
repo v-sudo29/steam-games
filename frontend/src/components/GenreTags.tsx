@@ -7,6 +7,8 @@ import { Form } from 'react-router-dom'
 import CustomCheckbox from './CustomCheckbox'
 import { useSearchParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useSearch } from '../context/searchContext'
+import { useSortList } from '../context/sortListContext'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -24,7 +26,10 @@ export default function GenreTags() {
   ]
   const { expanded } = useFilter()
   const { genres, setGenres } = useGenres()
+  const { searchData, query } = useSearch()
+  const { sortList } = useSortList()
   const [searchParams, setSearchParams] = useSearchParams()
+
   const navigate = useNavigate()
   let genreTags: JSX.Element[] = []
 
@@ -32,8 +37,14 @@ export default function GenreTags() {
   useEffect(() => {
     if (genres.length > 0) {
 
-      // Set search params to genres
-      setSearchParams({ filter: genres})
+      // SEARCH, FILTER, and SORT used 
+      if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+
+      // FILTER and SORT used
+      if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+
+      // SORT used
+      if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
     }
 
   }, [genres])
@@ -64,6 +75,12 @@ export default function GenreTags() {
     setGenres([])
     if (location.pathname.includes('all-games')) navigate('/all-games')
     if (location.pathname.includes('wishlist')) navigate('/wishlist')
+
+    // SEARCH and SORT used 
+    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList})
+
+    // SORT used
+    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList })
   }
 
   // SET GENRE FILTER TAGS
