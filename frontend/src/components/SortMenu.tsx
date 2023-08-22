@@ -21,7 +21,7 @@ export default function SortMenu() {
     'Discount',
     'Rating',
     'Feedback',
-    'Current Price'
+    'Price'
   ]
 
   const selectedCard = (
@@ -92,12 +92,13 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='11rem'>
+    <Box ml='auto' w='9rem
+    '>
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>
         <option>Feedback</option>
-        <option>Current Price</option>
+        <option>Price</option>
       </Select>
       {selectedCard}
       <VStack

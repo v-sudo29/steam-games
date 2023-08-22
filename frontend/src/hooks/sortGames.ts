@@ -11,7 +11,7 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       return 0
     })
   } 
-  if (sortType === 'Current Price') {
+  if (sortType === 'Price') {
     return gamesArr.sort((a, b) => {
       const newA = Number(a.currentPrice.replace('$', ''))
       const newB = Number(b.currentPrice.replace('$', ''))
