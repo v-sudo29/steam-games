@@ -14,12 +14,14 @@ async function updateWishlists() {
   console.log(wishlistData)
   
   // Drop wishlists collection
-  await mongoose.connection.db.dropCollection('wishlists', function(err, result) {
-    console.log('dropped collection!')
-  });
+  await mongoose.connection.db.dropCollection('wishlists')
+    .then(() => console.log('dropped collection!'))
+    .catch(error => console.log(error))
   
   // Create new wishlists collection
   await mongoose.connection.db.createCollection('wishlists')
+    .then(() => console.log('created new collection!'))
+    .catch(error => console.log)
   
   // // Insert data into new wishlists collection
   await Wishlist.insertMany(wishlistData)
