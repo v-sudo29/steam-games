@@ -79,6 +79,7 @@ export default function AllGamesCards() {
     const currentResultsCopy = [...gamesData]
     let sortedResults: GameObject[] | null
     
+    console.log(currentResultsCopy)
     // Sort through all sort types
     if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
     if (sortList.includes('Current Price')) sortedResults = sortGames(currentResultsCopy, 'Current Price')

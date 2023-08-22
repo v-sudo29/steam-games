@@ -71,7 +71,8 @@ export default function WishlistCards() {
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && wishlistData !== null && sortList.length !== 0) {
     const currentResultsCopy = [...wishlistData]
-    let sortedResults: GameObject[] | null
+    console.log(currentResultsCopy)
+    let sortedResults: GameObject[] | null = null
     
     // Sort through all sort types
     if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
@@ -79,8 +80,9 @@ export default function WishlistCards() {
     if (sortList.includes('Rating')) sortedResults = sortGames(currentResultsCopy, 'Rating')
     if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
     
-    currentResultsWL.current = sortedResults!
-    wishlistCards = sortedResults!.map((game, index) => {
+
+    currentResultsWL.current = sortedResults
+    wishlistCards = sortedResults && sortedResults.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null

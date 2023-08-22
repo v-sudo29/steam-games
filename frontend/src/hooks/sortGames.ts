@@ -13,8 +13,8 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
   } 
   if (sortType === 'Current Price') {
     return gamesArr.sort((a, b) => {
-      const newA = a.currentPrice.replace(/$/g, '')
-      const newB = b.currentPrice.replace(/$/g, '')
+      const newA = Number(a.currentPrice.replace('$', ''))
+      const newB = Number(b.currentPrice.replace('$', ''))
 
       if (newA > newB) return 1
       if (newB > newA) return -1
@@ -39,6 +39,10 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
     overwhelmPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Overwhelmingly Positive'))
     veryPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Very Positive'))
     mostlyPosArr.push(...gamesArr.filter(game => game.reviewsType === 'Mostly Positive'))
+
+    overwhelmPosArr.push(...gamesArr.filter(game => game.reviewsType === 'OVERWHELMINGLY POSITIVE'))
+    veryPosArr.push(...gamesArr.filter(game => game.reviewsType === 'VERY POSITIVE'))
+    mostlyPosArr.push(...gamesArr.filter(game => game.reviewsType === 'MOSTLY POSITIVE'))
 
     return [...overwhelmPosArr, ...veryPosArr, ...mostlyPosArr]
   } 
