@@ -18,12 +18,17 @@ import { useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useSearch } from "../context/searchContext"
 import { useTabs } from "../context/tabsContext"
+import { useSortList } from "../context/sortListContext"
+import { useGenres } from "../context/genresContext"
 
 export default function Header() {
   const [emptyError, setEmptyError] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const { searchData, setSearchData, query, setQuery } = useSearch()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
+  const { sortList } = useSortList()
+  const { genres } = useGenres()
+
   const searchRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
@@ -38,9 +43,15 @@ export default function Header() {
             setSearchData(res.data)
             setWishlistTabActive(false)
             setQuery(searchParam)
-            setSearchParams({
-              q: searchParam
-            })
+
+            // FILTER and SORT used 
+            if (genres.length > 0 && sortList.length > 0) setSearchParams({ q: searchParam, sort: sortList, filter: genres })
+
+            // FILTER used
+            if (genres.length > 0 && sortList.length === 0) setSearchParams({ q: searchParam, filter: genres })
+
+            // SORT used
+            if (genres.length === 0 && sortList.length > 0) setSearchParams({ q: searchParam, sort: sortList  })
           })
           .catch(err => console.error(err))
         return
@@ -51,7 +62,6 @@ export default function Header() {
   // Handle clear search
   const handleClearSearch = (): void => {
     setSearchData(null)
-
     if (searchRef.current) searchRef.current.value = ''
 
     // Change url params to /all-games
