@@ -167,5 +167,6 @@ export default function WishlistCards() {
       </Grid>
     </Grid>
   )
-  if (wishlistCards.length === 0) return <>No cards found.</>
+  if (wishlistCards.length === 0) return <>No games found.</>
+  return <></>
 }
