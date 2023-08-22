@@ -1,7 +1,15 @@
 import { GameObject } from "../interface/GameObject"
 
+const sortOptions = {
+  DISCOUNT: 'Discount',
+  PRICE: 'Price',
+  RATING: 'Rating',
+  FEEDBACK: 'Feedback'
+}
+
 export default function sortGames(gamesArr: GameObject[], sortType: string): GameObject[] | null {
-  if (sortType === 'Discount') {
+  
+  if (sortType === sortOptions.DISCOUNT) {
      return gamesArr.sort((a, b) => {
       const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
       const newB = b.discount.replace(/-/g, '').replace(/%/g, '')
@@ -11,7 +19,7 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       return 0
     })
   } 
-  if (sortType === 'Price') {
+  if (sortType === sortOptions.PRICE) {
     return gamesArr.sort((a, b) => {
       const newA = Number(a.currentPrice.replace('$', ''))
       const newB = Number(b.currentPrice.replace('$', ''))
@@ -21,7 +29,7 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       return 0
     })
   } 
-  if (sortType === 'Rating') {
+  if (sortType === sortOptions.RATING) {
     return gamesArr.sort((a, b) => {
       const newA = a.rating.replace(/%/g, '')
       const newB = b.rating.replace(/%/g, '')
@@ -31,7 +39,7 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       return 0
     })
   } 
-  if (sortType === 'Feedback') {
+  if (sortType === sortOptions.FEEDBACK) {
     const overwhelmPosArr = []
     const veryPosArr = []
     const mostlyPosArr = []

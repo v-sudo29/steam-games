@@ -17,12 +17,12 @@ export default function AllGamesCards() {
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
   const { genres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
-  const { sortList } = useSortList()
+  const { sortList, sortOptions } = useSortList()
   const { searchData, query } = useSearch()
   let gameCards: (JSX.Element | null)[] | null = null
 
+  // On component render, write accurate url search params
   useEffect(() => {
-    console.log('re-rendered')
     // SEARCH, FILTER, and SORT used 
     if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
 
@@ -33,10 +33,7 @@ export default function AllGamesCards() {
     if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
   }, [])
 
-  function resetPageNumber(): void {
-    setPageNumber(1)
-  }
-
+  // On every genres and sort change, reset page number
   useEffect(() => {
     resetPageNumber()
   }, [genres, sortList])
@@ -52,6 +49,8 @@ export default function AllGamesCards() {
     })
     currentResults.current = gamesDataCopy
   }
+
+  const resetPageNumber = (): void => setPageNumber(1)
 
   // -------------------------------------
   // SET NEW GAME CARDS BY GENRES AND SORT
@@ -81,10 +80,10 @@ export default function AllGamesCards() {
     let sortedResults: GameObject[] | null = null
     
     // Sort through all sort types
-    if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
-    if (sortList.includes('Current Price')) sortedResults = sortGames(currentResultsCopy, 'Current Price')
-    if (sortList.includes('Rating')) sortedResults = sortGames(currentResultsCopy, 'Rating')
-    if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
+    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
+    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
+    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
+    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
     
     if (sortedResults) {
       currentResults.current = sortedResults
@@ -119,10 +118,10 @@ export default function AllGamesCards() {
     }
 
     // Sort by SORT type
-    if (sortList.includes('Discount')) sortedResults = sortGames(matchedGames, 'Discount')
-    if (sortList.includes('Current Price')) sortedResults = sortGames(matchedGames, 'Current Price')
-    if (sortList.includes('Rating')) sortedResults = sortGames(matchedGames, 'Rating')
-    if (sortList.includes('Feedback')) sortedResults = sortGames(matchedGames, 'Feedback')
+    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
+    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
+    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
+    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
 
     currentResults.current = sortedResults!
     gameCards = sortedResults!.map((game, index) => {

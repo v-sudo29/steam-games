@@ -18,7 +18,7 @@ export default function WishlistCards() {
   const { pageNumberWL } = usePage()
   const { searchData, query } = useSearch()
   const { genres } = useGenres()
-  const { sortList } = useSortList()
+  const { sortList, sortOptions } = useSortList()
 
   let wishlistCards: (JSX.Element | null)[] | null = null
 
@@ -71,14 +71,13 @@ export default function WishlistCards() {
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && wishlistData !== null && sortList.length !== 0) {
     const currentResultsCopy = [...wishlistData]
-    console.log(currentResultsCopy)
     let sortedResults: GameObject[] | null = null
     
     // Sort through all sort types
-    if (sortList.includes('Discount')) sortedResults = sortGames(currentResultsCopy, 'Discount')
-    if (sortList.includes('Current Price')) sortedResults = sortGames(currentResultsCopy, 'Current Price')
-    if (sortList.includes('Rating')) sortedResults = sortGames(currentResultsCopy, 'Rating')
-    if (sortList.includes('Feedback')) sortedResults = sortGames(currentResultsCopy, 'Feedback')
+    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
+    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
+    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
+    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
     
 
     currentResultsWL.current = sortedResults
@@ -112,10 +111,10 @@ export default function WishlistCards() {
     }
 
     // Sort by SORT type
-    if (sortList.includes('Discount')) sortedResults = sortGames(matchedGames, 'Discount')
-    if (sortList.includes('Current Price')) sortedResults = sortGames(matchedGames, 'Current Price')
-    if (sortList.includes('Rating')) sortedResults = sortGames(matchedGames, 'Rating')
-    if (sortList.includes('Feedback')) sortedResults = sortGames(matchedGames, 'Feedback')
+    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
+    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
+    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
+    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
 
     currentResultsWL.current = sortedResults!
     wishlistCards = sortedResults!.map((game, index) => {

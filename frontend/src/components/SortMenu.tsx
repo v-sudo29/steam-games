@@ -9,20 +9,13 @@ import { useGenres } from "../context/genresContext"
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const { sortList, setSortList } = useSortList()
+  const { sortList, setSortList, sortOptions } = useSortList()
   const { searchData, query } = useSearch()
   const { genres } = useGenres()
   const animateRef = useRef<boolean>()
 
   const selected = sortList[0]
   animateRef.current = open
-
-  const options = [
-    'Discount',
-    'Rating',
-    'Feedback',
-    'Price'
-  ]
 
   const selectedCard = (
     <Button
@@ -65,7 +58,7 @@ export default function SortMenu() {
       !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
   }
 
-  const optionCards = options.map(option => {
+  const optionCards = Object.keys(sortOptions).map(option => {
     if (option === selected) return null
     return (
       <Box
