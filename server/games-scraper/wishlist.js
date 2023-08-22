@@ -24,7 +24,7 @@ module.exports = async () => {
   })
   const page = await browser.newPage()
 
-  await page.goto(`${wishlist_url}`, {waitUntil: 'load'})
+  await page.goto(`${ wishlist_url }`, { waitUntil: 'load' })
   await page.waitForSelector(wishlistSelector)
 
   for (let i = 0; i < 3; i++) {
@@ -48,7 +48,8 @@ module.exports = async () => {
         const discount = tag.querySelector('div.discount_pct').innerText
         const url = tag.querySelector('a.title').href
         const imgUrl = tag.querySelector('a.capsule img').src
-        
+        const rating = tag.querySelector('div.value.game_review_summary').dataset.tooltipText
+
         gamesArr.push({
           wishlist: true,
           appId: appId,
@@ -58,7 +59,8 @@ module.exports = async () => {
           currentPrice: currentPrice,
           discount: discount,
           url: url,
-          imgUrl: imgUrl
+          imgUrl: imgUrl,
+          rating: rating.split(' ')[0]
         })
       }
     })
