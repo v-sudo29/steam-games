@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { VStack, Text, HStack } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
@@ -23,6 +23,7 @@ export default function GenreTags() {
     'Pixel Graphics',
     'Platformer'
   ]
+  // const [defaultGenres, setDefaultGenres] = useState<string[]>([''])
   const { expanded } = useFilter()
   const { genres, setGenres } = useGenres()
   const { searchData, query } = useSearch()
@@ -36,7 +37,6 @@ export default function GenreTags() {
   // Every time genres changes, update url params
   useEffect(() => {
     if (genres.length > 0) {
-
       // SEARCH, FILTER, and SORT used 
       if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
 
@@ -46,28 +46,7 @@ export default function GenreTags() {
       // SORT used
       if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
     }
-
   }, [genres])
-
-  // Handle genre tag click
-  const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
-    e.preventDefault()
-
-    // Get filters container and checkboxes
-    const filtersContainer = document.getElementById('filters') as HTMLFormElement
-    const labelElements = filtersContainer.querySelectorAll('label')
-    const selectedFilters: string[] = []
-
-    // Push active filters to array
-    labelElements.forEach(label => {
-      const filterName = label.innerText
-      const inputChecked = (label.querySelector('input') as HTMLInputElement).checked
-      if (inputChecked) selectedFilters.push(filterName)
-    })
-
-    // Set genres state to selectedFilters array
-    setGenres(selectedFilters)
-  }
 
   // Handle checkboxes reset
   const handleReset = (): void => {
@@ -85,13 +64,7 @@ export default function GenreTags() {
   }
 
   // SET GENRE FILTER TAGS
-  genreTags = genreFilters.map(genre => 
-    <CustomCheckbox
-      key={`${genre}-genre-tag`}
-      genre={genre}
-      handleGenreClick={(e) => handleGenreClick(e)}
-    />
-  )
+  genreTags = genreFilters.map(genre => <CustomCheckbox key={`${genre}-genre-tag`} genre={genre}/>)
 
   return (
     <VStack 
@@ -118,7 +91,12 @@ export default function GenreTags() {
         }
       </HStack>
       <Form id='filters' className='form' role="group" aria-label="Filter Options">
-        {genreTags}
+        {genres.length > 0 ?
+          <CheckboxGroup defaultValue={genres}>
+            {genreTags}
+          </CheckboxGroup> :
+          <>{genreTags}</>
+        }
       </Form>
     </VStack> 
   )

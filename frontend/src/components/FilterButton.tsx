@@ -5,6 +5,7 @@ import { isSafari } from "react-device-detect"
 import { useMobile } from "../context/useMobileContext"
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
+import { useEffect } from "react"
 
 export default function FilterButton() {
   const { expanded, setExpanded } = useFilter()
@@ -13,6 +14,14 @@ export default function FilterButton() {
   
   const handleFilterBtnClick = () => setExpanded(prev => !prev)
 
+  useEffect(() => {
+    const urlParams = localStorage.getItem('storageObj')
+    if (urlParams) {
+      const parsedParams = JSON.parse(urlParams)
+      const keys = Object.keys(parsedParams)
+      if (keys.includes('expanded')) setExpanded(parsedParams.expanded)
+    }
+  }, [])
   return (
     <>
       {isMobile && 

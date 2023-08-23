@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react"
 import { useDefaultData } from "../../context/defaultDataContext"
 import { isSafari } from "react-device-detect"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useSearch } from "../../context/searchContext"
 import { useGenres } from "../../context/genresContext"
 import { useSortList } from "../../context/sortListContext"
@@ -16,22 +16,53 @@ export default function WishlistCards() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { wishlistLoading, wishlistError, wishlistData, currentResultsWL } = useDefaultData()
   const { pageNumberWL } = usePage()
-  const { searchData, query } = useSearch()
-  const { genres } = useGenres()
-  const { sortList, sortOptions } = useSortList()
+  const { searchData, query, setQuery } = useSearch()
+  const { genres, setGenres } = useGenres()
+  const { sortList, sortOptions, setSortList } = useSortList()
+  const firstRender = useRef(false)
 
   let wishlistCards: (JSX.Element | null)[] | null = null
 
-  // Display accurate url search params in url
+  console.log(gameCards)
+  // Every filter and sort change, store params in local storage
   useEffect(() => {
-    // SEARCH, FILTER, and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+    let pathname = null
+    if (firstRender.current) {
+      // SEARCH, FILTER, and SORT used 
+      if (searchData && genres.length > 0 && sortList.length > 0) {
+        pathname = { q: query, sort: sortList, filter: genres }
+        setSearchParams(pathname)
+      }
 
-    // FILTER and SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+      // FILTER and SORT used
+      if (!searchData && genres.length > 0 && sortList.length > 0) {
+        pathname = { sort: sortList, filter: genres }
+        setSearchParams(pathname)
+      }
 
-    // SORT used
-    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+      // SORT used
+      if (!searchData && genres.length === 0 && sortList.length > 0) {
+        pathname = { sort: sortList }
+        setSearchParams(pathname)
+      }
+
+      // Store pathname in local storage
+      if (pathname) localStorage.setItem('pathname', JSON.stringify(pathname))
+    }
+
+  }, [genres, sortList])
+
+  // When user refreshes, check local storage for stored url pathname on component render. Populate state
+  useEffect(() => {
+    const urlParams = localStorage.getItem('pathname')
+    if (urlParams) {
+      const parsedParams = JSON.parse(urlParams)
+      const keys = Object.keys(parsedParams)
+      if (keys.includes('sort')) setSortList(parsedParams.sort)
+      if (keys.includes('filter')) setGenres(parsedParams.filter)
+      if (keys.includes('q')) setQuery(parsedParams.q)
+    }
+    firstRender.current = true
   }, [])
 
   // Set DEFAULT GAME CARDS if no genre or sort selected

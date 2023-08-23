@@ -12,27 +12,85 @@ import { isSafari } from 'react-device-detect'
 import { useSearch } from '../../context/searchContext'
 import { useSearchParams } from 'react-router-dom'
 import { useMobile } from '../../context/useMobileContext'
+import { useFilter } from '../../context/filterContext'
+import { useRef } from 'react'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
-  const { genres } = useGenres()
+  const { genres, setGenres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
-  const { sortList, sortOptions } = useSortList()
-  const { searchData, query } = useSearch()
+  const { sortList, sortOptions, setSortList } = useSortList()
+  const { searchData, query, setQuery } = useSearch()
+  const { expanded } = useFilter()
   const isMobile = useMobile()
-  let gameCards: (JSX.Element | null)[] | null = null
+  const firstRender = useRef(false)
+  const gameCards = useRef<(JSX.Element | null)[] | null>(null)
 
-  // On component render, write accurate url search params
+  // Every filter and sort change, store params in local storage
   useEffect(() => {
-    // SEARCH, FILTER, and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+    let storageObj = null
+    if (firstRender.current) {
+      // SEARCH, FILTER, and SORT used 
+      if (searchData && genres.length > 0 && sortList.length > 0) {
+        const pathname = { q: query, sort: sortList, filter: genres }
+        storageObj = { 
+          q: query,
+          sort: sortList,
+          filter: genres,
+          currentResults: currentResults.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
+      }
 
-    // FILTER and SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+      // FILTER and SORT used
+      if (!searchData && genres.length > 0 && sortList.length > 0) {
+        const pathname = { sort: sortList, filter: genres }
+        storageObj = {
+          sort: sortList,
+          filter: genres,
+          currentResults: currentResults.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
+      }
 
-    // SORT used
-    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+      // SORT used
+      if (!searchData && genres.length === 0 && sortList.length > 0) {
+        const pathname = { sort: sortList }
+        storageObj = { 
+          sort: sortList,
+          currentResults: currentResults.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
+      }
+
+      // Store pathname in local storage
+      if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
+    }
+
+  }, [genres, sortList])
+
+  // When user refreshes, check local storage for stored url pathname on component render. Populate state
+  useEffect(() => {
+    const urlParams = localStorage.getItem('storageObj')
+    if (urlParams) {
+      const parsedParams = JSON.parse(urlParams)
+      const keys = Object.keys(parsedParams)
+      if (keys.includes('sort')) setSortList(parsedParams.sort)
+      if (keys.includes('filter')) setGenres(parsedParams.filter)
+      if (keys.includes('q')) setQuery(parsedParams.q)
+      if (keys.includes('currentResults')) {
+        currentResults.current = parsedParams.currentResults
+        gameCards.current = parsedParams.currentResults.map((game: GameObject, index: number) => {
+          if (index < 60) return <ResultsCard key={game.appId} game={game}/>
+          else return null
+        })
+      }
+    }
+    firstRender.current = true
   }, [])
 
   // On every genres and sort change, reset page number
@@ -46,7 +104,7 @@ export default function AllGamesCards() {
   if (gamesData && genres.length === 0 && sortList.length === 0 && pageNumber === 1) {
     const gamesDataCopy = gamesData
 
-    gameCards = gamesDataCopy.map((game, index) => {
+    gameCards.current = gamesDataCopy.map((game, index) => {
       if (index < 60) return <ResultsCard key={game.appId} game={game}/>
       else return null
     })
@@ -67,7 +125,7 @@ export default function AllGamesCards() {
       if (genreExists) matchedGames.push(gamesDataCopy[i])
     }
 
-    gameCards = matchedGames.map((game, index) => {
+    gameCards.current = matchedGames.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
@@ -88,7 +146,7 @@ export default function AllGamesCards() {
     
     if (sortedResults) {
       currentResults.current = sortedResults
-      gameCards = sortedResults.map((game, index) => {
+      gameCards.current = sortedResults.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
@@ -125,7 +183,7 @@ export default function AllGamesCards() {
     if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
 
     currentResults.current = sortedResults!
-    gameCards = sortedResults!.map((game, index) => {
+    gameCards.current = sortedResults!.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
@@ -136,7 +194,7 @@ export default function AllGamesCards() {
   if (searchData) {
     const searchDataCopy = [...searchData]
 
-    gameCards = searchDataCopy.map((game, index) => {
+    gameCards.current = searchDataCopy.map((game, index) => {
       if (index < 60) {
         return <ResultsCard key={game.appId} game={game}/>
       } return null
@@ -146,7 +204,7 @@ export default function AllGamesCards() {
 
   // Display cards according to page number
   if (pageNumber !== 1 && currentResults.current && currentResults.current.length > 0) {
-    gameCards = currentResults.current.map((game, index) => {
+    gameCards.current = currentResults.current.map((game, index) => {
       if (index > ((60 * pageNumber) - 61) && index < (60 * pageNumber)) {
         return <ResultsCard key={`${game.appId}-results`} game={game}/>
       } return null
@@ -156,7 +214,7 @@ export default function AllGamesCards() {
   const twentyFiveArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
   const skeletonCards = twentyFiveArr.map((index) => <SkeletonCard key={`${index}-all-games-skeleton-card`}/>)
 
-  if (gamesAreLoading || !gameCards) return (
+  if (gamesAreLoading || !gameCards.current) return (
     <Grid 
       w='100%'
       h='100%'
@@ -167,7 +225,7 @@ export default function AllGamesCards() {
     </Grid>
   )
   if (gamesError) return <h1>{gamesError}</h1>
-  if (gameCards && gameCards.length > 0) return (
+  if (gameCards.current && gameCards.current.length > 0) return (
     <Grid w='100%' h='100%'>
       <Grid 
         w='100%'
@@ -177,10 +235,10 @@ export default function AllGamesCards() {
         role='list'
         aria-label='Search results'
       >
-        {gameCards}
+        {gameCards.current}
       </Grid>
     </Grid>
   )
-  if (gameCards.length === 0) return <>No games found.</>
+  if (gameCards.current.length === 0) return <>No games found.</>
   return <></>
 }
