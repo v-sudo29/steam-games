@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
@@ -10,22 +10,8 @@ import { useMobile } from '../context/useMobileContext'
 import CustomCheckbox from './CustomCheckbox'
 
 export default function GenreTags() {
-  const genreFilters = [
-    '2D',
-    'Base Building',
-    'Card Game',
-    'Colony Sim',
-    'Cute',
-    'Farming',
-    'Farming Sim',
-    'Indie',
-    'Life Sim',
-    'Pixel Graphics',
-    'Platformer'
-  ]
-  // const [defaultGenres, setDefaultGenres] = useState<string[]>([''])
   const { expanded } = useFilter()
-  const { genres, setGenres } = useGenres()
+  const { genres, setGenres, genreFilters } = useGenres()
   const { searchData, query } = useSearch()
   const { sortList } = useSortList()
   const [searchParams, setSearchParams] = useSearchParams()
