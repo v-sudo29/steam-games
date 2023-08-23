@@ -1,11 +1,11 @@
 import { Box, Button, Select, VStack } from "@chakra-ui/react"
-import CarrotDownIcon from "../assets/CarrotDownIcon"
 import { useEffect, useRef, useState } from "react"
 import { useSortList } from "../context/sortListContext"
 import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../context/searchContext"
 import { useGenres } from "../context/genresContext"
 import { useMobile } from "../context/useMobileContext"
+import CarrotDownIcon from "../assets/CarrotDownIcon"
 
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
@@ -19,6 +19,30 @@ export default function SortMenu() {
   const selected = sortList[0]
   animateRef.current = open
 
+  // Handles user selecting a new sort
+  const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
+    const divElement = e.target as HTMLDivElement
+    const sortName = divElement.innerText
+    setSortList([sortName])
+    // SEARCH, FILTER, and SORT used 
+    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
+
+    // FILTER and SORT used
+    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
+
+    // SORT used
+    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
+    setOpen(false)
+  }
+
+  // Handle closing sort menu
+  const closeSelectMenu = (e: MouseEvent): void => {
+    const element = e.target as HTMLElement
+    if (element.id !== 'selectedCard' && element.id !== 'carrotDown' && 
+      !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
+  }
+
+  // Current selected sort option
   const selectedCard = (
     <Button
       id='selectedCard'
@@ -39,27 +63,7 @@ export default function SortMenu() {
     </Button>
   )
 
-  const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
-    const divElement = e.target as HTMLDivElement
-    const sortName = divElement.innerText
-    setSortList([sortName])
-    // SEARCH, FILTER, and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
-
-    // FILTER and SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
-
-    // SORT used
-    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
-    setOpen(false)
-  }
-
-  const closeSelectMenu = (e: MouseEvent): void => {
-    const element = e.target as HTMLElement
-    if (element.id !== 'selectedCard' && element.id !== 'carrotDown' && 
-      !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
-  }
-
+  // Other sort options not selected
   const optionCards = Object.values(sortOptions).map(option => {
     if (option === selected) return null
     return (
@@ -81,6 +85,7 @@ export default function SortMenu() {
     )
   })
 
+  // Close sort menu whenever user clicks outside of the sort menu
   useEffect(() => {
     document.addEventListener('mousedown', closeSelectMenu)
     return () => document.removeEventListener('mousedown', closeSelectMenu)

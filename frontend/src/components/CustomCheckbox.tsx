@@ -1,7 +1,12 @@
 import { Checkbox } from "@chakra-ui/react";
 import CheckboxIcon from "../assets/CheckboxIcon";
 
-export default function CustomCheckbox({ genre, handleGenreClick} : { genre: string, handleGenreClick: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void> }) {
+interface CheckboxArgs {
+  genre: string, 
+  handleGenreClick: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+}
+
+export default function CustomCheckbox({ genre, handleGenreClick } : CheckboxArgs) {
   return (
     <Checkbox
       transition="none"

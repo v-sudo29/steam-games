@@ -1,16 +1,16 @@
 import { Grid } from "@chakra-ui/react"
-import { useDefaultData } from "../context/defaultDataContext"
+import { useDefaultData } from "../../context/defaultDataContext"
 import { isSafari } from "react-device-detect"
 import { useEffect } from "react"
-import { useSearch } from "../context/searchContext"
-import { useGenres } from "../context/genresContext"
-import { useSortList } from "../context/sortListContext"
-import { usePage } from "../context/pageContext"
+import { useSearch } from "../../context/searchContext"
+import { useGenres } from "../../context/genresContext"
+import { useSortList } from "../../context/sortListContext"
+import { usePage } from "../../context/pageContext"
 import { useSearchParams } from "react-router-dom"
+import { GameObject } from "../../interface/GameObject"
 import ResultsCard from "./ResultsCard"
 import SkeletonCard from "./SkeletonCard"
-import { GameObject } from "../interface/GameObject"
-import sortGames from "../hooks/sortGames"
+import sortGames from "../../hooks/sortGames"
 
 export default function WishlistCards() {
   const [searchParams, setSearchParams] = useSearchParams()

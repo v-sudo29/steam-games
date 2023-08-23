@@ -2,9 +2,8 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Layout from './layout/Layout';
 import ContentLayout from './layout/ContentLayout';
 import Home from './components/Home';
-import WishlistCards from './components/WishlistCards';
-import AllGamesCards from './components/AllGamesCards';
-import { SearchProvider } from './context/searchContext';
+import WishlistCards from './components/cards/WishlistCards';
+import AllGamesCards from './components/cards/AllGamesCards';
 import './App.css';
 
 function App() {

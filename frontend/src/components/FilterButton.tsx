@@ -2,14 +2,15 @@ import { Button } from "@chakra-ui/react"
 import { useFilter } from "../context/filterContext"
 import { useGenres } from "../context/genresContext"
 import { isSafari } from "react-device-detect"
+import { useMobile } from "../context/useMobileContext"
 import FilterIcon from "../assets/FilterIcon"
 import ExitIcon from "../assets/ExitIcon"
-import { useMobile } from "../context/useMobileContext"
 
 export default function FilterButton() {
   const { expanded, setExpanded } = useFilter()
   const { genres } = useGenres()
   const isMobile = useMobile()
+  
   const handleFilterBtnClick = () => setExpanded(prev => !prev)
 
   return (

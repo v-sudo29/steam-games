@@ -1,17 +1,17 @@
 import ResultsCard from './ResultsCard'
-import sortGames from '../hooks/sortGames'
+import sortGames from '../../hooks/sortGames'
 import SkeletonCard from './SkeletonCard'
-import { GameObject } from '../interface/GameObject'
+import { GameObject } from '../../interface/GameObject'
 import { useEffect } from 'react'
 import { Grid } from '@chakra-ui/react'
-import { useGenres } from '../context/genresContext'
-import { usePage } from '../context/pageContext'
-import { useSortList } from '../context/sortListContext'
-import { useDefaultData } from '../context/defaultDataContext'
+import { useGenres } from '../../context/genresContext'
+import { usePage } from '../../context/pageContext'
+import { useSortList } from '../../context/sortListContext'
+import { useDefaultData } from '../../context/defaultDataContext'
 import { isSafari } from 'react-device-detect'
-import { useSearch } from '../context/searchContext'
+import { useSearch } from '../../context/searchContext'
 import { useSearchParams } from 'react-router-dom'
-import { useMobile } from '../context/useMobileContext'
+import { useMobile } from '../../context/useMobileContext'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -40,19 +40,18 @@ export default function AllGamesCards() {
     resetPageNumber()
   }, [genres, sortList])
 
+  const resetPageNumber = (): void => setPageNumber(1)
+
   // Set DEFAULT GAME CARDS if no genre or sort selected
   if (gamesData && genres.length === 0 && sortList.length === 0 && pageNumber === 1) {
     const gamesDataCopy = gamesData
 
     gameCards = gamesDataCopy.map((game, index) => {
-      if (index < 60) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
+      if (index < 60) return <ResultsCard key={game.appId} game={game}/>
+      else return null
     })
     currentResults.current = gamesDataCopy
   }
-
-  const resetPageNumber = (): void => setPageNumber(1)
 
   // -------------------------------------
   // SET NEW GAME CARDS BY GENRES AND SORT

@@ -1,12 +1,8 @@
-import { 
-  Box,
-  Link,
-  HStack,
- } from "@chakra-ui/react"
-
+import { Box, HStack, Link,} from "@chakra-ui/react"
 import { FaGithub } from "react-icons/fa"
 import Logo from "../assets/LogoAndName"
 import SearchBar from "./SearchBar"
+import openNewTab from "../hooks/openNewTab"
 
 export default function Header() {
   return (
@@ -22,11 +18,9 @@ export default function Header() {
         </section>
         <Box
           cursor='pointer'
-          onClick={() => window.open('https://github.com/v-sudo29/steam_games','_blank')}
+          onClick={() => openNewTab('https://github.com/v-sudo29/steam_games')}
           transition='color 200ms ease'
-          _hover={{
-            color: '#9b9b9b'
-          }}
+          _hover={{ color: '#9b9b9b' }}
         >
           <FaGithub size={25}/>
         </Box>  

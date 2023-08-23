@@ -3,13 +3,11 @@ import { VStack, Text, HStack } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
-import { Form } from 'react-router-dom'
-import CustomCheckbox from './CustomCheckbox'
-import { useSearchParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { Form, useNavigate, useSearchParams  } from 'react-router-dom'
 import { useSearch } from '../context/searchContext'
 import { useSortList } from '../context/sortListContext'
 import { useMobile } from '../context/useMobileContext'
+import CustomCheckbox from './CustomCheckbox'
 
 export default function GenreTags() {
   const genreFilters = [
@@ -71,6 +69,7 @@ export default function GenreTags() {
     setGenres(selectedFilters)
   }
 
+  // Handle checkboxes reset
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
     formElement.reset()
@@ -86,45 +85,41 @@ export default function GenreTags() {
   }
 
   // SET GENRE FILTER TAGS
-  genreTags = genreFilters.map(genre => {
-    return (
-      <CustomCheckbox
-        key={`${genre}-genre-tag`}
-        genre={genre}
-        handleGenreClick={(e) => handleGenreClick(e)}
-      />
-    )
-  })
+  genreTags = genreFilters.map(genre => 
+    <CustomCheckbox
+      key={`${genre}-genre-tag`}
+      genre={genre}
+      handleGenreClick={(e) => handleGenreClick(e)}
+    />
+  )
 
   return (
-    <>
-      <VStack 
-        pos='absolute'
-        opacity={expanded ? '100%' : '0%'}
-        minW='12rem' 
-        maxW='17rem'
-        align='start'
-        transition='all 200ms ease'
-        ml={isMobile ? '1rem' : ''}
-      >
-        <HStack gap='1rem'>
-          <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
-          {genres.length > 0 && 
-            <Text
-              onClick={handleReset}
-              cursor='pointer'
-              mb={isSafari ? '1.5rem' : '1rem'}
-              fontWeight='600'
-              color='#F5F5F5'
-            >
-              Clear
-            </Text>
-          }
-        </HStack>
-        <Form id='filters' className='form' role="group" aria-label="Filter Options">
-          {genreTags}
-        </Form>
-      </VStack> 
-    </>
+    <VStack 
+      pos='absolute'
+      opacity={expanded ? '100%' : '0%'}
+      minW='12rem' 
+      maxW='17rem'
+      align='start'
+      transition='all 200ms ease'
+      ml={isMobile ? '1rem' : ''}
+    >
+      <HStack gap='1rem'>
+        <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
+        {genres.length > 0 && 
+          <Text
+            onClick={handleReset}
+            cursor='pointer'
+            mb={isSafari ? '1.5rem' : '1rem'}
+            fontWeight='600'
+            color='#F5F5F5'
+          >
+            Clear
+          </Text>
+        }
+      </HStack>
+      <Form id='filters' className='form' role="group" aria-label="Filter Options">
+        {genreTags}
+      </Form>
+    </VStack> 
   )
 }

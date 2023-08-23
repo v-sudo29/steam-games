@@ -3,7 +3,7 @@ import FilterTabs from "../components/FilterTabs"
 import GenreTags from "../components/GenreTags"
 import { useFilter } from "../context/filterContext"
 import { Outlet } from "react-router-dom"
-import PageNumbers from "../components/PageNumbers"
+import Pagination from "../components/pagination/Pagination"
 
 export default function ContentLayout() {
   const { expanded } = useFilter()
@@ -27,7 +27,7 @@ export default function ContentLayout() {
           ml={expanded ? '17rem' : '0rem'}
         >
           <Outlet />
-        <PageNumbers/>
+        <Pagination/>
         </VStack>
       </HStack>
     </VStack>

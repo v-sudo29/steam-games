@@ -7,10 +7,10 @@ import {
   Text,
   VStack
 } from '@chakra-ui/react'
-import openNewTab from '../hooks/openNewTab'
-import { GameObject } from '../interface/GameObject'
+import openNewTab from '../../hooks/openNewTab'
+import { GameObject } from '../../interface/GameObject'
 import { isSafari } from 'react-device-detect'
-import { useMobile } from '../context/useMobileContext'
+import { useMobile } from '../../context/useMobileContext'
 
 function ResultsCard({ game } : { game: GameObject }) {
   const isMobile = useMobile()

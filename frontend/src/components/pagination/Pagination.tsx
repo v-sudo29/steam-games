@@ -1,12 +1,11 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
-import { useDefaultData } from "../context/defaultDataContext"
-import { useGenres } from "../context/genresContext"
-import { usePage } from "../context/pageContext"
+import { useDefaultData } from "../../context/defaultDataContext"
+import { usePage } from "../../context/pageContext"
 import { useLocation } from "react-router-dom"
+import PageNumber from "./PageNumber"
 
-export default function PageNumbers() {
+export default function Pagination() {
   const { currentResults, wishlistData } = useDefaultData()
-  const { genres } = useGenres()
   const { 
     pageNumber, 
     pageNumberWL, 
@@ -21,6 +20,7 @@ export default function PageNumbers() {
   let totalPages: number = 0
   let pagesJSX: JSX.Element[] = []
 
+  // Handle user clicking on numbers
   function handleClick(e: React.MouseEvent<HTMLParagraphElement, MouseEvent>): void {
     const pageElement = e.target as HTMLParagraphElement
     const number = parseInt(pageElement.innerText)
@@ -41,8 +41,8 @@ export default function PageNumbers() {
     window.scrollTo({ top: 0 })
   }
 
+  // Handles user incrementing page number clicking on right carrot
   function incrementPageNumber(): void {
-
     if (location.pathname.includes('all-games')) {
       if (pageNumber === totalPages) return
       const number = pageNumber
@@ -68,8 +68,8 @@ export default function PageNumbers() {
     }
   }
   
+  // Handles user decrementing page number clicking on left carrot
   function decrementPageNumber(): void {
-
     if (location.pathname.includes('all-games')) {
       if (pageNumber === 1) return
       const number = pageNumber
@@ -97,7 +97,7 @@ export default function PageNumbers() {
     }
   }
 
-  // TODO: set up pagination logic for wishlistGames
+  // Calculate total pages or wishlist games or all-games depending on url pathname
   if (location.pathname.includes('wishlist') && wishlistData) {
     totalPages = Math.ceil(wishlistData.length / 60)
   }
@@ -105,128 +105,114 @@ export default function PageNumbers() {
     totalPages =  Math.ceil(currentResults.current.length / 60)
   }
 
-  // Show FIRST 5 PAGES
+  // Show FIRST 5 page numbers if url pathname has all-games
   if (location.pathname.includes('all-games') && !paginationExpanded && totalPages !== 0 && pageNumber <= 10) { 
     const pagesArr = []
 
     if (totalPages > 1 && totalPages <= 10) {
       for (let i = 1; i <= totalPages; i++) {
         pagesArr.push(
-          <Text 
+          <PageNumber
             key={`${i}-first-pages`}
-            onClick={(e) => handleClick(e)}
-            className={i === pageNumber ? 'active-page' : ''}
-            cursor={i !== pageNumber ? 'pointer' : 'default'} 
-            fontSize='1.2rem'
-          >{i}
-          </Text>)
+            i={i} pageNumber={pageNumber}
+            handleClick={handleClick}
+          />
+        )
       }
     }
 
     if (totalPages > 10) {
       for (let i = 1; i <= totalPages; i++) {
         if (i < 6 || i === totalPages) pagesArr.push(
-          <Text 
+          <PageNumber
             key={`${i}-first-pages`}
-            onClick={(e) => handleClick(e)}
-            className={i === pageNumber ? 'active-page' : ''}
-            cursor={i !== pageNumber ? 'pointer' : 'default'} 
-            fontSize='1.2rem'
-          >{i}
-          </Text>)
+            i={i} pageNumber={pageNumber}
+            handleClick={handleClick}
+          />
+        )
         if (i === totalPages - 1) pagesArr.push(<Text key={`${i}-first-pages`}>...</Text>)
       }
     }
-
     pagesJSX = pagesArr
   }
 
+  // Show FIRST 5 page numbers if url pathname has wishlist
   if (location.pathname.includes('wishlist') && !paginationExpandedWL && totalPages !== 0 && pageNumberWL <= 10) { 
     const pagesArr = []
 
     if (totalPages > 1 && totalPages <= 10) {
       for (let i = 1; i <= totalPages; i++) {
         pagesArr.push(
-          <Text 
-            key={`${i}-first-pages`}
-            onClick={(e) => handleClick(e)}
-            className={i === pageNumberWL ? 'active-page' : ''}
-            cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
-            fontSize='1.2rem'
-          >{i}
-          </Text>)
+          <PageNumber
+            key={`${i}-first-pages-WL`}
+            i={i} pageNumber={pageNumberWL}
+            handleClick={handleClick}
+          />
+        )
       }
     }
 
     if (totalPages > 10) {
       for (let i = 1; i <= totalPages; i++) {
         if (i < 6 || i === totalPages) pagesArr.push(
-          <Text 
-            key={`${i}-first-pages`}
-            onClick={(e) => handleClick(e)}
-            className={i === pageNumberWL ? 'active-page' : ''}
-            cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
-            fontSize='1.2rem'
-          >{i}
-          </Text>)
+          <PageNumber
+            key={`${i}-first-pages-WL`}
+            i={i} pageNumber={pageNumberWL}
+            handleClick={handleClick}
+          />
+        )
         if (i === totalPages - 1) pagesArr.push(<Text key={`${i}-first-pages`}>...</Text>)
       }
     }
-
     pagesJSX = pagesArr
   }
 
-  // Show LAST 5 PAGES
+  // Show LAST 5 page numbers if url pathname has all-games
   if (location.pathname.includes('all-games') && !paginationExpanded && totalPages > 10 && ((pageNumber > (totalPages - 4)) && (pageNumber <= totalPages))) {
     const pagesArr = []
 
     for (let i = 1; i <= totalPages; i++) {
       if (i === totalPages - 5) pagesArr.push(<Text key={`${i}-last-pages`}>...</Text>)
       if (i === 1 || (i > (totalPages - 5) && i <= totalPages)) pagesArr.push(
-        <Text 
+        <PageNumber
           key={`${i}-last-pages`}
-          onClick={(e) => handleClick(e)}
-          className={i === pageNumber ? 'active-page' : ''}
-          cursor={i !== pageNumber ? 'pointer' : 'default'} 
-          fontSize='1.2rem'
-        >{i}
-        </Text>)
+          i={i} pageNumber={pageNumber}
+          handleClick={handleClick}
+        />
+      )
     }
     pagesJSX = pagesArr
   }
+
+  // Show LAST 5 page numbers if url pathname has wishlist
   if (location.pathname.includes('wishlist') && !paginationExpandedWL && totalPages > 10 && ((pageNumberWL > (totalPages - 4)) && (pageNumberWL <= totalPages))) {
     const pagesArr = []
 
     for (let i = 1; i <= totalPages; i++) {
       if (i === totalPages - 5) pagesArr.push(<Text key={`${i}-last-pages`}>...</Text>)
       if (i === 1 || (i > (totalPages - 5) && i <= totalPages)) pagesArr.push(
-        <Text 
-          key={`${i}-last-pages`}
-          onClick={(e) => handleClick(e)}
-          className={i === pageNumberWL ? 'active-page' : ''}
-          cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
-          fontSize='1.2rem'
-        >{i}
-        </Text>)
+        <PageNumber
+          key={`${i}-last-pages-WL`}
+          i={i} pageNumber={pageNumberWL}
+          handleClick={handleClick}
+        />
+      )
     }
     pagesJSX = pagesArr
   }
 
-  // Show EXPANDED PAGES
+  // Show EXPANDED page numbers if url pathname has all-games
   if (location.pathname.includes('all-games') && paginationExpanded) {
     const pagesArr = []
 
     for (let i = 1; i <=  totalPages; i++) {
       if (i === 2 || i === totalPages - 1) pagesArr.push(<Text key={`${i}-expanded-pages`}>...</Text>)
       if (i === 1 || i === totalPages || i === (pageNumber - 1) || i === pageNumber || i === (pageNumber + 1)) pagesArr.push(
-        <Text 
-          key={`${i}-expanded-pages-${genres}`}
-          onClick={(e) => handleClick(e)}
-          className={i === pageNumber ? 'active-page' : ''}
-          cursor={i !== pageNumber ? 'pointer' : 'default'} 
-          fontSize='1.2rem'
-        >{i}
-        </Text>
+        <PageNumber
+          key={`${i}-expanded-pages`}
+          i={i} pageNumber={pageNumberWL}
+          handleClick={handleClick}
+        />
       )
     }
     pagesJSX = pagesArr
@@ -237,14 +223,11 @@ export default function PageNumbers() {
     for (let i = 1; i <=  totalPages; i++) {
       if (i === 2 || i === totalPages - 1) pagesArr.push(<Text key={`${i}-expanded-pages`}>...</Text>)
       if (i === 1 || i === totalPages || i === (pageNumber - 1) || i === pageNumber || i === (pageNumber + 1)) pagesArr.push(
-        <Text 
-          key={`${i}-expanded-pages-${genres}`}
-          onClick={(e) => handleClick(e)}
-          className={i === pageNumberWL ? 'active-page' : ''}
-          cursor={i !== pageNumberWL ? 'pointer' : 'default'} 
-          fontSize='1.2rem'
-        >{i}
-        </Text>
+        <PageNumber
+          key={`${i}-expanded-pages-WL`}
+          i={i} pageNumber={pageNumberWL}
+          handleClick={handleClick}
+        />
       )
     }
     pagesJSX = pagesArr
@@ -252,6 +235,7 @@ export default function PageNumbers() {
 
   return (
     <>
+    {/* Render carrots if pathname is ALL-GAMES */}
       {location.pathname.includes('all-games') && 
         <>
           {totalPages > 1 && 
@@ -279,6 +263,8 @@ export default function PageNumbers() {
           }  
         </>
       }
+
+      {/* Render carrots if pathname is WISHLIST */}
       {location.pathname.includes('wishlist') &&
       <>
         {totalPages > 1 && 
