@@ -16,37 +16,35 @@ export default function ContentLayout() {
 
   return (
     <VStack align='start' flex='auto'>
-      <>
-        {isMobile && (
-          <VStack align='start' w='100%'>
-            <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
-              <Box>
-                <Logo/>
-              </Box>
-              <Box>
-                <FilterButton/>
-              </Box>
-              <Box>
-                <SortMenu/>
-              </Box>
-              <Box ml='auto'>
-                <SearchIcon/>
-              </Box>
-            </HStack>
-            <HStack>
-              <TwoTabs/>
-            </HStack>
-          </VStack>
-        )}
-
-        {!isMobile && (
-          <HStack gap='2rem' w='100%'>
-            <FilterButton/>
-            <TwoTabs/>
-            <SortMenu/>
+      {isMobile && (
+        <VStack align='start' w='100%'>
+          <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
+            <Box>
+              <Logo/>
+            </Box>
+            <Box>
+              <FilterButton/>
+            </Box>
+            <Box>
+              <SortMenu/>
+            </Box>
+            <Box ml='auto'>
+              <SearchIcon/>
+            </Box>
           </HStack>
-        )}
-      </>
+          <HStack>
+            <TwoTabs/>
+          </HStack>
+        </VStack>
+      )}
+
+      {!isMobile && (
+        <HStack gap='2rem' w='100%'>
+          <FilterButton/>
+          <TwoTabs/>
+          <SortMenu/>
+        </HStack>
+      )}
       <HStack 
         flex='auto'
         gap='1rem'
