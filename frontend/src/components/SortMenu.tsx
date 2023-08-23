@@ -42,11 +42,6 @@ export default function SortMenu() {
       !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
   }
 
-  // Handle enter key pressed
-  const handleEnterPressed = (e: React.KeyboardEvent<HTMLButtonElement>): void => {
-    console.log(e.key)
-  }
-
   // Current selected sort option
   const selectedCard = (
     <Button
@@ -90,7 +85,7 @@ export default function SortMenu() {
         _focusVisible={{
           outline: '4px solid #3D668F'
         }}
-      >
+      > 
         {option}
       </Box>
     )
