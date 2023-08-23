@@ -17,7 +17,7 @@ import { useRef } from 'react'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { gamesData, gamesError, gamesAreLoading, currentResults } = useDefaultData()
+  const { gamesData, gamesError, gamesAreLoading, currentResults, currentResultsWL } = useDefaultData()
   const { genres, setGenres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList, sortOptions, setSortList } = useSortList()
@@ -39,6 +39,7 @@ export default function AllGamesCards() {
           sort: sortList,
           filter: genres,
           currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
           expanded: expanded
         }
         setSearchParams(pathname)
@@ -51,6 +52,7 @@ export default function AllGamesCards() {
           sort: sortList,
           filter: genres,
           currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
           expanded: expanded
         }
         setSearchParams(pathname)
@@ -62,6 +64,7 @@ export default function AllGamesCards() {
         storageObj = { 
           sort: sortList,
           currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
           expanded: expanded
         }
         setSearchParams(pathname)
@@ -82,6 +85,7 @@ export default function AllGamesCards() {
       if (keys.includes('sort')) setSortList(parsedParams.sort)
       if (keys.includes('filter')) setGenres(parsedParams.filter)
       if (keys.includes('q')) setQuery(parsedParams.q)
+      if (keys.includes('currentResultsWL')) currentResultsWL.current = parsedParams.currentResultsWL
       if (keys.includes('currentResults')) {
         currentResults.current = parsedParams.currentResults
         gameCards.current = parsedParams.currentResults.map((game: GameObject, index: number) => {

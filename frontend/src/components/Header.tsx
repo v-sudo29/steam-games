@@ -9,7 +9,7 @@ export default function Header() {
     <header style={{ marginBottom: '3rem' }}>
       <HStack justify='space-between' gap='1rem'>
         <Box role='img' aria-label='Website logo'>
-          <Link href='/'>
+          <Link onClick={() => localStorage.clear()} href='/'>
             <Logo/>
           </Link>
         </Box>
