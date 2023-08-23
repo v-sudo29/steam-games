@@ -42,11 +42,16 @@ export default function SortMenu() {
       !element.classList.contains('optionCard') && animateRef.current) setOpen(false)
   }
 
+  // Handle enter key pressed
+  const handleEnterPressed = (e: React.KeyboardEvent<HTMLButtonElement>): void => {
+    console.log(e.key)
+  }
+
   // Current selected sort option
   const selectedCard = (
     <Button
+      tabIndex={0}
       id='selectedCard'
-      as='div'
       pos='relative'
       w='inherit'
       onClick={() => setOpen(prev => !prev)}
@@ -69,6 +74,7 @@ export default function SortMenu() {
     return (
       <Box
         key={option}
+        tabIndex={0}
         className='optionCard'
         onClick={(e) => handleSelection(e)}
         fontWeight='400'
@@ -79,6 +85,11 @@ export default function SortMenu() {
         cursor='pointer'
         w='inherit'
         p='0.4rem 1.4rem'
+        textAlign='left'
+        border='none'
+        _focusVisible={{
+          outline: '4px solid #3D668F'
+        }}
       >
         {option}
       </Box>
@@ -92,7 +103,13 @@ export default function SortMenu() {
   }, [])
 
   return (
-    <Box ml='auto' w='9rem'>
+    <Box
+      // tabIndex={0}
+      ml='auto'
+      w='9rem'
+      border='none'
+      borderRadius={!isMobile ? '0.4rem' : '2rem'}
+    >
       <Select display='none'>
         <option>Discount</option>
         <option>Rating</option>

@@ -8,19 +8,22 @@ export default function Header() {
   return (
     <header style={{ marginBottom: '3rem' }}>
       <HStack justify='space-between' gap='1rem'>
-        <Box role='img' aria-label='Website logo'>
-          <Link onClick={() => localStorage.clear()} href='/'>
-            <Logo/>
-          </Link>
-        </Box>
+        <Link onClick={() => localStorage.clear()} href='/'>
+          <Logo/>
+        </Link>
         <section style={{ flexGrow: '3', display: 'flex', justifyContent: 'center' }}>
           <SearchBar/>
         </section>
         <Box
+          tabIndex={0}
+          as='button'
           cursor='pointer'
           onClick={() => openNewTab('https://github.com/v-sudo29/steam_games')}
           transition='color 200ms ease'
           _hover={{ color: '#9b9b9b' }}
+          _focusVisible={{
+            outline: '3px solid #3D668F'
+          }}
         >
           <FaGithub size={25}/>
         </Box>  
