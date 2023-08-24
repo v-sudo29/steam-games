@@ -2,7 +2,7 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../../hooks/sortGames'
 import SkeletonCard from './SkeletonCard'
 import { GameObject } from '../../interface/GameObject'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Grid } from '@chakra-ui/react'
 import { useGenres } from '../../context/genresContext'
 import { usePage } from '../../context/pageContext'
@@ -13,7 +13,6 @@ import { useSearch } from '../../context/searchContext'
 import { useSearchParams } from 'react-router-dom'
 import { useMobile } from '../../context/useMobileContext'
 import { useFilter } from '../../context/filterContext'
-import { useRef } from 'react'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -24,57 +23,54 @@ export default function AllGamesCards() {
   const { searchData, query, setQuery } = useSearch()
   const { expanded } = useFilter()
   const isMobile = useMobile()
-  const firstRender = useRef(false)
   const gameCards = useRef<(JSX.Element | null)[] | null>(null)
 
   // Every filter and sort change, store params in local storage
   useEffect(() => {
     let storageObj = null
-    if (firstRender.current) {
-      // SEARCH, FILTER, and SORT used 
-      if (searchData && genres.length > 0 && sortList.length > 0) {
-        const pathname = { q: query, sort: sortList, filter: genres }
-        storageObj = { 
-          q: query,
-          sort: sortList,
-          filter: genres,
-          currentResults: currentResults.current,
-          currentResultsWL: currentResultsWL.current,
-          expanded: expanded
-        }
-        setSearchParams(pathname)
+    // SEARCH, FILTER, and SORT used 
+    if (searchData && genres.length > 0 && sortList.length > 0) {
+      const pathname = { q: query, sort: sortList, filter: genres }
+      storageObj = { 
+        q: query,
+        sort: sortList,
+        filter: genres,
+        currentResults: currentResults.current,
+        currentResultsWL: currentResultsWL.current,
+        expanded: expanded
       }
+      setSearchParams(pathname)
+    }
 
-      // FILTER and SORT used
-      if (!searchData && genres.length > 0 && sortList.length > 0) {
-        const pathname = { sort: sortList, filter: genres }
-        storageObj = {
-          sort: sortList,
-          filter: genres,
-          currentResults: currentResults.current,
-          currentResultsWL: currentResultsWL.current,
-          expanded: expanded
-        }
-        setSearchParams(pathname)
+    // FILTER and SORT used
+    if (!searchData && genres.length > 0 && sortList.length > 0) {
+      const pathname = { sort: sortList, filter: genres }
+      storageObj = {
+        sort: sortList,
+        filter: genres,
+        currentResults: currentResults.current,
+        currentResultsWL: currentResultsWL.current,
+        expanded: expanded
       }
+      setSearchParams(pathname)
+    }
 
-      // SORT used
-      if (!searchData && genres.length === 0 && sortList.length > 0) {
-        const pathname = { sort: sortList }
-        storageObj = { 
-          sort: sortList,
-          currentResults: currentResults.current,
-          currentResultsWL: currentResultsWL.current,
-          expanded: expanded
-        }
-        setSearchParams(pathname)
+    // SORT used
+    if (!searchData && genres.length === 0 && sortList.length > 0) {
+      const pathname = { sort: sortList }
+      storageObj = { 
+        sort: sortList,
+        currentResults: currentResults.current,
+        currentResultsWL: currentResultsWL.current,
+        expanded: expanded
       }
+      setSearchParams(pathname)
 
       // Store pathname in local storage
       if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
     }
 
-  }, [genres, sortList])
+  }, [genres, sortList, expanded])
 
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
@@ -88,13 +84,14 @@ export default function AllGamesCards() {
       if (keys.includes('currentResultsWL')) currentResultsWL.current = parsedParams.currentResultsWL
       if (keys.includes('currentResults')) {
         currentResults.current = parsedParams.currentResults
-        gameCards.current = parsedParams.currentResults.map((game: GameObject, index: number) => {
-          if (index < 60) return <ResultsCard key={game.appId} game={game}/>
-          else return null
-        })
+        if (parsedParams.currentResults){
+          gameCards.current = parsedParams.currentResults.map((game: GameObject, index: number) => {
+            if (index < 60) return <ResultsCard key={game.appId} game={game}/>
+            else return null
+          })
+        }
       }
     }
-    firstRender.current = true
   }, [])
 
   // On every genres and sort change, reset page number
