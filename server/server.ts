@@ -22,7 +22,7 @@ mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
 // START SCHEDULER
-require('./scheduler.ts')
+require('./scheduler.js')
 
 // GET REQUESTS
 app.get('/all-games', (request, response) => {
