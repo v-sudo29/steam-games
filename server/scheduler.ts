@@ -7,7 +7,7 @@ import Wishlist from './models/Wishlist'
 import Game from './models/Game'
 import mongoose from 'mongoose'
 
-const scheduleExpression = '*/14 * * * *'
+const scheduleExpression = '0 10,18 * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
