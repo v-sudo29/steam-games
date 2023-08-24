@@ -16,6 +16,7 @@ export default function Header() {
         </section>
         <Box
           tabIndex={0}
+          border='none'
           as='button'
           cursor='pointer'
           onClick={() => openNewTab('https://github.com/v-sudo29/steam_games')}

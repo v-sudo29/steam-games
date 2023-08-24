@@ -72,6 +72,7 @@ export default function GenreTags() {
             mb={isSafari ? '1.5rem' : '1rem'}
             fontWeight='600'
             color='#F5F5F5'
+            ml={isSafari ? '1rem' : '0rem'}
           >
             Clear
           </Text>

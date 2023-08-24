@@ -19,6 +19,7 @@ function ResultsCard({ game } : { game: GameObject }) {
       <Card 
         onClick={() => openNewTab(game.url)}
         display='flex'
+        flex='auto'
         role="list item"
         overflow='hidden'
         variant='outline'
@@ -34,20 +35,16 @@ function ResultsCard({ game } : { game: GameObject }) {
         color='#F5F5F5'
         p='1rem'
         gap='0.9rem'
-        h='max-content'
       >
-        <Box h='100%' w='100%' flexGrow='2'>
-          <Image
-            borderRadius='0.4rem'
-            src={game.imgUrl} 
-            alt={game.name} 
-            objectFit='cover'
-            h='inherit'
-            mb={isSafari ? '0.9rem' : '0'}
-            aria-label="Game cover art"
-          />
-        </Box>
-
+        <Image
+          borderRadius='0.4rem'
+          src={game.imgUrl} 
+          alt={game.name} 
+          objectFit='cover'
+          h='inherit'
+          mb={isSafari ? '0.9rem' : '0'}
+          aria-label="Game cover art"
+        />
         {/* GAME INFO */}
         <HStack gap='1rem' align='start' h='100%' flexGrow='1'>
 
