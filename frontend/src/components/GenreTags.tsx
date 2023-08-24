@@ -53,10 +53,6 @@ export default function GenreTags() {
   // SET GENRE FILTER TAGS
   genreTags = genreFilters.map(genre => <CustomCheckbox key={`${genre}-genre-tag`} genre={genre}/>)
 
-  useEffect(() => {
-    console.log(genres)
-  }, [genres])
-
   return (
     <VStack 
       pos='absolute'
