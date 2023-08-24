@@ -80,6 +80,8 @@ export default function WishlistCards() {
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
     const urlParams = localStorage.getItem('storageObj')
+    
+    // On every visit after the first, checked local storage
     if (urlParams) {
       const parsedParams = JSON.parse(urlParams)
       const keys = Object.keys(parsedParams)
@@ -104,6 +106,20 @@ export default function WishlistCards() {
           if (index < 60) return <ResultsCard key={game.appId} game={game}/>
           else return null
         })
+      }
+    } 
+    // On very first visit, store states in local storage
+    else {
+      if (!query && genres.length === 0 && sortList.length > 0) {
+        const pathname = { sort: sortList }
+        const storageObj = { 
+          sort: sortList,
+          currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
+        localStorage.setItem('storageObj', JSON.stringify(storageObj))
       }
     }
     firstRender.current = true

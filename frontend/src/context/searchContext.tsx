@@ -20,7 +20,6 @@ export const SearchProvider = ({ children } : { children: ReactNode }) => {
   const [query, setQuery] = useState<string | null>(null)
   const searchRef = useRef<HTMLInputElement>(null)
 
-  console.log(searchData)
   const searchValues = {
     searchData,
     query,
