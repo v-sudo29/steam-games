@@ -23,13 +23,13 @@ export default function WishlistCards() {
   const { genres, setGenres } = useGenres()
   const { sortList, sortOptions, setSortList } = useSortList()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
-  const { expanded } = useFilter()
+  const { expanded, setExpanded } = useFilter()
   const wishlistCards = useRef<(JSX.Element | null)[] | null>(null)
   const firstRender = useRef(false)
 
   const navigate = useNavigate()
 
-  // Every filter and sort change, store params in local storage
+  // Every state change, store params in local storage
   useEffect(() => {
     let storageObj
     if (firstRender.current) {
@@ -95,8 +95,8 @@ export default function WishlistCards() {
           setSearchData(res.data)
           setWishlistTabActive(true)
         })
-        console.log('finished setting state from local storage!')
       }
+      if (keys.includes('expanded')) setExpanded(parsedParams.expanded)
       if (keys.includes('currentResults')) currentResults.current = parsedParams.currentResults
       if (keys.includes('currentResultsWL')) {
         currentResultsWL.current = parsedParams.currentResultsWL
