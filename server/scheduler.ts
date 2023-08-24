@@ -1,10 +1,10 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import { CronJob } from 'cron'
-import gameScraper from './games-scraper/index'
-import getWishlist from './games-scraper/wishlist'
-import Wishlist from './models/Wishlist'
-import Game from './models/Game'
+import gameScraper from './games-scraper/index.js'
+import getWishlist from './games-scraper/wishlist.js'
+import Wishlist from './models/Wishlist.js'
+import Game from './models/Game.js'
 import mongoose from 'mongoose'
 
 const scheduleExpression = '0 10,18 * * *'

@@ -5,8 +5,8 @@ dotenv.config()
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import Game from './models/Game'
-import Wishlist from './models/Wishlist'
+import Game from './models/Game.js'
+import Wishlist from './models/Wishlist.js'
 const app = express()
 
 // MIDDLEWARE
