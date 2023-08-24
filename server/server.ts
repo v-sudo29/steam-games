@@ -1,12 +1,12 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // IMPORTS
-const express = require('express')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const Game = require('./models/Game')
-const Wishlist = require('./models/Wishlist')
+import express from 'express'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import Game from './models/Game'
+import Wishlist from './models/Wishlist'
 const app = express()
 
 // MIDDLEWARE
@@ -16,11 +16,13 @@ app.use(cors())
 // DATABASE
 const url = process.env.MONGODB_URI
 
+if (!url) throw  new Error('MONGODB_URI environment variable is not defined')
+
 mongoose.set('strictQuery', false)
 mongoose.connect(url)
 
 // START SCHEDULER
-require('./scheduler.js')
+require('./scheduler.ts')
 
 // GET REQUESTS
 app.get('/all-games', (request, response) => {

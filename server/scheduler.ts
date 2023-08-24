@@ -1,13 +1,13 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
+import { CronJob } from 'cron'
+import gameScraper from './games-scraper/index'
+import getWishlist from './games-scraper/wishlist'
+import Wishlist from './models/Wishlist'
+import Game from './models/Game'
+import mongoose from 'mongoose'
 
-const { CronJob } = require('cron')
-const gameScraper = require('./games-scraper/index.js')
-const getWishlist = require('./games-scraper/wishlist.js')
-const Wishlist = require('./models/Wishlist.js')
-const Game = require('./models/Game.js')
-const mongoose = require('mongoose')
-
-const scheduleExpression = '0 10,18 * * *'
+const scheduleExpression = '*/14 * * * *'
 
 async function updateWishlists() {
   const wishlistData = await getWishlist()
@@ -32,10 +32,11 @@ async function updateWishlists() {
 async function updateGames() {
   const gamesData = await gameScraper()
   console.log(gamesData.length)
+
     // Drop games collection
-  await mongoose.connection.db.dropCollection('games', function(err, result) {
-    console.log('dropped collection!')
-  });
+  await mongoose.connection.db.dropCollection('games')
+    .then(() => console.log('dropped collection!'))
+    .catch(error => console.log(error))
   
   // Create new games collection
   await mongoose.connection.db.createCollection('games')

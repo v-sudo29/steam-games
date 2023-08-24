@@ -1,32 +1,48 @@
-require('dotenv').config()
-const puppeteer = require('puppeteer-extra')
-const { Cluster } = require('puppeteer-cluster');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+import dotenv from 'dotenv'
+dotenv.config()
+import puppeteer from 'puppeteer-extra';
+import { Cluster } from 'puppeteer-cluster';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 puppeteer.use(StealthPlugin());
 
 const WORKERS_COUNT = 2
 
 const searchResultSelector = 'div.leftcol.large'
 
-const TWO_D_URL = process.env.TWO_D_URL
-const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL
-const CARD_GAME_URL = process.env.CARD_GAME_URL
-const COLONY_SIM_URL = process.env.COLONY_SIM_URL
-const CUTE_URL = process.env.CUTE_URL
-const INDIE_URL = process.env.INDIE_URL
-const FARMING_SIM_URL = process.env.FARMING_SIM_URL
-const FARMING_URL = process.env.FARMING_URL
-const LIFE_SIM_URL = process.env.LIFE_SIM_URL
-const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL
-const PLATFORMER_URL = process.env.PLATFORMER_URL
+const TWO_D_URL = process.env.TWO_D_URL ?? ''
+const BASE_BUILDING_URL = process.env.BASE_BUILDING_URL ?? ''
+const CARD_GAME_URL = process.env.CARD_GAME_URL ?? ''
+const COLONY_SIM_URL = process.env.COLONY_SIM_URL ?? ''
+const CUTE_URL = process.env.CUTE_URL ?? ''
+const INDIE_URL = process.env.INDIE_URL ?? ''
+const FARMING_SIM_URL = process.env.FARMING_SIM_URL ?? ''
+const FARMING_URL = process.env.FARMING_URL ?? ''
+const LIFE_SIM_URL = process.env.LIFE_SIM_URL ?? ''
+const PIXEL_GRAPHICS_URL = process.env.PIXEL_GRAPHICS_URL ?? ''
+const PLATFORMER_URL = process.env.PLATFORMER_URL ?? ''
 
-function delay(time) {
+interface IInfo {
+  appId?: string,
+  name?: string,
+  url?: string,
+  discount?: string,
+  currentPrice?: string,
+  originalPrice?: string,
+  rating?: string,
+  reviewsType?: string,
+  imgUrl?: string,
+  genres?: string[],
+  saleEnds?: string,
+  description?: string
+}
+
+function delay(time: number): Promise<unknown> {
   return new Promise(function(resolve) { 
       setTimeout(resolve, time)
   });
 }
 
-async function getGames(url, gameType) {
+async function getGames(url: string, gameType: string) {
   console.log(`Scraping ${gameType} games!`)
   const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
@@ -40,12 +56,15 @@ async function getGames(url, gameType) {
 
   // Get total results
   const resultsNum = await page.evaluate(() => {
-    const totalResults = document.querySelector('div.search_results_count') === null 
-      ? document.querySelector('#search_results_filtered_warning_persistent').querySelector('div').innerText  
-      : document.querySelector('div.search_results_count').innerText 
+    const totalResults = !document.querySelector('div.search_results_count') 
+      ? document.querySelector('#search_results_filtered_warning_persistent')?.querySelector('div')?.innerText ?? null
+      : (document.querySelector('div.search_results_count') as HTMLDivElement).innerText 
     
-    const totalNumber = parseInt(totalResults.split(' ')[0])
-    return totalNumber
+    if (totalResults) {
+      const totalNumber = parseInt(totalResults.split(' ')[0])
+      return totalNumber
+    }
+    return 0
   })
 
   // Get total scrolls
@@ -58,30 +77,29 @@ async function getGames(url, gameType) {
     await delay(700)
   }
 
-  const gamesArr = []
-  let i = 0
+  const gamesArr: IInfo[] = []
 
   // Grab info on page
   const grabInfo = await page.evaluate(() => {
-    const infoArr = []
-    let gameTags = null
+    const infoArr: IInfo[] = []
+    let gameTags: NodeListOf<HTMLDivElement>
     if (!document.querySelector('a.search_result_row.ds_collapse_flag.app_impression_tracked')) {
         return []
     }
-    gameTags = document
-      .querySelector('#search_resultsRows')
+    gameTags = (document
+      .querySelector('#search_resultsRows') as HTMLDivElement)
       .querySelectorAll('a.search_result_row.ds_collapse_flag.app_impression_tracked')
 
     gameTags.forEach(async (game) => {
-      const gameName = game.querySelector('span.title').innerText
-      const redirectLink = game.getAttribute('href')
-      const discount = game.querySelector('div.discount_pct').innerText
-      const currentPrice = game.querySelector('div.discount_final_price').innerText
-      const originalPrice = game.querySelector('div.discount_original_price').innerText
-      const reviewsType = game.querySelector('span.search_review_summary.positive') ? 
-        game.querySelector('span.search_review_summary.positive').getAttribute('data-tooltip-html') 
+      const gameName = (game.querySelector('span.title') as HTMLSpanElement).innerText
+      const redirectLink = game.getAttribute('href') ?? ''
+      const discount = (game.querySelector('div.discount_pct') as HTMLDivElement).innerText
+      const currentPrice = (game.querySelector('div.discount_final_price') as HTMLDivElement).innerText
+      const originalPrice = (game.querySelector('div.discount_original_price') as HTMLDivElement).innerText
+      const reviewsType = (game.querySelector('span.search_review_summary.positive') as HTMLSpanElement) ? 
+        game.querySelector('span.search_review_summary.positive')?.getAttribute('data-tooltip-html') ?? null
         : null
-      const rating = reviewsType.split('<br>')[1].split(' ')[0]
+      const rating = reviewsType?.split('<br>')[1].split(' ')[0]
 
       const obj = {
         name: gameName,
@@ -89,7 +107,7 @@ async function getGames(url, gameType) {
         discount: discount,
         currentPrice: currentPrice,
         originalPrice: originalPrice,
-        reviewsType: reviewsType.split('<br>')[0],
+        reviewsType: reviewsType?.split('<br>')[0] ?? '',
         rating: rating
       }
       infoArr.push(obj)
@@ -104,7 +122,7 @@ async function getGames(url, gameType) {
   return gamesArr
 }
 
-async function scrapeSteam(games) {
+async function scrapeSteam(games: IInfo[]) {
   console.log('Starting steam games scraping!')
   const cluster = await Cluster.launch({
     concurrency: Cluster.CONCURRENCY_PAGE,
@@ -113,7 +131,7 @@ async function scrapeSteam(games) {
       headless: 'new',
     }
   })
-  const gamesArr = games
+  const gamesArr: IInfo[] = games
 
   await cluster.task(async ({ page, data: {url, index} }) => {
     if (index === 51) console.log('Scraped 50 games')
@@ -154,15 +172,15 @@ async function scrapeSteam(games) {
     await page.waitForSelector('div.app_tag.add_button')
 
     // Scrape original img url
-    const imgUrl = await page.evaluate(() => document.querySelector('img.game_header_image_full').src)
+    const imgUrl = await page.evaluate(() => (document.querySelector('img.game_header_image_full') as HTMLImageElement).src)
 
     // Scrape genres
     await page.click('div.app_tag.add_button')
     await page.waitForSelector('div.newmodal.app_tag_modal_frame')
 
     const genres = await page.evaluate(() => {
-      const genresArr = []
-      const genreTags = document.querySelectorAll('div.app_tag_control.popular a.app_tag')
+      const genresArr: string[] = []
+      const genreTags = document.querySelectorAll('div.app_tag_control.popular a.app_tag') as NodeListOf<HTMLAnchorElement>
       genreTags.forEach(tag => {
         genresArr.push(tag.innerText)
       })
@@ -170,23 +188,24 @@ async function scrapeSteam(games) {
     })
     
     // Game page url
-    const storeUrl = await page.evaluate(() => document.querySelector('meta[property="og:url"]').getAttribute('content'))
+    const storeUrl = await page.evaluate(() => (document.querySelector('meta[property="og:url"]') as HTMLMetaElement).getAttribute('content'))
 
     // Scrape end date
-    const saleEnds = await page.evaluate(() => document.querySelector('p.game_purchase_discount_countdown').innerText
-    .split('Offer ends ')[1])
+    const saleEnds = await page.evaluate(() => (document.querySelector('p.game_purchase_discount_countdown') as HTMLParagraphElement)
+      .innerText
+      .split('Offer ends ')[1])
 
     // Description
-    const description = await page.evaluate(() => document.querySelector('meta[property="og:description"]').getAttribute('content'))
+    const description = await page.evaluate(() => (document.querySelector('meta[property="og:description"]') as HTMLMetaElement).getAttribute('content'))
 
     // Append info
-    gamesArr[index]['appId'] = storeUrl.split('/')[4]
+    gamesArr[index]['appId'] = storeUrl?.split('/')[4] ?? ''
     gamesArr[index]['imgUrl'] = imgUrl
     gamesArr[index]['genres'] = genres
-    gamesArr[index]['url'] = storeUrl
+    gamesArr[index]['url'] = storeUrl ?? ''
     gamesArr[index]['saleEnds'] = saleEnds
-    gamesArr[index]['description'] = description
-    i++
+    gamesArr[index]['description'] = description ?? ''
+
   }).catch(err => console.log(err))
 
   for (let i = 0; i < gamesArr.length; i++) {
@@ -198,7 +217,7 @@ async function scrapeSteam(games) {
   return gamesArr
 }
 
-module.exports = async () => {
+export default async () => {
   
   const twoDimGames = await getGames(TWO_D_URL, '2D')
   const baseGames = await getGames(BASE_BUILDING_URL, 'Base Building')
