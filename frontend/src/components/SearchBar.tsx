@@ -27,18 +27,6 @@ export default function SearchBar() {
 
   const navigate = useNavigate()
   const [emptyError, setEmptyError] = useState<boolean>(false)
-  
-  // useEffect(() => {
-  //   if (!searchData && query) {
-  //     axios.get(`https://steam-games-server.onrender.com/search?q=${query}`)
-  //       .then(res => {
-  //         navigate('/all-games')
-  //         setGamesTabActive(true)
-  //         setSearchData(res.data)
-  //         setWishlistTabActive(false)
-  //       })
-  //   }
-  // }, [query])
 
   // Handle search when 'Enter' key is pressed
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {

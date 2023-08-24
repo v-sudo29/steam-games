@@ -11,7 +11,7 @@ export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const { sortList, setSortList, sortOptions } = useSortList()
-  const { searchData, query } = useSearch()
+  const {  query } = useSearch()
   const { genres } = useGenres()
   const isMobile = useMobile()
   const animateRef = useRef<boolean>()
@@ -25,13 +25,13 @@ export default function SortMenu() {
     const sortName = divElement.innerText
     setSortList([sortName])
     // SEARCH, FILTER, and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
+    if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
 
     // FILTER and SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
+    if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
 
     // SORT used
-    if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
+    if (!query && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
     setOpen(false)
   }
 
