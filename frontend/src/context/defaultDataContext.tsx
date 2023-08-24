@@ -32,11 +32,17 @@ export const DefaultDataProvider = ({ children } : { children: ReactNode }) => {
   const currentResultsWL = useRef<GameObject[] | null>(null)
 
   useEffect(() => {
-    if (gamesResponse) setGamesData(gamesResponse)
+    if (gamesResponse) {
+      setGamesData(gamesResponse)
+      currentResults.current = gamesResponse
+    }
   }, [gamesResponse])
   
   useEffect(() => {
-    if (wishlistResponse) setWishlistData(wishlistResponse)
+    if (wishlistResponse) {
+      setWishlistData(wishlistResponse)
+      currentResultsWL.current = wishlistResponse
+    }
   }, [wishlistResponse])
 
   const defaultInfo = {
