@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { flushSync } from "react-dom"
 
 const MobileContext = createContext<boolean>(false)
 
@@ -10,13 +11,13 @@ export const MobileProvider = ({ children } : { children: ReactNode }) => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
 
   const handleResize = (): void => {
-    if (window.innerWidth > 790) setIsMobile(false)
+    if (window.innerWidth > 480) flushSync(() => setIsMobile(false))
     else setIsMobile(true)
   }
 
   // Handle window resizing for media queries
   useEffect(() => {
-    if (window.innerWidth > 790) setIsMobile(false)
+    if (window.innerWidth > 480) setIsMobile(false)
     else setIsMobile(true)
 
     window.addEventListener('resize', handleResize)
