@@ -23,14 +23,15 @@ export default function GenreTags() {
   // Every time genres changes, update url params
   useEffect(() => {
     if (genres.length > 0) {
+
       // SEARCH, FILTER, and SORT used 
-      if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+      if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
 
       // FILTER and SORT used
-      if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+      if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
 
       // SORT used
-      if (!searchData && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+      if (!query && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
     }
   }, [genres])
 
@@ -43,10 +44,10 @@ export default function GenreTags() {
     if (location.pathname.includes('wishlist')) navigate('/wishlist')
 
     // SEARCH and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList})
+    if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList})
 
     // SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+    if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList })
   }
 
   // SET GENRE FILTER TAGS

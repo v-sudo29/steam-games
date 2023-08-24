@@ -6,30 +6,35 @@ import { useSearch } from "../../context/searchContext"
 import { useGenres } from "../../context/genresContext"
 import { useSortList } from "../../context/sortListContext"
 import { usePage } from "../../context/pageContext"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { useFilter } from "../../context/filterContext"
+import { useTabs } from "../../context/tabsContext"
 import { GameObject } from "../../interface/GameObject"
 import ResultsCard from "./ResultsCard"
 import SkeletonCard from "./SkeletonCard"
 import sortGames from "../../hooks/sortGames"
+import axios from "axios"
 
 export default function WishlistCards() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { wishlistLoading, wishlistError, wishlistData, currentResults, currentResultsWL } = useDefaultData()
   const { pageNumberWL } = usePage()
-  const { searchData, query, setQuery } = useSearch()
+  const { query, setQuery, setSearchData } = useSearch()
   const { genres, setGenres } = useGenres()
   const { sortList, sortOptions, setSortList } = useSortList()
+  const { setGamesTabActive, setWishlistTabActive } = useTabs()
   const { expanded } = useFilter()
-  const firstRender = useRef(false)
   const wishlistCards = useRef<(JSX.Element | null)[] | null>(null)
+  const firstRender = useRef(false)
+
+  const navigate = useNavigate()
 
   // Every filter and sort change, store params in local storage
   useEffect(() => {
     let storageObj
     if (firstRender.current) {
       // SEARCH, FILTER, and SORT used 
-      if (searchData && genres.length > 0 && sortList.length > 0) {
+      if (query && genres.length > 0 && sortList.length > 0) {
         const pathname = { q: query, sort: sortList, filter: genres }
         storageObj = { 
           q: query,
@@ -43,7 +48,7 @@ export default function WishlistCards() {
       }
 
       // FILTER and SORT used
-      if (!searchData && genres.length > 0 && sortList.length > 0) {
+      if (!query && genres.length > 0 && sortList.length > 0) {
         const pathname = { sort: sortList, filter: genres }
         storageObj = {
           sort: sortList,
@@ -56,7 +61,7 @@ export default function WishlistCards() {
       }
 
       // SORT used
-      if (!searchData && genres.length === 0 && sortList.length > 0) {
+      if (!query && genres.length === 0 && sortList.length > 0) {
         const pathname = { sort: sortList }
         storageObj = { 
           sort: sortList,
@@ -70,8 +75,7 @@ export default function WishlistCards() {
       // Store pathname in local storage
       if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
     }
-
-  }, [genres, sortList])
+  }, [genres, sortList, expanded, query])
 
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
@@ -81,7 +85,18 @@ export default function WishlistCards() {
       const keys = Object.keys(parsedParams)
       if (keys.includes('sort')) setSortList(parsedParams.sort)
       if (keys.includes('filter')) setGenres(parsedParams.filter)
-      if (keys.includes('q')) setQuery(parsedParams.q)
+      if (keys.includes('q')) {
+        setQuery(parsedParams.q)
+
+        axios.get(`https://steam-games-server.onrender.com/search?q=${parsedParams.q}`)
+        .then(res => {
+          navigate('/wishlist')
+          setGamesTabActive(false)
+          setSearchData(res.data)
+          setWishlistTabActive(true)
+        })
+        console.log('finished setting state from local storage!')
+      }
       if (keys.includes('currentResults')) currentResults.current = parsedParams.currentResults
       if (keys.includes('currentResultsWL')) {
         currentResultsWL.current = parsedParams.currentResultsWL

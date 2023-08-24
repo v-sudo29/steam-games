@@ -13,7 +13,7 @@ import { useTabs } from "../context/tabsContext"
 import { useGenres } from "../context/genresContext"
 import { useSortList } from "../context/sortListContext"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import SearchIcon from "../assets/SearchIcon"
 import ExitIcon from "../assets/ExitIcon"
@@ -28,6 +28,18 @@ export default function SearchBar() {
   const navigate = useNavigate()
   const [emptyError, setEmptyError] = useState<boolean>(false)
   
+  // useEffect(() => {
+  //   if (!searchData && query) {
+  //     axios.get(`https://steam-games-server.onrender.com/search?q=${query}`)
+  //       .then(res => {
+  //         navigate('/all-games')
+  //         setGamesTabActive(true)
+  //         setSearchData(res.data)
+  //         setWishlistTabActive(false)
+  //       })
+  //   }
+  // }, [query])
+
   // Handle search when 'Enter' key is pressed
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && searchRef.current && searchRef.current.value !== '') {
@@ -58,8 +70,9 @@ export default function SearchBar() {
   // Handle clear search
   const handleClearSearch = (): void => {
     setSearchData(null)
+    setQuery(null)
+    
     if (searchRef.current) searchRef.current.value = ''
-
     // Change url params to /all-games
     navigate('/all-games')
   }

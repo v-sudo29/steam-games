@@ -10,9 +10,11 @@ import { useSortList } from '../../context/sortListContext'
 import { useDefaultData } from '../../context/defaultDataContext'
 import { isSafari } from 'react-device-detect'
 import { useSearch } from '../../context/searchContext'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useMobile } from '../../context/useMobileContext'
 import { useFilter } from '../../context/filterContext'
+import { useTabs } from '../../context/tabsContext'
+import axios from 'axios'
 
 export default function AllGamesCards() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -20,57 +22,75 @@ export default function AllGamesCards() {
   const { genres, setGenres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
   const { sortList, sortOptions, setSortList } = useSortList()
-  const { searchData, query, setQuery } = useSearch()
-  const { expanded } = useFilter()
+  const { searchData, setSearchData, query, setQuery } = useSearch()
+  const { setGamesTabActive, setWishlistTabActive } = useTabs()
+  const { expanded, setExpanded } = useFilter()
   const isMobile = useMobile()
   const gameCards = useRef<(JSX.Element | null)[] | null>(null)
+  const firstRender = useRef(false)
+
+  const navigate = useNavigate()
 
   // Every filter and sort change, store params in local storage
   useEffect(() => {
     let storageObj = null
-    // SEARCH, FILTER, and SORT used 
-    if (searchData && genres.length > 0 && sortList.length > 0) {
-      const pathname = { q: query, sort: sortList, filter: genres }
-      storageObj = { 
-        q: query,
-        sort: sortList,
-        filter: genres,
-        currentResults: currentResults.current,
-        currentResultsWL: currentResultsWL.current,
-        expanded: expanded
+    if (firstRender.current) {
+      // SEARCH, FILTER, and SORT used 
+      if (query && genres.length > 0 && sortList.length > 0) {
+        const pathname = { q: query, sort: sortList, filter: genres }
+        storageObj = { 
+          q: query,
+          sort: sortList,
+          filter: genres,
+          currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
       }
-      setSearchParams(pathname)
-    }
 
-    // FILTER and SORT used
-    if (!searchData && genres.length > 0 && sortList.length > 0) {
-      const pathname = { sort: sortList, filter: genres }
-      storageObj = {
-        sort: sortList,
-        filter: genres,
-        currentResults: currentResults.current,
-        currentResultsWL: currentResultsWL.current,
-        expanded: expanded
+      // SEARCH and SORT used
+      if (query && genres.length === 0 && sortList.length > 0) {
+        const pathname = { q: query, sort: sortList }
+        storageObj = { 
+          q: query,
+          sort: sortList,
+          currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
       }
-      setSearchParams(pathname)
-    }
 
-    // SORT used
-    if (!searchData && genres.length === 0 && sortList.length > 0) {
-      const pathname = { sort: sortList }
-      storageObj = { 
-        sort: sortList,
-        currentResults: currentResults.current,
-        currentResultsWL: currentResultsWL.current,
-        expanded: expanded
+      // FILTER and SORT used
+      if (!query && genres.length > 0 && sortList.length > 0) {
+        const pathname = { sort: sortList, filter: genres }
+        storageObj = {
+          sort: sortList,
+          filter: genres,
+          currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
       }
-      setSearchParams(pathname)
+
+      // SORT used
+      if (!query && genres.length === 0 && sortList.length > 0) {
+        const pathname = { sort: sortList }
+        storageObj = { 
+          sort: sortList,
+          currentResults: currentResults.current,
+          currentResultsWL: currentResultsWL.current,
+          expanded: expanded
+        }
+        setSearchParams(pathname)
+      }
 
       // Store pathname in local storage
       if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
     }
-
-  }, [genres, sortList, expanded])
+  }, [genres, sortList, expanded, query])
 
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
@@ -80,7 +100,17 @@ export default function AllGamesCards() {
       const keys = Object.keys(parsedParams)
       if (keys.includes('sort')) setSortList(parsedParams.sort)
       if (keys.includes('filter')) setGenres(parsedParams.filter)
-      if (keys.includes('q')) setQuery(parsedParams.q)
+      if (keys.includes('q')) {
+        setQuery(parsedParams.q)
+        axios.get(`https://steam-games-server.onrender.com/search?q=${parsedParams.q}`)
+          .then(res => {
+            navigate('/all-games')
+            setGamesTabActive(true)
+            setSearchData(res.data)
+            setWishlistTabActive(false)
+          })
+      }
+      if (keys.includes('expanded')) setExpanded(parsedParams.expanded)
       if (keys.includes('currentResultsWL')) currentResultsWL.current = parsedParams.currentResultsWL
       if (keys.includes('currentResults')) {
         currentResults.current = parsedParams.currentResults
@@ -92,6 +122,7 @@ export default function AllGamesCards() {
         }
       }
     }
+    firstRender.current = true
   }, [])
 
   // On every genres and sort change, reset page number

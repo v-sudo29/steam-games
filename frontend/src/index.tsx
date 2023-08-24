@@ -34,7 +34,7 @@ const theme = extendTheme({
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <DefaultDataProvider>
       <FilterProvider>
         <GenresProvider>
@@ -54,5 +54,5 @@ root.render(
         </GenresProvider>
       </FilterProvider>
     </DefaultDataProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

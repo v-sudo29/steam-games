@@ -4,8 +4,8 @@ import { GameObject } from '../interface/GameObject'
 interface SearchObject {
   searchData: GameObject[] | null,
   setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
-  query: string,
-  setQuery: React.Dispatch<React.SetStateAction<string>>,
+  query: string | null,
+  setQuery: React.Dispatch<React.SetStateAction<string | null>>,
   searchRef: React.RefObject<HTMLInputElement>
 }
 
@@ -17,9 +17,10 @@ export const useSearch = () => {
 
 export const SearchProvider = ({ children } : { children: ReactNode }) => {
   const [searchData, setSearchData] = useState<GameObject[] | null>(null)
-  const [query, setQuery] = useState<string>('')
+  const [query, setQuery] = useState<string | null>(null)
   const searchRef = useRef<HTMLInputElement>(null)
 
+  console.log(searchData)
   const searchValues = {
     searchData,
     query,
