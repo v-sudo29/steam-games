@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
-import { VStack, Text, HStack, CheckboxGroup, Checkbox } from '@chakra-ui/react'
+import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
 import { useGenres } from '../context/genresContext'
 import { useFilter } from '../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form, useNavigate, useSearchParams  } from 'react-router-dom'
 import { useSearch } from '../context/searchContext'
-import { useSortList } from '../context/sortListContext'
+import { useSort } from '../context/sortContext'
 import { useMobile } from '../context/useMobileContext'
 import CustomCheckbox from './CustomCheckbox'
 
 export default function GenreTags() {
   const { expanded } = useFilter()
   const { genres, setGenres, genreFilters } = useGenres()
-  const { searchData, query } = useSearch()
-  const { sortList } = useSortList()
+  const { query } = useSearch()
+  const { sort } = useSort()
   const [searchParams, setSearchParams] = useSearchParams()
   const isMobile = useMobile()
 
@@ -25,13 +25,13 @@ export default function GenreTags() {
     if (genres.length > 0) {
 
       // SEARCH, FILTER, and SORT used 
-      if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList, filter: genres })
+      if (query && genres.length > 0 && sort.length > 0) setSearchParams({ q: query, sort: sort, filter: genres })
 
       // FILTER and SORT used
-      if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList, filter: genres })
+      if (!query && genres.length > 0 && sort.length > 0) setSearchParams({ sort: sort, filter: genres })
 
       // SORT used
-      if (!query && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+      if (!query && genres.length === 0 && sort.length > 0) setSearchParams({ sort: sort })
     }
   }, [genres])
 
@@ -44,10 +44,10 @@ export default function GenreTags() {
     if (location.pathname.includes('wishlist')) navigate('/wishlist')
 
     // SEARCH and SORT used 
-    if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortList})
+    if (query && genres.length > 0 && sort.length > 0) setSearchParams({ q: query, sort: sort})
 
     // SORT used
-    if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortList })
+    if (!query && genres.length > 0 && sort.length > 0) setSearchParams({ sort: sort })
   }
 
   // SET GENRE FILTER TAGS

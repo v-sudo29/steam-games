@@ -11,9 +11,9 @@ import { useSearch } from "../context/searchContext"
 import { useSearchParams } from "react-router-dom"
 import { useTabs } from "../context/tabsContext"
 import { useGenres } from "../context/genresContext"
-import { useSortList } from "../context/sortListContext"
+import { useSort } from "../context/sortContext"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import SearchIcon from "../assets/SearchIcon"
 import ExitIcon from "../assets/ExitIcon"
@@ -22,7 +22,7 @@ export default function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { searchData, searchRef, query, setSearchData, setQuery } = useSearch()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
-  const { sortList } = useSortList()
+  const { sort } = useSort()
   const { genres } = useGenres()
 
   const navigate = useNavigate()
@@ -41,13 +41,13 @@ export default function SearchBar() {
             setQuery(searchParam)
 
             // FILTER and SORT used 
-            if (genres.length > 0 && sortList.length > 0) setSearchParams({ q: searchParam, sort: sortList, filter: genres })
+            if (genres.length > 0 && sort.length > 0) setSearchParams({ q: searchParam, sort: sort, filter: genres })
 
             // FILTER used
-            if (genres.length > 0 && sortList.length === 0) setSearchParams({ q: searchParam, filter: genres })
+            if (genres.length > 0 && sort.length === 0) setSearchParams({ q: searchParam, filter: genres })
 
             // SORT used
-            if (genres.length === 0 && sortList.length > 0) setSearchParams({ q: searchParam, sort: sortList  })
+            if (genres.length === 0 && sort.length > 0) setSearchParams({ q: searchParam, sort: sort })
           })
           .catch(err => console.error(err))
         return

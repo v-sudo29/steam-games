@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 import { Grid } from '@chakra-ui/react'
 import { useGenres } from '../../context/genresContext'
 import { usePage } from '../../context/pageContext'
-import { useSortList } from '../../context/sortListContext'
+import { useSort } from '../../context/sortContext'
 import { useDefaultData } from '../../context/defaultDataContext'
 import { isSafari } from 'react-device-detect'
 import { useSearch } from '../../context/searchContext'
@@ -21,7 +21,7 @@ export default function AllGamesCards() {
   const { gamesData, gamesError, gamesAreLoading, currentResults, currentResultsWL } = useDefaultData()
   const { genres, setGenres } = useGenres()
   const { pageNumber, setPageNumber } = usePage()
-  const { sortList, sortOptions, setSortList } = useSortList()
+  const { sort, sortOptions, setSort } = useSort()
   const { searchData, setSearchData, query, setQuery } = useSearch()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
   const { expanded, setExpanded } = useFilter()
@@ -36,11 +36,11 @@ export default function AllGamesCards() {
     let storageObj = null
     if (firstRender.current) {
       // SEARCH, FILTER, and SORT used 
-      if (query && genres.length > 0 && sortList.length > 0) {
-        const pathname = { q: query, sort: sortList, filter: genres }
+      if (query && genres.length > 0 && sort.length > 0) {
+        const pathname = { q: query, sort: sort, filter: genres }
         storageObj = { 
           q: query,
-          sort: sortList,
+          sort: sort,
           filter: genres,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
@@ -50,11 +50,11 @@ export default function AllGamesCards() {
       }
 
       // SEARCH and SORT used
-      if (query && genres.length === 0 && sortList.length > 0) {
-        const pathname = { q: query, sort: sortList }
+      if (query && genres.length === 0 && sort.length > 0) {
+        const pathname = { q: query, sort: sort }
         storageObj = { 
           q: query,
-          sort: sortList,
+          sort: sort,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
           expanded: expanded
@@ -63,10 +63,10 @@ export default function AllGamesCards() {
       }
 
       // FILTER and SORT used
-      if (!query && genres.length > 0 && sortList.length > 0) {
-        const pathname = { sort: sortList, filter: genres }
+      if (!query && genres.length > 0 && sort.length > 0) {
+        const pathname = { sort: sort, filter: genres }
         storageObj = {
-          sort: sortList,
+          sort: sort,
           filter: genres,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
@@ -76,10 +76,10 @@ export default function AllGamesCards() {
       }
 
       // SORT used
-      if (!query && genres.length === 0 && sortList.length > 0) {
-        const pathname = { sort: sortList }
+      if (!query && genres.length === 0 && sort.length > 0) {
+        const pathname = { sort: sort }
         storageObj = { 
-          sort: sortList,
+          sort: sort,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
           expanded: expanded
@@ -90,7 +90,7 @@ export default function AllGamesCards() {
       // Store pathname in local storage
       if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
     }
-  }, [genres, sortList, expanded, query])
+  }, [genres, sort, expanded, query])
 
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function AllGamesCards() {
     if (urlParams) {
       const parsedParams = JSON.parse(urlParams)
       const keys = Object.keys(parsedParams)
-      if (keys.includes('sort')) setSortList(parsedParams.sort)
+      if (keys.includes('sort')) setSort(parsedParams.sort)
       if (keys.includes('filter')) setGenres(parsedParams.filter)
       if (keys.includes('q')) {
         setQuery(parsedParams.q)
@@ -126,10 +126,10 @@ export default function AllGamesCards() {
     } 
     // On very first visit, store states in local storage
     else {
-      if (!query && genres.length === 0 && sortList.length > 0) {
-        const pathname = { sort: sortList }
+      if (!query && genres.length === 0 && sort.length > 0) {
+        const pathname = { sort: sort }
         const storageObj = { 
-          sort: sortList,
+          sort: sort,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
           expanded: expanded
@@ -144,12 +144,12 @@ export default function AllGamesCards() {
   // On every genres and sort change, reset page number
   useEffect(() => {
     resetPageNumber()
-  }, [genres, sortList])
+  }, [genres, sort])
 
   const resetPageNumber = (): void => setPageNumber(1)
 
   // Set DEFAULT GAME CARDS if no genre or sort selected
-  if (gamesData && genres.length === 0 && sortList.length === 0 && pageNumber === 1) {
+  if (gamesData && genres.length === 0 && sort.length === 0 && pageNumber === 1) {
     const gamesDataCopy = gamesData
 
     gameCards.current = gamesDataCopy.map((game, index) => {
@@ -164,7 +164,7 @@ export default function AllGamesCards() {
   // -------------------------------------
 
   // Set CARDS by GENRES ONLY
-  if (gamesData && genres.length !== 0 && sortList.length === 0) {
+  if (gamesData && genres.length !== 0 && sort.length === 0) {
     const matchedGames = []
     const gamesDataCopy = [...gamesData]
     
@@ -182,15 +182,15 @@ export default function AllGamesCards() {
   } 
   
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
-  if (genres.length === 0 && gamesData !== null && sortList.length !== 0) {
+  if (genres.length === 0 && gamesData !== null && sort.length !== 0) {
     const currentResultsCopy = [...gamesData]
     let sortedResults: GameObject[] | null = null
     
     // Sort through all sort types
-    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
-    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
-    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
-    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
+    if (sort.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
+    if (sort.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
+    if (sort.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
+    if (sort.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
     
     if (sortedResults) {
       currentResults.current = sortedResults
@@ -203,7 +203,7 @@ export default function AllGamesCards() {
   }
 
   // Set CARDS by GENRES AND SORT
-  if (genres.length !== 0 && gamesData !== null && sortList.length !== 0 && currentResults.current) {
+  if (genres.length !== 0 && gamesData !== null && sort.length !== 0 && currentResults.current) {
     let gamesDataCopy: GameObject[] = []
 
     if (genres.length === 1) gamesDataCopy = [...currentResults.current]
@@ -225,10 +225,10 @@ export default function AllGamesCards() {
     }
 
     // Sort by SORT type
-    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
-    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
-    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
-    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
+    if (sort.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
+    if (sort.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
+    if (sort.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
+    if (sort.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
 
     currentResults.current = sortedResults!
     gameCards.current = sortedResults!.map((game, index) => {

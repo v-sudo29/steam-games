@@ -1,6 +1,6 @@
 import { Box, Button, Select, VStack } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { useSortList } from "../context/sortListContext"
+import { useSort } from "../context/sortContext"
 import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../context/searchContext"
 import { useGenres } from "../context/genresContext"
@@ -10,28 +10,28 @@ import CarrotDownIcon from "../assets/CarrotDownIcon"
 export default function SortMenu() {
   const [open, setOpen] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
-  const { sortList, setSortList, sortOptions } = useSortList()
+  const { sort, setSort, sortOptions } = useSort()
   const {  query } = useSearch()
   const { genres } = useGenres()
   const isMobile = useMobile()
   const animateRef = useRef<boolean>()
 
-  const selected = sortList[0]
+  const selected = sort[0]
   animateRef.current = open
 
   // Handles user selecting a new sort
   const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
     const divElement = e.target as HTMLDivElement
     const sortName = divElement.innerText
-    setSortList([sortName])
+    setSort([sortName])
     // SEARCH, FILTER, and SORT used 
-    if (query && genres.length > 0 && sortList.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
+    if (query && genres.length > 0 && sort.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
 
     // FILTER and SORT used
-    if (!query && genres.length > 0 && sortList.length > 0) setSearchParams({ sort: sortName, filter: genres })
+    if (!query && genres.length > 0 && sort.length > 0) setSearchParams({ sort: sortName, filter: genres })
 
     // SORT used
-    if (!query && genres.length === 0 && sortList.length > 0) setSearchParams({ sort: sortName })
+    if (!query && genres.length === 0 && sort.length > 0) setSearchParams({ sort: sortName })
     setOpen(false)
   }
 

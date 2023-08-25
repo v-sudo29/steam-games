@@ -4,7 +4,7 @@ import { isSafari } from "react-device-detect"
 import { useEffect, useRef } from "react"
 import { useSearch } from "../../context/searchContext"
 import { useGenres } from "../../context/genresContext"
-import { useSortList } from "../../context/sortListContext"
+import { useSort } from "../../context/sortContext"
 import { usePage } from "../../context/pageContext"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { useFilter } from "../../context/filterContext"
@@ -21,7 +21,7 @@ export default function WishlistCards() {
   const { pageNumberWL } = usePage()
   const { query, setQuery, setSearchData } = useSearch()
   const { genres, setGenres } = useGenres()
-  const { sortList, sortOptions, setSortList } = useSortList()
+  const { sort, sortOptions, setSort } = useSort()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
   const { expanded, setExpanded } = useFilter()
   const wishlistCards = useRef<(JSX.Element | null)[] | null>(null)
@@ -34,11 +34,11 @@ export default function WishlistCards() {
     let storageObj
     if (firstRender.current) {
       // SEARCH, FILTER, and SORT used 
-      if (query && genres.length > 0 && sortList.length > 0) {
-        const pathname = { q: query, sort: sortList, filter: genres }
+      if (query && genres.length > 0 && sort.length > 0) {
+        const pathname = { q: query, sort: sort, filter: genres }
         storageObj = { 
           q: query,
-          sort: sortList,
+          sort: sort,
           filter: genres,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
@@ -48,10 +48,10 @@ export default function WishlistCards() {
       }
 
       // FILTER and SORT used
-      if (!query && genres.length > 0 && sortList.length > 0) {
-        const pathname = { sort: sortList, filter: genres }
+      if (!query && genres.length > 0 && sort.length > 0) {
+        const pathname = { sort: sort, filter: genres }
         storageObj = {
-          sort: sortList,
+          sort: sort,
           filter: genres,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
@@ -61,10 +61,10 @@ export default function WishlistCards() {
       }
 
       // SORT used
-      if (!query && genres.length === 0 && sortList.length > 0) {
-        const pathname = { sort: sortList }
+      if (!query && genres.length === 0 && sort.length > 0) {
+        const pathname = { sort: sort }
         storageObj = { 
-          sort: sortList,
+          sort: sort,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
           expanded: expanded
@@ -75,7 +75,7 @@ export default function WishlistCards() {
       // Store pathname in local storage
       if (storageObj) localStorage.setItem('storageObj', JSON.stringify(storageObj))
     }
-  }, [genres, sortList, expanded, query])
+  }, [genres, sort, expanded, query])
 
   // When user refreshes, check local storage for stored url pathname on component render. Populate state
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function WishlistCards() {
     if (urlParams) {
       const parsedParams = JSON.parse(urlParams)
       const keys = Object.keys(parsedParams)
-      if (keys.includes('sort')) setSortList(parsedParams.sort)
+      if (keys.includes('sort')) setSort(parsedParams.sort)
       if (keys.includes('filter')) setGenres(parsedParams.filter)
       if (keys.includes('q')) {
         setQuery(parsedParams.q)
@@ -110,10 +110,10 @@ export default function WishlistCards() {
     } 
     // On very first visit, store states in local storage
     else {
-      if (!query && genres.length === 0 && sortList.length > 0) {
-        const pathname = { sort: sortList }
+      if (!query && genres.length === 0 && sort.length > 0) {
+        const pathname = { sort: sort }
         const storageObj = { 
-          sort: sortList,
+          sort: sort,
           currentResults: currentResults.current,
           currentResultsWL: currentResultsWL.current,
           expanded: expanded
@@ -126,7 +126,7 @@ export default function WishlistCards() {
   }, [])
 
   // Set DEFAULT GAME CARDS if no genre or sort selected
-  if (wishlistData && genres.length === 0 && sortList.length === 0 && pageNumberWL === 1) {
+  if (wishlistData && genres.length === 0 && sort.length === 0 && pageNumberWL === 1) {
     const wishlistDataCopy = wishlistData
 
     wishlistCards.current = wishlistDataCopy.map((game, index) => {
@@ -142,7 +142,7 @@ export default function WishlistCards() {
   // -------------------------------------
 
   // Set CARDS by GENRES ONLY
-  if (wishlistData && genres.length !== 0 && sortList.length === 0) {
+  if (wishlistData && genres.length !== 0 && sort.length === 0) {
     const matchedGames = []
     const wishlistDataCopy = [...wishlistData]
     
@@ -160,15 +160,15 @@ export default function WishlistCards() {
   } 
   
   // Set CARDS by SORT ONLY (can only choose one sort at a time)
-  if (genres.length === 0 && wishlistData !== null && sortList.length !== 0) {
+  if (genres.length === 0 && wishlistData !== null && sort.length !== 0) {
     const currentResultsCopy = [...wishlistData]
     let sortedResults: GameObject[] | null = null
     
     // Sort through all sort types
-    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
-    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
-    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
-    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
+    if (sort.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
+    if (sort.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
+    if (sort.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
+    if (sort.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
     
 
     currentResultsWL.current = sortedResults
@@ -180,7 +180,7 @@ export default function WishlistCards() {
   }
 
   // Set CARDS by GENRES AND SORT
-  if (genres.length !== 0 && wishlistData !== null && sortList.length !== 0 && currentResultsWL.current) {
+  if (genres.length !== 0 && wishlistData !== null && sort.length !== 0 && currentResultsWL.current) {
     let wishlistDataCopy: GameObject[] = []
 
     if (genres.length === 1) wishlistDataCopy = [...currentResultsWL.current]
@@ -202,10 +202,10 @@ export default function WishlistCards() {
     }
 
     // Sort by SORT type
-    if (sortList.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
-    if (sortList.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
-    if (sortList.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
-    if (sortList.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
+    if (sort.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(matchedGames, sortOptions.DISCOUNT)
+    if (sort.includes(sortOptions.PRICE)) sortedResults = sortGames(matchedGames, sortOptions.PRICE)
+    if (sort.includes(sortOptions.RATING)) sortedResults = sortGames(matchedGames, sortOptions.RATING)
+    if (sort.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(matchedGames, sortOptions.FEEDBACK)
 
     currentResultsWL.current = sortedResults!
     wishlistCards.current = sortedResults!.map((game, index) => {

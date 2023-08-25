@@ -6,7 +6,7 @@ import { FilterProvider } from './context/filterContext';
 import { GenresProvider } from './context/genresContext';
 import { PageProvider } from './context/pageContext';
 import { SearchProvider } from './context/searchContext';
-import { SortListProvider } from './context/sortListContext';
+import { SortProvider } from './context/sortContext';
 import { TabsProvider } from './context/tabsContext';
 import { MobileProvider } from './context/useMobileContext';
 import App from './App';
@@ -40,7 +40,7 @@ root.render(
         <GenresProvider>
           <PageProvider>
             <SearchProvider>
-              <SortListProvider>
+              <SortProvider>
                 <TabsProvider>
                   <MobileProvider>
                     <ChakraProvider theme={theme}>
@@ -48,7 +48,7 @@ root.render(
                     </ChakraProvider>
                   </MobileProvider>
                 </TabsProvider>
-              </SortListProvider>
+              </SortProvider>
             </SearchProvider>
           </PageProvider>
         </GenresProvider>
