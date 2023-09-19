@@ -29,5 +29,4 @@
 - Utilizing Figma to **view prototypes for animated UI transitions**
 
 ## Contributors
-Visual design by Amanda Ho
 Made with ❤️ by [Victoria Nguyen](https://github.com/v-sudo29)
