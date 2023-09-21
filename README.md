@@ -2,9 +2,10 @@
 <img width="1791" alt="Dideals screenshot" src="https://github.com/v-sudo29/steam_games/assets/117846985/190ca433-52cc-4159-bbd7-3ea60fa09623">
 
 ## Introduction
-**Dideals** is a **full-stack web application** that provides a user-friendly interface for browsing discounted Steam games. Built entirely from scratch, it scrapes the Steam store twice daily to retrieve the latest deals and presents them in a clean, streamlined way for easy discovery.
+**Dideals** is a **full-stack web application** that provides a user-friendly interface for browsing discounted Steam games. Built entirely from scratch, it scrapes the Steam store twice daily to retrieve the latest deals and presents them in a clean, streamlined way for easy discovery. Inspired by a friend's wish to easily track discounted wishlist games and discover new sales, the app provides dedicated views for both curated wishlists and exploring discounts across Steam.
 
-Checkout the live site: [Deployed Link](https://steam-discounts.onrender.com/)
+## Live Demo
+[Deployed Link](https://steam-discounts.onrender.com/)
 
 ## Key Features
 - Intuitive UI with sorting, filtering, and search to easily find discounted games
@@ -19,6 +20,13 @@ Checkout the live site: [Deployed Link](https://steam-discounts.onrender.com/)
 - [MongoDB](https://www.mongodb.com/) database
 - [Puppeteer](https://pptr.dev/) headless browser for web scraping
 - [Cron](https://www.npmjs.com/package/cron) job to run Puppeteer scraping script twice daily, keeping game data up-to-date
+
+## What I Learned
+- How to **automate web scraping** using cron jobs to run scripts on a schedule
+- Using ChakraUI for styling and **leveraging its out-of-the-box accessibility**
+- **Persisting state** in the front-end using local storage
+- **Implementing standard path params** in the URL for routing
+- Utilizing Figma to **view prototypes for animated UI transitions**
 
 ## Contributors
 Made with ❤️ by [Victoria Nguyen](https://github.com/v-sudo29)
