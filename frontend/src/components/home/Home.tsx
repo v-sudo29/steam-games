@@ -13,7 +13,6 @@ export default function Home() {
       category: 'view deals',
       action: 'test action',
       label: 'test label',
-      value: 0
     })
     navigate('/all-games')
   }
