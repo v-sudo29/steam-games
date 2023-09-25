@@ -9,8 +9,12 @@ import ReactGA from 'react-ga4'
 import './App.css';
 
 function App() {
+  // Initialize Google Analytics 4
   ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)
-  ReactGA.send({ hitType: "pageview", page: "/", title: "Custom Title" });
+  ReactGA.send({ hitType: "pageview", page: "/", title: "Home Page" });
+  ReactGA.send({ hitType: "pageview", page: "/all-games", title: "All Games" });
+  ReactGA.send({ hitType: "pageview", page: "/wishlist", title: "All Games" });
+  ReactGA.send({ hitType: "pageview", page: "*", title: "404 Error" });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
