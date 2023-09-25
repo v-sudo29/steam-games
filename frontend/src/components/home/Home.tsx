@@ -42,9 +42,9 @@ export default function Home() {
           bg='#8439FF'
           color='#F5F5F5'
           _hover={{ backgroundColor: '#6327c3'}}
-          >
-            View Deals
-          </Button>
+        >
+          View Deals
+        </Button>
         <Button
           onClick={() => window.open('https://github.com/v-sudo29/steam_games','_blank')}
           border='none'
@@ -52,9 +52,9 @@ export default function Home() {
           p='1.6rem 1.6rem'
           fontSize='1.1rem'
           _hover={{ backgroundColor: 'whiteAlpha.700'}}
-          >
-            GitHub
-          </Button>
+        >
+          GitHub
+        </Button>
       </HStack>
     </VStack>
   )

@@ -1,8 +1,8 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Layout from './layout/Layout';
 import ContentLayout from './layout/ContentLayout';
-import Home from './components/Home';
-import NotFound from './components/error/NotFound';
+import Home from './components/home/Home';
+import NotFound from './components/common/error/NotFound';
 import WishlistCards from './components/cards/WishlistCards';
 import AllGamesCards from './components/cards/AllGamesCards';
 import ReactGA from 'react-ga4'
