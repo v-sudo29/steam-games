@@ -7,16 +7,16 @@ import {
   InputRightElement,
   Text
 } from "@chakra-ui/react"
-import { useSearch } from "../context/searchContext"
+import { useSearch } from "../../../context/searchContext"
 import { useSearchParams } from "react-router-dom"
-import { useTabs } from "../context/tabsContext"
-import { useGenres } from "../context/genresContext"
-import { useSort } from "../context/sortContext"
+import { useTabs } from "../../../context/tabsContext"
+import { useGenres } from "../../../context/genresContext"
+import { useSort } from "../../../context/sortContext"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
-import SearchIcon from "../assets/SearchIcon"
-import ExitIcon from "../assets/ExitIcon"
+import SearchIcon from "../../../assets/SearchIcon"
+import ExitIcon from "../../../assets/ExitIcon"
 
 export default function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams()

@@ -1,6 +1,6 @@
 import { Box, Stack, Text } from "@chakra-ui/react"
-import { useDefaultData } from "../../context/defaultDataContext"
-import { usePage } from "../../context/pageContext"
+import { useDefaultData } from "../../../context/defaultDataContext"
+import { usePage } from "../../../context/pageContext"
 import { useLocation } from "react-router-dom"
 import PageNumber from "./PageNumber"
 

@@ -1,10 +1,10 @@
 import { Button } from "@chakra-ui/react"
-import { useFilter } from "../context/filterContext"
-import { useGenres } from "../context/genresContext"
+import { useFilter } from "../../../context/filterContext"
+import { useGenres } from "../../../context/genresContext"
 import { isSafari } from "react-device-detect"
-import { useMobile } from "../context/useMobileContext"
-import FilterIcon from "../assets/FilterIcon"
-import ExitIcon from "../assets/ExitIcon"
+import { useMobile } from "../../../context/useMobileContext"
+import FilterIcon from "../../../assets/FilterIcon"
+import ExitIcon from "../../../assets/ExitIcon"
 import { useEffect } from "react"
 
 export default function FilterButton() {

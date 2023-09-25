@@ -1,9 +1,9 @@
 import { Box, HStack, Link,} from "@chakra-ui/react"
 import { FaGithub } from "react-icons/fa"
-import { useMobile } from "../context/useMobileContext"
-import Logo from "../assets/LogoAndName"
+import { useMobile } from "../../../context/useMobileContext"
+import Logo from "../../../assets/LogoAndName"
 import SearchBar from "./SearchBar"
-import openNewTab from "../hooks/openNewTab"
+import openNewTab from "../../../hooks/openNewTab"
 
 export default function Header() {
   const isMobile = useMobile()

@@ -2,13 +2,13 @@ import { Box, HStack, VStack } from "@chakra-ui/react"
 import { useFilter } from "../context/filterContext"
 import { useMobile } from "../context/useMobileContext"
 import { Outlet } from "react-router-dom"
-import FilterButton from "../components/FilterButton"
-import GenreTags from "../components/GenreTags"
-import Pagination from "../components/pagination/Pagination"
+import FilterButton from "../components/common/header/FilterButton"
+import GenreTags from "../components/common/header/GenreTags"
+import Pagination from "../components/common/pagination/Pagination"
 import Logo from "../assets/Logo"
 import SearchIcon from "../assets/SearchIcon"
-import SortMenu from "../components/SortMenu"
-import TwoTabs from "../components/TwoTabs"
+import SortMenu from "../components/common/header/SortMenu"
+import TwoTabs from "../components/common/header/TwoTabs"
 
 export default function ContentLayout() {
   const { expanded } = useFilter()

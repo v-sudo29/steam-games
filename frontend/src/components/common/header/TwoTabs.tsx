@@ -4,9 +4,9 @@ import {
   TabList,
 } from "@chakra-ui/react"
 
-import { useTabs } from "../context/tabsContext"
+import { useTabs } from "../../../context/tabsContext"
 import { useNavigate } from "react-router-dom"
-import { useDefaultData } from "../context/defaultDataContext"
+import { useDefaultData } from "../../../context/defaultDataContext"
 
 export default function TwoTabs() {
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()

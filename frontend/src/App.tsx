@@ -9,11 +9,19 @@ import ReactGA from 'react-ga4'
 import './App.css';
 
 function App() {
-  // Initialize Google Analytics 4
+  // Initialize Google Analytics 4g
   ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)
+//   const RouteChangeTracker = ({ history }) => {
+//     history.listen((location, action) => {
+//         ReactGA.set({ page: location.pathname });
+//         ReactGA.pageview(location.pathname);
+//     });
+//     return 
+//  ;
+//  };
   ReactGA.send({ hitType: "pageview", page: "/", title: "Home Page" });
   ReactGA.send({ hitType: "pageview", page: "/all-games", title: "All Games" });
-  ReactGA.send({ hitType: "pageview", page: "/wishlist", title: "All Games" });
+  ReactGA.send({ hitType: "pageview", page: "/wishlist", title: "Wishlist" });
   ReactGA.send({ hitType: "pageview", page: "*", title: "404 Error" });
 
   const router = createBrowserRouter(

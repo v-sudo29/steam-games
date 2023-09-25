@@ -1,6 +1,6 @@
 import { Checkbox } from "@chakra-ui/react";
-import CheckboxIcon from "../assets/CheckboxIcon";
-import { useGenres } from "../context/genresContext";
+import CheckboxIcon from "../../../assets/CheckboxIcon";
+import { useGenres } from "../../../context/genresContext";
 
 export default function CustomCheckbox({ genre }: { genre: string }) {
   const { setGenres } = useGenres()
