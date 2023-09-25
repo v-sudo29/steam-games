@@ -3,9 +3,20 @@ import { FaGithub } from 'react-icons/fa'
 import { BsArrowRightShort } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
+import ReactGA from "react-ga4"
 
 export default function Home() {
   const navigate = useNavigate()
+
+  const navigateToGames = () => {
+    ReactGA.event({
+      category: 'view deals',
+      action: 'test action',
+      label: 'test label',
+      value: 0
+    })
+    navigate('/all-games')
+  }
 
   // TODO: Make home page mobile responsive
   return (
@@ -22,7 +33,7 @@ export default function Home() {
       </Text>
       <HStack gap='1rem'>
         <Button
-          onClick={() => navigate('/all-games')}
+          onClick={navigateToGames}
           border='none'
           mr={isSafari ? '1rem' : 0}
           rightIcon={<BsArrowRightShort style={{ marginLeft: '-0.3rem'}} size={30}/>}
