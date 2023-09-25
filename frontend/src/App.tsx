@@ -5,9 +5,13 @@ import Home from './components/Home';
 import NotFound from './components/error/NotFound';
 import WishlistCards from './components/cards/WishlistCards';
 import AllGamesCards from './components/cards/AllGamesCards';
+import ReactGA from 'react-ga4'
 import './App.css';
 
 function App() {
+  ReactGA.initialize(`${import.meta.env.MEASUREMENT_ID}`)
+  ReactGA.send({ hitType: "pageview", page: "/", title: "Custom Title" });
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
