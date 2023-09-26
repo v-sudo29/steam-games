@@ -43,6 +43,7 @@ export default function Home() {
       </Text>
       <HStack gap='1rem'>
         <Button
+          className="view-deals-button"
           onClick={navigateToGames}
           border='none'
           mr={isSafari ? '1rem' : 0}
