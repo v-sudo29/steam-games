@@ -10,8 +10,8 @@ export default function Home() {
 
   const navigateToGames = () => {
     ReactGA.event({
-      category: 'button click',
-      action: 'button click',
+      category: 'button_click',
+      action: 'click',
       label: 'view_deals_button',
     })
     navigate('/all-games')
