@@ -45,7 +45,7 @@ export default function Home() {
           View Deals
         </Button>
         <Button
-          onClick={() => window.open('https://github.com/v-sudo29/steam_games','_blank')}
+          onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
           border='none'
           leftIcon={<FaGithub size={22}/>}
           p='1.6rem 1.6rem'
