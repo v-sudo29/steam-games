@@ -13,6 +13,7 @@ export default function Home() {
       category: 'button_click',
       action: 'click',
       label: 'view_deals_button',
+      nonInteraction: false
     })
     navigate('/all-games')
   }
