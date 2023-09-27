@@ -16,6 +16,12 @@ function App() {
   ReactGA.send({ hitType: "pageview", page: "/all-games", title: "All Games" });
   ReactGA.send({ hitType: "pageview", page: "/wishlist", title: "Wishlist" });
 
+  // Initialize Google Tag Manager
+  const tagManagerArgs = {
+    gtmId: `${import.meta.env.VITE_GTM_ID}`
+  }
+  TagManager.initialize(tagManagerArgs)
+  
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
