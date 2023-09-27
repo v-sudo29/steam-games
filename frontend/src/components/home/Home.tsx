@@ -3,30 +3,9 @@ import { FaGithub } from 'react-icons/fa'
 import { BsArrowRightShort } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
-import ReactGA from "react-ga4"
 
 export default function Home() {
   const navigate = useNavigate()
-
-  const navigateToGames = () => {
-    ReactGA.event({
-      category: 'button_click',
-      action: 'click',
-      label: 'view_deals_button',
-      nonInteraction: false
-    })
-    navigate('/all-games')
-  }
-
-  const openRepositoryInNewTab = () => {
-    ReactGA.event({
-      category: 'button_click',
-      action: 'click',
-      label: 'home_github_button',
-      nonInteraction: false
-    })
-    window.open('https://github.com/v-sudo29/steam-games','_blank')
-  }
 
   // TODO: Make home page mobile responsive
   return (
@@ -44,7 +23,7 @@ export default function Home() {
       <HStack gap='1rem'>
         <Button
           className="view-deals-button"
-          onClick={navigateToGames}
+          onClick={() => navigate('/all-games')}
           border='none'
           mr={isSafari ? '1rem' : 0}
           rightIcon={<BsArrowRightShort style={{ marginLeft: '-0.3rem'}} size={30}/>}
@@ -57,7 +36,7 @@ export default function Home() {
           View Deals
         </Button>
         <Button
-          onClick={openRepositoryInNewTab}
+          onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
           border='none'
           leftIcon={<FaGithub size={22}/>}
           p='1.6rem 1.6rem'

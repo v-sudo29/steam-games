@@ -21,7 +21,8 @@ function App() {
     gtmId: `${import.meta.env.VITE_GTM_ID}`
   }
   TagManager.initialize(tagManagerArgs)
-  
+  TagManager.dataLayer
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
