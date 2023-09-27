@@ -18,6 +18,7 @@ function ResultsCard({ game } : { game: GameObject }) {
     <figure style={{ height: 'inherit', width: 'inherit' }}>
       <Card 
         onClick={() => openNewTab(game.url)}
+        className='game-card'
         display='flex'
         flex='auto'
         role="list item"
