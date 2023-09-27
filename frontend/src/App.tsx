@@ -14,7 +14,6 @@ function App() {
   ReactGA.send({ hitType: "pageview", page: "/", title: "Home Page" });
   ReactGA.send({ hitType: "pageview", page: "/all-games", title: "All Games" });
   ReactGA.send({ hitType: "pageview", page: "/wishlist", title: "Wishlist" });
-  ReactGA.send({ hitType: "pageview", page: "*", title: "404 Error" });
 
   const router = createBrowserRouter(
     createRoutesFromElements(
