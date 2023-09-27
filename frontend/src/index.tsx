@@ -9,6 +9,7 @@ import { SortProvider } from './context/sortContext';
 import { TabsProvider } from './context/tabsContext';
 import { MobileProvider } from './context/useMobileContext';
 import App from './App';
+import React from 'react';
 
 const theme = extendTheme({
   components: {
@@ -31,9 +32,15 @@ const theme = extendTheme({
   },
 })
 
+// Removes Google Tag Manager console logs
+if (import.meta.env.VITE_ENVIRONMENT === 'production') {
+  console.group = () => {}
+  console.log = () => {}
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <DefaultDataProvider>
       <FilterProvider>
         <GenresProvider>
@@ -53,5 +60,5 @@ root.render(
         </GenresProvider>
       </FilterProvider>
     </DefaultDataProvider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
