@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Layout from './layout/Layout';
 import ContentLayout from './layout/ContentLayout';
@@ -8,9 +9,9 @@ import AllGamesCards from './components/cards/AllGamesCards';
 import ReactGA from 'react-ga4'
 import TagManager from 'react-gtm-module'
 import './App.css';
-import { useEffect } from 'react';
 
 function App() {
+  
   useEffect(() => {
     // Initialize Google Analytics 4
     ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)
