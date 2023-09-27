@@ -11,7 +11,7 @@ import TagManager from 'react-gtm-module'
 import './App.css';
 
 function App() {
-  
+
   useEffect(() => {
     // Initialize Google Analytics 4
     ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)
@@ -22,10 +22,6 @@ function App() {
     // Initialize Google Tag Manager
     const tagManagerArgs = {
       gtmId: `${import.meta.env.VITE_GTM_ID}`,
-      dataLayerHome: {
-        page: location.pathname,
-        title: 'Home Page'
-      }
     }
     TagManager.initialize(tagManagerArgs)
   }, [])

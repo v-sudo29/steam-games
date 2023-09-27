@@ -32,12 +32,6 @@ const theme = extendTheme({
   },
 })
 
-// Removes Google Tag Manager console logs
-if (import.meta.env.VITE_ENVIRONMENT === 'production') {
-  console.group = () => {}
-  console.log = () => {}
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
