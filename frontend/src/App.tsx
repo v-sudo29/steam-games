@@ -6,10 +6,11 @@ import NotFound from './components/common/error/NotFound';
 import WishlistCards from './components/cards/WishlistCards';
 import AllGamesCards from './components/cards/AllGamesCards';
 import ReactGA from 'react-ga4'
+import TagManager from 'react-gtm-module'
 import './App.css';
 
 function App() {
-  // Initialize Google Analytics 4g
+  // Initialize Google Analytics 4
   ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)
   ReactGA.send({ hitType: "pageview", page: "/", title: "Home Page" });
   ReactGA.send({ hitType: "pageview", page: "/all-games", title: "All Games" });
