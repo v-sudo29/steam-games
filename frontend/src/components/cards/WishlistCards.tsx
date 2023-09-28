@@ -28,7 +28,7 @@ const WishlistCards = () => {
   const firstRender = useRef(false)
 
   const navigate = useNavigate()
-
+  
   // Every state change, store params in local storage
   useEffect(() => {
     let storageObj
@@ -125,58 +125,29 @@ const WishlistCards = () => {
     firstRender.current = true
   }, [])
 
-  // Set DEFAULT GAME CARDS if no genre or sort selected
-  if (wishlistData && genres.length === 0 && sort.length === 0 && pageNumberWL === 1) {
-    const wishlistDataCopy = wishlistData
-
-    wishlistCards.current = wishlistDataCopy.map((game, index) => {
-      if (index < 60) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
-    })
-    currentResultsWL.current = wishlistDataCopy
-  }
-
   // -------------------------------------
   // SET NEW GAME CARDS BY GENRES AND SORT
   // -------------------------------------
 
-  // Set CARDS by GENRES ONLY
-  if (wishlistData && genres.length !== 0 && sort.length === 0) {
-    const matchedGames = []
-    const wishlistDataCopy = [...wishlistData]
-    
-    for (let i = 0; i < wishlistDataCopy.length; i++) {
-      const genreExists = wishlistDataCopy[i]['genres']?.some(genre => genres.includes(genre))
-      if (genreExists) matchedGames.push(wishlistDataCopy[i])
-    }
-
-    wishlistCards.current = matchedGames.map((game, index) => {
-      if (index < 60) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
-    })
-    currentResultsWL.current = matchedGames
-  } 
-  
-  // Set CARDS by SORT ONLY (can only choose one sort at a time)
+  // DEFAULT: Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && wishlistData !== null && sort.length !== 0) {
     const currentResultsCopy = [...wishlistData]
     let sortedResults: GameObject[] | null = null
     
-    // Sort through all sort types
+    // Sort by SORT type
     if (sort.includes(sortOptions.DISCOUNT)) sortedResults = sortGames(currentResultsCopy, sortOptions.DISCOUNT)
     if (sort.includes(sortOptions.PRICE)) sortedResults = sortGames(currentResultsCopy, sortOptions.PRICE)
     if (sort.includes(sortOptions.RATING)) sortedResults = sortGames(currentResultsCopy, sortOptions.RATING)
     if (sort.includes(sortOptions.FEEDBACK)) sortedResults = sortGames(currentResultsCopy, sortOptions.FEEDBACK)
-    
 
     currentResultsWL.current = sortedResults
-    wishlistCards.current = sortedResults && sortedResults.map((game, index) => {
-      if (index < 60) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
-    })
+    if (sortedResults) {
+      wishlistCards.current = sortedResults && sortedResults.map((game, index) => {
+        if (index < 60) {
+          return <ResultsCard key={game.appId} game={game}/>
+        } return null
+      })
+    }
   }
 
   // Set CARDS by GENRES AND SORT
