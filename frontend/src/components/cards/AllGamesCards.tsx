@@ -148,40 +148,11 @@ const AllGamesCards = () => {
 
   const resetPageNumber = (): void => setPageNumber(1)
 
-  // Set DEFAULT GAME CARDS if no genre or sort selected
-  if (gamesData && genres.length === 0 && sort.length === 0 && pageNumber === 1) {
-    const gamesDataCopy = gamesData
-
-    gameCards.current = gamesDataCopy.map((game, index) => {
-      if (index < 60) return <ResultsCard key={game.appId} game={game}/>
-      else return null
-    })
-    currentResults.current = gamesDataCopy
-  }
-
   // -------------------------------------
   // SET NEW GAME CARDS BY GENRES AND SORT
   // -------------------------------------
-
-  // Set CARDS by GENRES ONLY
-  if (gamesData && genres.length !== 0 && sort.length === 0) {
-    const matchedGames = []
-    const gamesDataCopy = [...gamesData]
-    
-    for (let i = 0; i < gamesDataCopy.length; i++) {
-      const genreExists = gamesDataCopy[i]['genres']?.some(genre => genres.includes(genre))
-      if (genreExists) matchedGames.push(gamesDataCopy[i])
-    }
-
-    gameCards.current = matchedGames.map((game, index) => {
-      if (index < 60) {
-        return <ResultsCard key={game.appId} game={game}/>
-      } return null
-    })
-    currentResults.current = matchedGames
-  } 
   
-  // Set CARDS by SORT ONLY (can only choose one sort at a time)
+  // DEFAULT: Set CARDS by SORT ONLY (can only choose one sort at a time)
   if (genres.length === 0 && gamesData !== null && sort.length !== 0) {
     const currentResultsCopy = [...gamesData]
     let sortedResults: GameObject[] | null = null
