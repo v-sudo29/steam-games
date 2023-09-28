@@ -20,13 +20,15 @@
 - [MongoDB](https://www.mongodb.com/) database
 - [Puppeteer](https://pptr.dev/) headless browser for web scraping
 - [Cron](https://www.npmjs.com/package/cron) job to run Puppeteer scraping script twice daily, keeping game data up-to-date
+- [Google Analytics](https://marketingplatform.google.com/about/analytics/) for web traffic analytics
 
 ## What I Learned
 - How to **automate web scraping** using cron jobs to run scripts on a schedule
 - Using ChakraUI for styling and **leveraging its out-of-the-box accessibility**
-- **Persisting state** in the front-end using local storage
+- **Persisting state** in the frontend using local storage
 - **Implementing standard path params** in the URL for routing
 - Utilizing Figma to **view prototypes for animated UI transitions**
+- Using Google Analytics with Google Tag Manager integration to **track site usage metrics**
 
 ## Contributors
 Made with ❤️ by [Victoria Nguyen](https://github.com/v-sudo29)
