@@ -2,7 +2,7 @@ import ResultsCard from './ResultsCard'
 import sortGames from '../../hooks/sortGames'
 import SkeletonCard from './SkeletonCard'
 import { GameObject } from '../../interface/GameObject'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Grid } from '@chakra-ui/react'
 import { useGenres } from '../../context/genresContext'
 import { usePage } from '../../context/pageContext'
@@ -16,7 +16,7 @@ import { useFilter } from '../../context/filterContext'
 import { useTabs } from '../../context/tabsContext'
 import axios from 'axios'
 
-export default function AllGamesCards() {
+const AllGamesCards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { gamesData, gamesError, gamesAreLoading, currentResults, currentResultsWL } = useDefaultData()
   const { genres, setGenres } = useGenres()
@@ -290,3 +290,5 @@ export default function AllGamesCards() {
   if (gameCards.current.length === 0) return <>No games found.</>
   return <></>
 }
+
+export default AllGamesCards

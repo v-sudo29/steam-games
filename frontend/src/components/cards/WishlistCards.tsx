@@ -15,7 +15,7 @@ import SkeletonCard from "./SkeletonCard"
 import sortGames from "../../hooks/sortGames"
 import axios from "axios"
 
-export default function WishlistCards() {
+const WishlistCards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { wishlistLoading, wishlistError, wishlistData, currentResults, currentResultsWL } = useDefaultData()
   const { pageNumberWL } = usePage()
@@ -260,3 +260,5 @@ export default function WishlistCards() {
   if (wishlistCards.current.length === 0) return <>No games found.</>
   return <></>
 }
+
+export default WishlistCards

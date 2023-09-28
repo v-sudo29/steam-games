@@ -18,7 +18,7 @@ import axios from "axios"
 import SearchIcon from "../../../assets/SearchIcon"
 import ExitIcon from "../../../assets/ExitIcon"
 
-export default function SearchBar() {
+const SearchBar = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { searchData, searchRef, query, setSearchData, setQuery } = useSearch()
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
@@ -64,6 +64,7 @@ export default function SearchBar() {
     // Change url params to /all-games
     navigate('/all-games')
   }
+  
   return (
     <InputGroup maxW='45rem' role='search' display='flex' justifyContent='center'>
       <InputLeftElement
@@ -96,7 +97,7 @@ export default function SearchBar() {
         pl='3rem'
         onKeyDown={(e) => handleEnter(e)}
         onChange={() => {
-          if ( searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
+          if (searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
         }}
       />
       {searchData && (
@@ -121,3 +122,5 @@ export default function SearchBar() {
     </InputGroup>
   )
 }
+
+export default SearchBar

@@ -5,13 +5,11 @@ import Logo from "../../../assets/LogoAndName"
 import SearchBar from "./SearchBar"
 import openNewTab from "../../../hooks/openNewTab"
 
-export default function Header() {
+const Header = () => {
   const isMobile = useMobile()
   return (
     <header style={{ marginBottom: '3rem' }}>
-
       {!isMobile ? 
-      
         <HStack justify='space-between' gap='1rem'>
           <Link onClick={() => localStorage.clear()} href='/'>
             <Logo/>
@@ -39,3 +37,5 @@ export default function Header() {
     </header>
   )
 }
+
+export default Header

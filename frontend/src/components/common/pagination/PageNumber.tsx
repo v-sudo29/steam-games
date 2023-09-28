@@ -6,8 +6,7 @@ interface PageNumberArgs {
   handleClick: (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => void
 }
 
-export default function PageNumber({ i, pageNumber, handleClick } : PageNumberArgs) {
-
+const PageNumber = ({ i, pageNumber, handleClick } : PageNumberArgs) => {
   return (
     <Text 
       onClick={(e) => handleClick(e)}
@@ -18,3 +17,5 @@ export default function PageNumber({ i, pageNumber, handleClick } : PageNumberAr
     </Text>
   )
 }
+
+export default PageNumber

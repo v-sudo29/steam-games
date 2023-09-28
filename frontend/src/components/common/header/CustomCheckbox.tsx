@@ -2,7 +2,7 @@ import { Checkbox } from "@chakra-ui/react";
 import CheckboxIcon from "../../../assets/CheckboxIcon";
 import { useGenres } from "../../../context/genresContext";
 
-export default function CustomCheckbox({ genre }: { genre: string }) {
+const CustomCheckbox = ({ genre }: { genre: string }) => {
   const { setGenres } = useGenres()
 
   // Handle genre tag click
@@ -40,3 +40,5 @@ export default function CustomCheckbox({ genre }: { genre: string }) {
     </Checkbox>
   )
 }
+
+export default CustomCheckbox

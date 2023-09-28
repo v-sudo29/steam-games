@@ -4,7 +4,7 @@ import { usePage } from "../../../context/pageContext"
 import { useLocation } from "react-router-dom"
 import PageNumber from "./PageNumber"
 
-export default function Pagination() {
+const Pagination = () => {
   const { currentResults, wishlistData } = useDefaultData()
   const { 
     pageNumber, 
@@ -295,3 +295,5 @@ export default function Pagination() {
     </>
   )
 }
+
+export default Pagination

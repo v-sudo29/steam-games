@@ -7,11 +7,11 @@ import { useGenres } from "../../../context/genresContext"
 import { useMobile } from "../../../context/useMobileContext"
 import CarrotDownIcon from "../../../assets/CarrotDownIcon"
 
-export default function SortMenu() {
+const SortMenu = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [searchParams, setSearchParams] = useSearchParams()
   const { sort, setSort, sortOptions } = useSort()
-  const {  query } = useSearch()
+  const { query } = useSearch()
   const { genres } = useGenres()
   const isMobile = useMobile()
   const animateRef = useRef<boolean>()
@@ -131,3 +131,5 @@ export default function SortMenu() {
     </Box>
   )
 }
+
+export default SortMenu

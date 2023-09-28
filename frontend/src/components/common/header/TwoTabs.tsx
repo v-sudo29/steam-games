@@ -8,7 +8,7 @@ import { useTabs } from "../../../context/tabsContext"
 import { useNavigate } from "react-router-dom"
 import { useDefaultData } from "../../../context/defaultDataContext"
 
-export default function TwoTabs() {
+const TwoTabs = () => {
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
   const { wishlistData } = useDefaultData()
   const navigate = useNavigate()
@@ -60,3 +60,5 @@ export default function TwoTabs() {
     </>
   )
 }
+
+export default TwoTabs

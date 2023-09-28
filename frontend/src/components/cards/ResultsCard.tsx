@@ -12,15 +12,12 @@ import { GameObject } from '../../interface/GameObject'
 import { isSafari } from 'react-device-detect'
 import { useMobile } from '../../context/useMobileContext'
 
-function ResultsCard({ game } : { game: GameObject }) {
+const ResultsCard = ({ game } : { game: GameObject }) => {
   const isMobile = useMobile()
   return (
     <figure className='game-card-component' style={{ height: 'inherit', width: 'inherit', pointerEvents: 'none' }}>
       <Card 
-        onClick={(e) => {
-          console.log(e.target)
-          openNewTab(game.url)
-        }}
+        onClick={() => openNewTab(game.url)}
         className='game-card-component'
         display='flex'
         flex='auto'

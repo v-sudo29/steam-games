@@ -10,8 +10,7 @@ import ReactGA from 'react-ga4'
 import TagManager from 'react-gtm-module'
 import './App.css';
 
-function App() {
-
+const App = () => {
   useEffect(() => {
     // Initialize Google Analytics 4
     ReactGA.initialize(`${import.meta.env.VITE_MEASUREMENT_ID}`)

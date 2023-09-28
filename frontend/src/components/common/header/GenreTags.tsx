@@ -9,7 +9,7 @@ import { useSort } from '../../../context/sortContext'
 import { useMobile } from '../../../context/useMobileContext'
 import CustomCheckbox from './CustomCheckbox'
 
-export default function GenreTags() {
+const GenreTags = () => {
   const { expanded } = useFilter()
   const { genres, setGenres, genreFilters } = useGenres()
   const { query } = useSearch()
@@ -94,3 +94,4 @@ export default function GenreTags() {
     </VStack> 
   )
 }
+export default GenreTags

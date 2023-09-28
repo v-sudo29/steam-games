@@ -7,7 +7,7 @@ import FilterIcon from "../../../assets/FilterIcon"
 import ExitIcon from "../../../assets/ExitIcon"
 import { useEffect } from "react"
 
-export default function FilterButton() {
+const FilterButton = () => {
   const { expanded, setExpanded } = useFilter()
   const { genres } = useGenres()
   const isMobile = useMobile()
@@ -61,3 +61,5 @@ export default function FilterButton() {
     </>
   )
 }
+
+export default FilterButton

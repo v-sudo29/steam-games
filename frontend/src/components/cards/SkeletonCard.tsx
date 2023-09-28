@@ -1,6 +1,6 @@
 import { Card, Skeleton, SkeletonText } from "@chakra-ui/react"
 
-export default function SkeletonCard() {
+const SkeletonCard = () => {
   const useSkeletonTextHeight = (): string => {
     if (window.innerWidth < 480) return '0.5rem';
     if (window.innerWidth < 640) return '0.6rem';
@@ -81,3 +81,5 @@ export default function SkeletonCard() {
     </article>
   )
 }
+
+export default SkeletonCard

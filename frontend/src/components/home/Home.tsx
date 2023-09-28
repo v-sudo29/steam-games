@@ -4,7 +4,7 @@ import { BsArrowRightShort } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
 
-export default function Home() {
+const Home = () => {
   const navigate = useNavigate()
 
   // TODO: Make home page mobile responsive
@@ -49,3 +49,5 @@ export default function Home() {
     </VStack>
   )
 }
+
+export default Home
