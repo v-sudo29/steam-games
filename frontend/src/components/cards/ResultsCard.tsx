@@ -41,6 +41,7 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
         <Image
           className='game-card-component'
           borderRadius='0.4rem'
+          loading='lazy'
           src={game.imgUrl} 
           alt={game.name} 
           objectFit='cover'
