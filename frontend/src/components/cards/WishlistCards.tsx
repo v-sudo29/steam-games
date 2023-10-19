@@ -221,17 +221,14 @@ const WishlistCards = () => {
         <Grid 
           w='100%'
           h={!isSafari ? '100%' :'min-content'}
-          style={ window.innerWidth >= 786 ? 
-            {gridTemplateColumns: 'repeat(auto-fill, minmax(13rem, 1fr))'}
-            : 
-            {gridTemplateRows: 'repeat(auto-fill), minmax(0rem, 1fr)'}
-          }
+          gridTemplateColumns='1fr'
+          gridTemplateRows='repeat(auto-fill), minmax(0rem, 1fr)'
           gridGap='1rem'
           role='list'
           aria-label='Search results'
         >
         {wishlistCards.current}
-      </Grid>
+        </Grid>
       )}
 
       {/* DESKTOP */}
@@ -239,8 +236,7 @@ const WishlistCards = () => {
         <Grid 
           w='100%'
           h={!isSafari ? '100%' :'min-content'}
-          templateColumns={window.innerWidth >= 786 ? 'repeat(auto-fill, minmax(15rem, 1fr))' : '1fr'}
-          templateRows={window.innerWidth < 786 ? 'repeat(auto-fill, minmax(0rem, 1fr)' : undefined}
+          gridTemplateColumns={'repeat(auto-fill, minmax(15rem, 1fr))'}
           gridGap='1.5rem'
           role='list'
           aria-label='Wishlist games'
