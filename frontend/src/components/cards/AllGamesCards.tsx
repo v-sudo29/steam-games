@@ -247,26 +247,25 @@ const AllGamesCards = () => {
   if (gameCards.current && gameCards.current.length > 0) return (
     <Grid w='100%' h='100%'>
       
+      {/* MOBILE */}
       {isMobile && (
         <Grid 
           w='100%'
           h={!isSafari ? '100%' :'min-content'}
           style={ window.innerWidth >= 786 ? 
-            {
-              gridTemplateColumns: 'repeat(auto-fill, minmax(13rem, 1fr))'
-            } : 
-            {
-              gridTemplateRows: 'repeat(auto-fill), minmax(0rem, 1fr)'
-            }
+            {gridTemplateColumns: 'repeat(auto-fill, minmax(13rem, 1fr))'} 
+            : 
+            {gridTemplateRows: 'repeat(auto-fill), minmax(0rem, 1fr)'}
           }
           gridGap='1rem'
           role='list'
           aria-label='Search results'
         >
-        {gameCards.current}
-      </Grid>
+          {gameCards.current}
+        </Grid>
       )}
 
+      {/* DESKTOP */}
       {!isMobile && (
         <Grid 
           w='100%'

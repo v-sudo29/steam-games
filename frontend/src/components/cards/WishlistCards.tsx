@@ -1,6 +1,6 @@
 import { Grid } from "@chakra-ui/react"
 import { useDefaultData } from "../../context/defaultDataContext"
-import { isSafari } from "react-device-detect"
+import { isMobile, isSafari } from "react-device-detect"
 import { useEffect, useRef } from "react"
 import { useSearch } from "../../context/searchContext"
 import { useGenres } from "../../context/genresContext"
@@ -216,16 +216,38 @@ const WishlistCards = () => {
   if (wishlistError) return <h1>{wishlistError}</h1>
   if (wishlistCards.current && wishlistCards.current.length > 0) return (
     <Grid w='100%' h='100%'>
-      <Grid 
-        w='100%'
-        h={!isSafari ? '100%' :'min-content'}
-        templateColumns='repeat(auto-fill, minmax(15rem, 1fr))'
-        gridGap='1.5rem'
-        role='list'
-        aria-label='Search results'
-      >
+
+      {isMobile && (
+        <Grid 
+          w='100%'
+          h={!isSafari ? '100%' :'min-content'}
+          style={ window.innerWidth >= 786 ? 
+            {gridTemplateColumns: 'repeat(auto-fill, minmax(13rem, 1fr))'}
+            : 
+            {gridTemplateRows: 'repeat(auto-fill), minmax(0rem, 1fr)'}
+          }
+          gridGap='1rem'
+          role='list'
+          aria-label='Search results'
+        >
         {wishlistCards.current}
       </Grid>
+      )}
+
+      {/* DESKTOP */}
+      {!isMobile && (
+        <Grid 
+          w='100%'
+          h={!isSafari ? '100%' :'min-content'}
+          templateColumns={window.innerWidth >= 786 ? 'repeat(auto-fill, minmax(15rem, 1fr))' : '1fr'}
+          templateRows={window.innerWidth < 786 ? 'repeat(auto-fill, minmax(0rem, 1fr)' : undefined}
+          gridGap='1.5rem'
+          role='list'
+          aria-label='Wishlist games'
+        >
+          {wishlistCards.current}
+        </Grid>
+      )}
     </Grid>
   )
   if (wishlistCards.current.length === 0) return <>No games found.</>
