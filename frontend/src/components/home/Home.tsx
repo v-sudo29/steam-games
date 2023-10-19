@@ -3,24 +3,49 @@ import { FaGithub } from 'react-icons/fa'
 import { BsArrowRightShort } from 'react-icons/bs'
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
+import { useMobile } from "../../context/useMobileContext"
 
 const Home = () => {
   const navigate = useNavigate()
+  const isMobile = useMobile()
 
   // TODO: Make home page mobile responsive
   return (
-    <VStack textAlign='center' mt='8rem' gap='2rem'>
-      <Heading w='35rem' fontSize='5xl'>Find your next favorite game <Text color='#8439FF' as="span">on sale</Text></Heading>
-      <Text
-        mb={isSafari ? '2rem' : 0}
-        mt={isSafari ? '2rem' : 0}
+    <VStack
+      textAlign='center'
+      mt='8rem'
+      gap='2rem'
+    >
+      <Heading
         w='35rem'
-        fontSize='1.4rem'
-        color='whiteAlpha.800'
+        fontSize='5xl'
       >
-        Tired of missing out on Steam sales? Dideals does the hard work for you by collecting amazing discounted games in one spot.
-      </Text>
+        <div>Find your next </div>
+        <span> favorite game</span>
+        <Text color='#8439FF' as="span"> on sale</Text>
+      </Heading>
+      {!isMobile && (
+        <Text
+          mb={isSafari ? '2rem' : 0}
+          mt={isSafari ? '2rem' : 0}
+          w='35rem'
+          fontSize='1.4rem'
+          color='whiteAlpha.800'
+        >
+          Tired of missing out on Steam sales? Dideals does the hard work for you by collecting amazing discounted games in one spot.
+        </Text>
+      )}
       <HStack gap='1rem'>
+        <Button
+          onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
+          border='none'
+          leftIcon={<FaGithub size={22}/>}
+          p='1.6rem 1.6rem'
+          fontSize='1.1rem'
+          _hover={{ backgroundColor: 'whiteAlpha.700'}}
+        >
+          GitHub
+        </Button>
         <Button
           className="view-deals-button"
           onClick={() => navigate('/all-games')}
@@ -34,16 +59,6 @@ const Home = () => {
           _hover={{ backgroundColor: '#6327c3'}}
         >
           View Deals
-        </Button>
-        <Button
-          onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
-          border='none'
-          leftIcon={<FaGithub size={22}/>}
-          p='1.6rem 1.6rem'
-          fontSize='1.1rem'
-          _hover={{ backgroundColor: 'whiteAlpha.700'}}
-        >
-          GitHub
         </Button>
       </HStack>
     </VStack>

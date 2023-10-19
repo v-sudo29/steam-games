@@ -3,8 +3,8 @@ import { useFilter } from "../../../context/filterContext"
 import { useGenres } from "../../../context/genresContext"
 import { isSafari } from "react-device-detect"
 import { useMobile } from "../../../context/useMobileContext"
-import FilterIcon from "../../../assets/FilterIcon"
-import ExitIcon from "../../../assets/ExitIcon"
+import FilterIcon from "../../../assets/icons/FilterIcon"
+import ExitIcon from "../../../assets/icons/ExitIcon"
 import { useEffect } from "react"
 
 const FilterButton = () => {

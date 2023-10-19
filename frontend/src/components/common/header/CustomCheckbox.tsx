@@ -1,5 +1,5 @@
 import { Checkbox } from "@chakra-ui/react";
-import CheckboxIcon from "../../../assets/CheckboxIcon";
+import CheckboxIcon from "../../../assets/icons/CheckboxIcon";
 import { useGenres } from "../../../context/genresContext";
 
 const CustomCheckbox = ({ genre }: { genre: string }) => {

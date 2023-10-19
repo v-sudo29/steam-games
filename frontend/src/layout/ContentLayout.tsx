@@ -1,12 +1,12 @@
-import { Box, HStack, VStack } from "@chakra-ui/react"
+import { Box, HStack, Link, VStack } from "@chakra-ui/react"
 import { useFilter } from "../context/filterContext"
 import { useMobile } from "../context/useMobileContext"
 import { Outlet } from "react-router-dom"
 import FilterButton from "../components/common/header/FilterButton"
 import GenreTags from "../components/common/header/GenreTags"
 import Pagination from "../components/common/pagination/Pagination"
-import LogoAndName from "../assets/LogoAndName"
-import SearchIcon from "../assets/SearchIcon"
+import LogoAndName from "../assets/logo/LogoAndName"
+import SearchIcon from "../assets/icons/SearchIcon"
 import SortMenu from "../components/common/header/SortMenu"
 import TwoTabs from "../components/common/header/TwoTabs"
 
@@ -19,9 +19,9 @@ export default function ContentLayout() {
       {isMobile && (
         <>
           <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
-            <Box>
-              <LogoAndName/>
-            </Box>
+          <Link onClick={() => localStorage.clear()} href='/'>
+            <LogoAndName/>
+          </Link>
             <Box ml='auto'>
               <SearchIcon/>
             </Box>

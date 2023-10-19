@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../../../context/searchContext"
 import { useGenres } from "../../../context/genresContext"
 import { useMobile } from "../../../context/useMobileContext"
-import CarrotDownIcon from "../../../assets/CarrotDownIcon"
+import CarrotDownIcon from "../../../assets/icons/CarrotDownIcon"
 
 const SortMenu = () => {
   const [open, setOpen] = useState<boolean>(false)

@@ -1,7 +1,7 @@
-import { Box, HStack, Link,} from "@chakra-ui/react"
+import { Box, HStack, Link, Stack,} from "@chakra-ui/react"
 import { FaGithub } from "react-icons/fa"
 import { useMobile } from "../../../context/useMobileContext"
-import LogoAndName from "../../../assets/LogoAndName"
+import LogoAndName from "../../../assets/logo/LogoAndName"
 import SearchBar from "./SearchBar"
 import openNewTab from "../../../hooks/openNewTab"
 
@@ -9,8 +9,10 @@ const Header = () => {
   const isMobile = useMobile()
   return (
     <header style={{ marginBottom: '3rem' }}>
-      {!isMobile ? 
-        <HStack justify='space-between' gap='1rem'>
+      <HStack justify='space-between' gap='1rem'>
+      {/* DESKTOP */}
+      {!isMobile && (
+        <>
           <Link onClick={() => localStorage.clear()} href='/'>
             <LogoAndName/>
           </Link>
@@ -31,9 +33,9 @@ const Header = () => {
           >
             <FaGithub size={25}/>
           </Box>  
-        </HStack>
-      : <></>
-      }
+        </>
+      )}
+      </HStack>
     </header>
   )
 }

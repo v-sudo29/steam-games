@@ -15,8 +15,8 @@ import { useSort } from "../../../context/sortContext"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
-import SearchIcon from "../../../assets/SearchIcon"
-import ExitIcon from "../../../assets/ExitIcon"
+import SearchIcon from "../../../assets/icons/SearchIcon"
+import ExitIcon from "../../../assets/icons/ExitIcon"
 
 const SearchBar = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -66,7 +66,13 @@ const SearchBar = () => {
   }
   
   return (
-    <InputGroup maxW='45rem' role='search' display='flex' justifyContent='center'>
+    <InputGroup
+      role='search'
+      pos='relative'
+      style={{
+        left: '-1.2rem', // ChakraUI bug, paddingLeft: -3rem does not work
+      }}
+    >
       <InputLeftElement
         role='presentation'
         pos='relative'
