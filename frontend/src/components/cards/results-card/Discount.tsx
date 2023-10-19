@@ -10,11 +10,11 @@ const Discount = ({ discount } : { discount: string }) => {
       pos='relative'
       align='center'
       direction='row'
-      w='3.5rem'
+      w={window.innerWidth >= 786 ? '3.5rem' : '5rem'}
     >
       <Text
         className='game-card-component'
-        p='0.1rem 0.2rem'
+        p={window.innerWidth >= 786 ? '0.1rem 0.2rem' : '0.2rem 0.5rem'}
         w='inherit'
         borderRadius='0.3rem'
         color='#F5F5F5'

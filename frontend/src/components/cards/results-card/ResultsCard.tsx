@@ -56,7 +56,7 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
         gap='0.9rem'
         style={ window.innerWidth < 786 ? {
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr'
+          gridTemplateColumns: '2fr 1fr 1.5fr'
         } : undefined}
       >
         {/* DESKTOP BREAKPOINT */}
