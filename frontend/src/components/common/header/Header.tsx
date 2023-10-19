@@ -1,7 +1,7 @@
 import { Box, HStack, Link,} from "@chakra-ui/react"
 import { FaGithub } from "react-icons/fa"
 import { useMobile } from "../../../context/useMobileContext"
-import Logo from "../../../assets/LogoAndName"
+import LogoAndName from "../../../assets/LogoAndName"
 import SearchBar from "./SearchBar"
 import openNewTab from "../../../hooks/openNewTab"
 
@@ -12,7 +12,7 @@ const Header = () => {
       {!isMobile ? 
         <HStack justify='space-between' gap='1rem'>
           <Link onClick={() => localStorage.clear()} href='/'>
-            <Logo/>
+            <LogoAndName/>
           </Link>
           <section style={{ flexGrow: '3', display: 'flex', justifyContent: 'center' }}>
             <SearchBar/>

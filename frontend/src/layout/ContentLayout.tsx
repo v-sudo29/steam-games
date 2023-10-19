@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom"
 import FilterButton from "../components/common/header/FilterButton"
 import GenreTags from "../components/common/header/GenreTags"
 import Pagination from "../components/common/pagination/Pagination"
-import Logo from "../assets/Logo"
+import LogoAndName from "../assets/LogoAndName"
 import SearchIcon from "../assets/SearchIcon"
 import SortMenu from "../components/common/header/SortMenu"
 import TwoTabs from "../components/common/header/TwoTabs"
@@ -17,25 +17,23 @@ export default function ContentLayout() {
   return (
     <VStack align='start' flex='auto'>
       {isMobile && (
-        <VStack align='start' w='100%'>
+        <>
           <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
             <Box>
-              <Logo/>
-            </Box>
-            <Box>
-              <FilterButton/>
-            </Box>
-            <Box>
-              <SortMenu/>
+              <LogoAndName/>
             </Box>
             <Box ml='auto'>
               <SearchIcon/>
             </Box>
           </HStack>
+          <HStack p='0rem 1rem' mb='1rem'>
+            <FilterButton/>
+            <SortMenu/>
+          </HStack>
           <HStack>
             <TwoTabs/>
           </HStack>
-        </VStack>
+        </>
       )}
 
       {!isMobile && (

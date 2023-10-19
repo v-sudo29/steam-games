@@ -26,16 +26,16 @@ const FilterButton = () => {
     <>
       {isMobile && 
         <Button
-        onClick={handleFilterBtnClick}
-        aria-expanded={expanded}
-        aria-controls='filters'
-        mr={isSafari ? '2rem' : 0}
-        border='none'
-        borderRadius='2rem'
-        bg='#2F3740' 
-        color='#F5F5F5'
-        p='0rem 1.3rem'
-        _hover={{ backgroundColor: '#3b454f' }}
+          onClick={handleFilterBtnClick}
+          aria-expanded={expanded}
+          aria-controls='filters'
+          mr={isSafari ? '2rem' : 0}
+          border='none'
+          bg='#2F3740' 
+          leftIcon={!expanded ? <FilterIcon/> : <ExitIcon/>}
+          color='#F5F5F5'
+          p='0rem 1.3rem'
+          _hover={{ backgroundColor: '#3b454f' }}
         >
           Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
         </Button>

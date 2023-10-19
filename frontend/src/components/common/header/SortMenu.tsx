@@ -54,7 +54,7 @@ const SortMenu = () => {
       rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
       fontWeight='600'
       border='none'
-      borderRadius={!isMobile ? '0.4rem' : '2rem'}
+      borderRadius='0.4rem'
       color='#F5F5F5'
       bg='#2F3740'
       _hover={{ backgroundColor: '#3b454f' }}
@@ -103,7 +103,7 @@ const SortMenu = () => {
       ml='auto'
       w='9rem'
       border='none'
-      borderRadius={!isMobile ? '0.4rem' : '2rem'}
+      borderRadius='0.4rem'
     >
       <Select display='none'>
         <option>Discount</option>
@@ -111,7 +111,7 @@ const SortMenu = () => {
         <option>Feedback</option>
         <option>Price</option>
       </Select>
-      {selectedCard}
+        {selectedCard}
       <VStack
         display={open ? 'flex' : 'none'}
         pos='absolute'

@@ -1,6 +1,6 @@
-import ResultsCard from './ResultsCard'
+import ResultsCard from './results-card/ResultsCard'
 import sortGames from '../../hooks/sortGames'
-import SkeletonCard from './SkeletonCard'
+import SkeletonCard from './skeleton-card/SkeletonCard'
 import { GameObject } from '../../interface/GameObject'
 import { useEffect, useRef } from 'react'
 import { Grid } from '@chakra-ui/react'
@@ -246,16 +246,41 @@ const AllGamesCards = () => {
   if (gamesError) return <h1>{gamesError}</h1>
   if (gameCards.current && gameCards.current.length > 0) return (
     <Grid w='100%' h='100%'>
-      <Grid 
-        w='100%'
-        h={!isSafari ? '100%' :'min-content'}
-        templateColumns={!isMobile ? 'repeat(auto-fill, minmax(15rem, 1fr))' : 'repeat(auto-fill, minmax(13rem, 1fr))'}
-        gridGap={!isMobile ? '1.5rem' : '1rem'}
-        role='list'
-        aria-label='Search results'
-      >
+      
+      {isMobile && (
+        <Grid 
+          w='100%'
+          h={!isSafari ? '100%' :'min-content'}
+          style={ window.innerWidth >= 786 ? 
+            {
+              gridTemplateColumns: 'repeat(auto-fill, minmax(13rem, 1fr))'
+            } : 
+            {
+              gridTemplateRows: 'repeat(auto-fill), minmax(0rem, 1fr)'
+            }
+          }
+          gridGap='1rem'
+          role='list'
+          aria-label='Search results'
+        >
         {gameCards.current}
       </Grid>
+      )}
+
+      {!isMobile && (
+        <Grid 
+          w='100%'
+          h={!isSafari ? '100%' :'min-content'}
+          templateColumns={window.innerWidth >= 786 ? 'repeat(auto-fill, minmax(15rem, 1fr))' : '1fr'}
+          templateRows={window.innerWidth < 786 ? 'repeat(auto-fill, minmax(0rem, 1fr)' : undefined}
+          gridGap='1.5rem'
+          role='list'
+          aria-label='Search results'
+        >
+          {gameCards.current}
+        </Grid>
+      )}
+      
     </Grid>
   )
   if (gameCards.current.length === 0) return <>No games found.</>
