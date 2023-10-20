@@ -3,7 +3,6 @@ import {
   Card,
   HStack,
   Stack,
-  Text,
   VStack
 } from '@chakra-ui/react'
 import openNewTab from '../../../hooks/openNewTab'
@@ -18,6 +17,7 @@ import GameName from './GameName'
 
 const ResultsCard = ({ game } : { game: GameObject }) => {
   const isMobile = useMobile()
+  
   return (
     <figure
       className='game-card-component'
@@ -72,7 +72,7 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
               align='start'
               h='100%'
               flexGrow='1'
-              >
+            >
               {/* GAME TITLE AND CURRENT PRICE */}
               <VStack
                 className='game-card-component'
@@ -100,7 +100,7 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
                   mt='auto'
                   direction='row'
                   align='center'
-                  >
+                >
                   <CurrentPrice currentPrice={game.currentPrice} isSafari={isSafari}/>
                   <OriginalPrice originalPrice={game.originalPrice} />   
                 </Stack>

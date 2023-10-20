@@ -57,9 +57,9 @@ const GenreTags = () => {
     <>
       {/* MOBILE */}
       {isMobile && (
-        <VStack>
-          
-        </VStack>
+        // <VStack>
+          <></>
+        // </VStack>
       )}
 
       {/* DESKTOP */}

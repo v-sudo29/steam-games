@@ -6,6 +6,8 @@ interface SearchObject {
   setSearchData: React.Dispatch<React.SetStateAction<GameObject[] | null>>,
   query: string | null,
   setQuery: React.Dispatch<React.SetStateAction<string | null>>,
+  searchExpanded: boolean,
+  setSearchExpanded: React.Dispatch<React.SetStateAction<boolean>>,
   searchRef: React.RefObject<HTMLInputElement>
 }
 
@@ -18,6 +20,7 @@ export const useSearch = () => {
 export const SearchProvider = ({ children } : { children: ReactNode }) => {
   const [searchData, setSearchData] = useState<GameObject[] | null>(null)
   const [query, setQuery] = useState<string | null>(null)
+  const [searchExpanded, setSearchExpanded] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
 
   const searchValues = {
@@ -25,7 +28,9 @@ export const SearchProvider = ({ children } : { children: ReactNode }) => {
     query,
     setSearchData,
     setQuery,
-    searchRef
+    searchRef,
+    searchExpanded,
+    setSearchExpanded
   }
 
   return (

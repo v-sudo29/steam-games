@@ -9,9 +9,12 @@ import LogoAndName from "../assets/logo/LogoAndName"
 import SearchIcon from "../assets/icons/SearchIcon"
 import SortMenu from "../components/common/header/SortMenu"
 import TwoTabs from "../components/common/header/TwoTabs"
+import { useSearch } from "../context/searchContext"
+import SearchBar from "../components/common/header/SearchBar"
 
 export default function ContentLayout() {
   const { expanded } = useFilter()
+  const { searchExpanded, setSearchExpanded } = useSearch()
   const isMobile = useMobile()
 
   return (
@@ -19,10 +22,33 @@ export default function ContentLayout() {
       {isMobile && (
         <>
           <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
-          <Link onClick={() => localStorage.clear()} href='/'>
-            <LogoAndName/>
-          </Link>
-            <Box ml='auto'>
+            <Link onClick={() => localStorage.clear()} href='/'>
+              <LogoAndName/>
+            </Link>
+            {searchExpanded && (
+              <>
+                {/* MOBILE SEARCH BAR */}
+                <Box pos='absolute' w='95vw'>
+                  <SearchBar/>
+                </Box>
+
+                {/* OVERLAY */}
+                <Box
+                  pos='absolute'
+                  height='500vh'
+                  width='100vw'
+                  border='1px solid white'
+                  zIndex={30}
+                >
+
+                </Box>
+              </>
+            )}
+            <Box
+              ml='auto'
+              onClick={() => setSearchExpanded(true)}
+              cursor='pointer'
+            >
               <SearchIcon/>
             </Box>
           </HStack>
