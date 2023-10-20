@@ -9,18 +9,9 @@ const Home = () => {
   const navigate = useNavigate()
   const isMobile = useMobile()
 
-  // TODO: Make home page mobile responsive
   return (
-    <VStack
-      textAlign='center'
-      mt='8rem'
-      gap='2rem'
-    >
-      <Heading
-        maxW='35rem'
-        fontSize='5xl'
-        px='1rem'
-      >
+    <VStack textAlign='center' mt='8rem' gap='2rem'>
+      <Heading maxW='35rem' fontSize='5xl' px='1rem'>
         <div>Find your next </div>
         <span> favorite game</span>
         <Text color='#8439FF' as="span"> on sale</Text>
