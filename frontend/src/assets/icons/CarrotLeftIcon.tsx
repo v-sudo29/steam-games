@@ -1,9 +1,6 @@
 import React from 'react'
-import { useSearch } from '../../context/searchContext'
 
 const CarrotLeftIcon = () => {
-  const { setSearchExpanded } = useSearch()
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +8,6 @@ const CarrotLeftIcon = () => {
       height="20"
       viewBox="0 0 12 20"
       fill="none"
-      // onClick={() => setSearchExpanded(false)}
       cursor='pointer'
       pointerEvents='auto'
     >

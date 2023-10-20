@@ -14,7 +14,7 @@ import SearchBar from "../components/common/header/SearchBar"
 import CarrotLeftIcon from "../assets/icons/CarrotLeftIcon"
 
 export default function ContentLayout() {
-  const { expanded } = useFilter()
+  const { expanded, setExpanded } = useFilter()
   const { searchExpanded, setSearchExpanded } = useSearch()
   const isMobile = useMobile()
 
@@ -63,7 +63,7 @@ export default function ContentLayout() {
                 </Box>
               </>
             )}
-            
+
             <Box
               ml='auto'
               onClick={() => setSearchExpanded(true)}
@@ -79,38 +79,71 @@ export default function ContentLayout() {
           <HStack>
             <TwoTabs/>
           </HStack>
+          <HStack 
+            flex='auto'
+            gap='1rem'
+            mt='1rem'
+            h='100%'
+            w='100%'
+            align='start'
+          >
+            <VStack
+              h={'100%'}
+              w={'100%'}
+              transition='all 200ms ease'
+            >
+              {/* OVERLAY */}
+              {expanded && (
+                <Box
+                  pos='fixed'
+                  h='500vh'
+                  w='200vw'
+                  opacity='0.9'
+                  top='0'
+                  zIndex={10}
+                  backgroundColor='#14191F'
+                  onClick={() => setExpanded(false)}
+                >
+                </Box>
+              )}
+              <GenreTags/>
+              <Outlet />
+            <Pagination/>
+            </VStack>
+          </HStack>
         </>
       )}
 
       {/* DESKTOP */}
       {!isMobile && (
-        <HStack gap='2rem' w='100%'>
-          <FilterButton/>
-          <TwoTabs/>
-          <SortMenu/>
-        </HStack>
+        <>
+          <HStack gap='2rem' w='100%'>
+            <FilterButton/>
+            <TwoTabs/>
+            <SortMenu/>
+          </HStack>
+          <HStack 
+            flex='auto'
+            gap='1rem'
+            mt='1rem'
+            h='100%'
+            w='100%'
+            align='start'
+          >
+            {/* GENRE TAGS */}
+            <GenreTags/>
+            <VStack
+              h={'100%'}
+              w={'100%'}
+              transition='margin-left 200ms ease'
+              ml={expanded ? '17rem' : '0rem'}
+            >
+              <Outlet />
+            <Pagination/>
+            </VStack>
+          </HStack>
+        </>
       )}
-
-      <HStack 
-        flex='auto'
-        gap='1rem'
-        mt='1rem'
-        h='100%'
-        w='100%'
-        align='start'
-      >
-        {/* GENRE TAGS */}
-        <GenreTags/>
-        <VStack
-          h={'100%'}
-          w={'100%'}
-          transition='margin-left 200ms ease'
-          ml={expanded ? '17rem' : '0rem'}
-        >
-          <Outlet />
-        <Pagination/>
-        </VStack>
-      </HStack>
     </VStack>
   )
 }

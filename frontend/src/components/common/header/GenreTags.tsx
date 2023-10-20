@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
+import { VStack, Text, HStack, CheckboxGroup, Box } from '@chakra-ui/react'
 import { useGenres } from '../../../context/genresContext'
 import { useFilter } from '../../../context/filterContext'
 import { isSafari } from 'react-device-detect'
@@ -57,9 +57,35 @@ const GenreTags = () => {
     <>
       {/* MOBILE */}
       {isMobile && (
-        // <VStack>
-          <></>
-        // </VStack>
+        <>
+          <VStack 
+            pos='fixed'
+            opacity={expanded ? '100%' : '0%'}
+            w='100vw'
+            h='max-content'
+            p='1.5rem'
+            align='start'
+            transition='all 200ms ease'
+            bg='#2F3740'
+            top='10rem'
+            zIndex={20}
+            >
+            <Form id='filters' className='form' role="group" aria-label="Filter Options">
+            {(!isSafari && genres.length > 0) ?
+              <CheckboxGroup defaultValue={genres}>
+              {genreTags}
+              </CheckboxGroup> :
+              <>{genreTags}</>
+            }
+            {(isSafari && genres.length > 0) && // TODO: filters not persisting after refresh in Safari
+              <CheckboxGroup defaultValue={genres}>
+                {genreTags}
+              </CheckboxGroup>
+            }
+            </Form>
+          </VStack> 
+        </>
+        
       )}
 
       {/* DESKTOP */}

@@ -12,8 +12,8 @@ const FilterButton = () => {
   const { genres } = useGenres()
   const isMobile = useMobile()
   
-  const handleFilterBtnClick = () => {
-    if (!isMobile) setExpanded(prev => !prev)
+  const handleClick= () => {
+    setExpanded(prev => !prev)
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const FilterButton = () => {
     <>
       {isMobile && 
         <Button
-          onClick={handleFilterBtnClick}
+          onClick={handleClick}
           aria-expanded={expanded}
           aria-controls='filters'
           mr={isSafari ? '2rem' : 0}
@@ -38,6 +38,7 @@ const FilterButton = () => {
           color='#F5F5F5'
           p='0rem 1.3rem'
           _hover={{ backgroundColor: '#3b454f' }}
+          zIndex={expanded ? 20 : 0}
         >
           Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
         </Button>
@@ -45,7 +46,7 @@ const FilterButton = () => {
 
       {!isMobile && 
         <Button
-          onClick={handleFilterBtnClick}
+          onClick={handleClick}
           aria-expanded={expanded}
           aria-controls='filters'
           mr={isSafari ? '2rem' : '-1rem'}
