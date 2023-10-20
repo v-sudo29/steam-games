@@ -7,6 +7,7 @@ export default function SearchIcon() {
 
   let iconStyles
 
+  // MOBILE icon styles
   if (isMobile && !searchExpanded) {
     iconStyles = {
       width: '30',
@@ -21,6 +22,7 @@ export default function SearchIcon() {
     }
   }
 
+  // DESKTOP icon styles
   if (!isMobile) {
     iconStyles = {
       width: '15',
@@ -28,6 +30,7 @@ export default function SearchIcon() {
     }
   }
   
+  // HOME PAGE icon styles
   const homeIconStyles = {
     width: '15',
     height: '15'
