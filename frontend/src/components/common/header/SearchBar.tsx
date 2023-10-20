@@ -72,6 +72,7 @@ const SearchBar = () => {
       style={{
         left: '-1.2rem', // ChakraUI bug, paddingLeft: -3rem does not work
       }}
+      justifyContent='center'
     >
       <InputLeftElement
         role='presentation'
@@ -87,6 +88,7 @@ const SearchBar = () => {
         fontFamily='Rubik'
         fontWeight='semibold'
         fontSize='0.9rem'
+        maxW='45rem'
         placeholder='Search for games...'
         _placeholder={{ color: '#535B65'}}
         _focus={{

@@ -12,7 +12,9 @@ const FilterButton = () => {
   const { genres } = useGenres()
   const isMobile = useMobile()
   
-  const handleFilterBtnClick = () => setExpanded(prev => !prev)
+  const handleFilterBtnClick = () => {
+    if (!isMobile) setExpanded(prev => !prev)
+  }
 
   useEffect(() => {
     const urlParams = localStorage.getItem('storageObj')

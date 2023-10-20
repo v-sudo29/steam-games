@@ -54,44 +54,57 @@ const GenreTags = () => {
   genreTags = genreFilters.map(genre => <CustomCheckbox key={`${genre}-genre-tag`} genre={genre}/>)
 
   return (
-    <VStack 
-      pos='absolute'
-      opacity={expanded ? '100%' : '0%'}
-      minW='12rem' 
-      maxW='17rem'
-      align='start'
-      transition='all 200ms ease'
-      ml={isMobile ? '1rem' : ''}
-    >
-      <HStack gap='1rem'>
-        <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
-        {genres.length > 0 && 
-          <Text
-            onClick={handleReset}
-            cursor='pointer'
-            mb={isSafari ? '1.5rem' : '1rem'}
-            fontWeight='600'
-            color='#F5F5F5'
-            ml={isSafari ? '1rem' : '0rem'}
-          >
-            Clear
-          </Text>
-        }
-      </HStack>
-      <Form id='filters' className='form' role="group" aria-label="Filter Options">
-        {(!isSafari && genres.length > 0) ?
-          <CheckboxGroup defaultValue={genres}>
+    <>
+      {/* MOBILE */}
+      {isMobile && (
+        <VStack>
+          
+        </VStack>
+      )}
+
+      {/* DESKTOP */}
+      {!isMobile && (
+        <VStack 
+          pos='absolute'
+          opacity={expanded ? '100%' : '0%'}
+          minW='12rem' 
+          maxW='17rem'
+          align='start'
+          transition='all 200ms ease'
+          ml={isMobile ? '1rem' : ''}
+        >
+          <HStack gap='1rem'>
+          <Text mb={isSafari ? '1.5rem' : '1rem'} fontWeight='600' color='#888888'>Select filters</Text>
+          {genres.length > 0 && (
+            <Text
+              onClick={handleReset}
+              cursor='pointer'
+              mb={isSafari ? '1.5rem' : '1rem'}
+              fontWeight='600'
+              color='#F5F5F5'
+              ml={isSafari ? '1rem' : '0rem'}
+            >
+              Clear
+            </Text>
+          )}
+          </HStack>
+          <Form id='filters' className='form' role="group" aria-label="Filter Options">
+          {(!isSafari && genres.length > 0) ?
+            <CheckboxGroup defaultValue={genres}>
             {genreTags}
-          </CheckboxGroup> :
-          <>{genreTags}</>
-        }
-        {(isSafari && genres.length > 0) && // TODO: filters not persisting after refresh in Safari
-          <CheckboxGroup defaultValue={genres}>
-            {genreTags}
-          </CheckboxGroup>
-        }
-      </Form>
-    </VStack> 
-  )
-}
-export default GenreTags
+            </CheckboxGroup> :
+            <>{genreTags}</>
+          }
+          {(isSafari && genres.length > 0) && // TODO: filters not persisting after refresh in Safari
+            <CheckboxGroup defaultValue={genres}>
+              {genreTags}
+            </CheckboxGroup>
+          }
+          </Form>
+        </VStack> 
+      )}
+    </>
+
+    )
+  }
+  export default GenreTags
