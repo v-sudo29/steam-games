@@ -58,7 +58,8 @@ const GenreTags = () => {
       {/* MOBILE */}
       {isMobile && (
         <>
-          <VStack 
+          <VStack
+            pointerEvents={expanded ? 'auto' : 'none'}
             pos='fixed'
             opacity={expanded ? '100%' : '0%'}
             w='100vw'
