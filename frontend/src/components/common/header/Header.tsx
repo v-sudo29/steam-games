@@ -7,9 +7,11 @@ import openNewTab from "../../../helpers/openNewTab"
 
 const Header = () => {
   const isMobile = useMobile()
+
   return (
     <header style={{ marginBottom: '3rem' }}>
       <HStack justify='space-between' gap='1rem'>
+        
       {/* DESKTOP */}
       {!isMobile && (
         <>

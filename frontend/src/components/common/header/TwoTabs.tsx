@@ -3,7 +3,6 @@ import {
   Tabs,
   TabList,
 } from "@chakra-ui/react"
-
 import { useTabs } from "../../../context/tabsContext"
 import { useNavigate } from "react-router-dom"
 import { useDefaultData } from "../../../context/defaultDataContext"

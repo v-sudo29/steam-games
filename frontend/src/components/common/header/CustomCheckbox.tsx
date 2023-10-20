@@ -1,6 +1,7 @@
 import { Checkbox } from "@chakra-ui/react";
-import CheckboxIcon from "../../../assets/icons/CheckboxIcon";
 import { useGenres } from "../../../context/genresContext";
+import CheckboxIcon from "../../../assets/icons/CheckboxIcon";
+
 
 const CustomCheckbox = ({ genre }: { genre: string }) => {
   const { setGenres } = useGenres()
@@ -39,7 +40,7 @@ const CustomCheckbox = ({ genre }: { genre: string }) => {
       w='100%'
       mb='0.5rem'
     >
-    {genre}
+      {genre}
     </Checkbox>
   )
 }

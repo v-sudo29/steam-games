@@ -3,19 +3,18 @@ import { useFilter } from "../../../context/filterContext"
 import { useGenres } from "../../../context/genresContext"
 import { isSafari } from "react-device-detect"
 import { useMobile } from "../../../context/useMobileContext"
+import { useEffect } from "react"
 import FilterIcon from "../../../assets/icons/FilterIcon"
 import ExitIcon from "../../../assets/icons/ExitIcon"
-import { useEffect } from "react"
 
 const FilterButton = () => {
   const { expanded, setExpanded } = useFilter()
   const { genres } = useGenres()
   const isMobile = useMobile()
   
-  const handleClick= () => {
-    setExpanded(prev => !prev)
-  }
+  const handleClick = (): void => setExpanded(prev => !prev)
 
+  // Get expanded state from local storage if exists
   useEffect(() => {
     const urlParams = localStorage.getItem('storageObj')
     if (urlParams) {
@@ -24,8 +23,10 @@ const FilterButton = () => {
       if (keys.includes('expanded')) setExpanded(parsedParams.expanded)
     }
   }, [])
+
   return (
     <>
+      {/* MOBILE */}
       {isMobile && 
         <Button
           onClick={handleClick}
@@ -44,6 +45,7 @@ const FilterButton = () => {
         </Button>
       }
 
+      {/* DESKTOP */}
       {!isMobile && 
         <Button
           onClick={handleClick}

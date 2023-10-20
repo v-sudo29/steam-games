@@ -13,7 +13,6 @@ const SortMenu = () => {
   const { sort, setSort, sortOptions } = useSort()
   const { query } = useSearch()
   const { genres } = useGenres()
-  const isMobile = useMobile()
   const animateRef = useRef<boolean>()
 
   const selected = sort[0]
@@ -24,6 +23,7 @@ const SortMenu = () => {
     const divElement = e.target as HTMLDivElement
     const sortName = divElement.innerText
     setSort([sortName])
+
     // SEARCH, FILTER, and SORT used 
     if (query && genres.length > 0 && sort.length > 0) setSearchParams({ q: query, sort: sortName, filter: genres })
 
@@ -99,7 +99,6 @@ const SortMenu = () => {
 
   return (
     <Box
-      // tabIndex={0}
       ml='auto'
       w='9rem'
       border='none'

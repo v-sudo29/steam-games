@@ -70,14 +70,17 @@ const GenreTags = () => {
             bg='#2F3740'
             top='10rem'
             zIndex={20}
-            >
+          >
             <Form id='filters' className='form' role="group" aria-label="Filter Options">
+            {/* ALL OTHER BROWSERS */}
             {(!isSafari && genres.length > 0) ?
               <CheckboxGroup defaultValue={genres}>
                 {genreTags}
               </CheckboxGroup> :
               <>{genreTags}</>
             }
+
+            {/* SAFARI BROWSER */}
             {(isSafari && genres.length > 0) && // TODO: filters not persisting after refresh in Safari
               <CheckboxGroup defaultValue={genres}>
                 {genreTags}
@@ -131,7 +134,6 @@ const GenreTags = () => {
         </VStack> 
       )}
     </>
-
     )
   }
   export default GenreTags

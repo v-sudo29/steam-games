@@ -24,7 +24,6 @@ const SearchBar = () => {
   const { setGamesTabActive, setWishlistTabActive } = useTabs()
   const { sort } = useSort()
   const { genres } = useGenres()
-  const { searchExpanded } = useSearch()
 
   const navigate = useNavigate()
   const [emptyError, setEmptyError] = useState<boolean>(false)
