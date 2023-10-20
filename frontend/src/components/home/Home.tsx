@@ -17,8 +17,9 @@ const Home = () => {
       gap='2rem'
     >
       <Heading
-        w='35rem'
+        maxW='35rem'
         fontSize='5xl'
+        px='1rem'
       >
         <div>Find your next </div>
         <span> favorite game</span>
@@ -35,7 +36,7 @@ const Home = () => {
           Tired of missing out on Steam sales? Dideals does the hard work for you by collecting amazing discounted games in one spot.
         </Text>
       )}
-      <HStack gap='1rem'>
+      <HStack gap='1rem' flexWrap='wrap' justifyContent='center'>
         <Button
           onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
           border='none'
