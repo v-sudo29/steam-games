@@ -1,4 +1,3 @@
-import React from 'react'
 import { Text, Stack } from '@chakra-ui/react'
 
 const Discount = ({ discount } : { discount: string }) => {

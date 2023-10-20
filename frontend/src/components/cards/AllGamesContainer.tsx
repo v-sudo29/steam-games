@@ -16,7 +16,7 @@ import { useFilter } from '../../context/filterContext'
 import { useTabs } from '../../context/tabsContext'
 import axios from 'axios'
 
-const AllGamesCards = () => {
+const AllGamesContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { gamesData, gamesError, gamesAreLoading, currentResults, currentResultsWL } = useDefaultData()
   const { genres, setGenres } = useGenres()
@@ -28,12 +28,12 @@ const AllGamesCards = () => {
   const isMobile = useMobile()
   const gameCards = useRef<(JSX.Element | null)[] | null>(null)
   const firstRender = useRef(false)
-
   const navigate = useNavigate()
 
   // Every filter and sort change, store params in local storage
   useEffect(() => {
     let storageObj = null
+
     if (firstRender.current) {
       // SEARCH, FILTER, and SORT used 
       if (query && genres.length > 0 && sort.length > 0) {
@@ -92,7 +92,7 @@ const AllGamesCards = () => {
     }
   }, [genres, sort, expanded, query])
 
-  // When user refreshes, check local storage for stored url pathname on component render. Populate state
+  // When user refreshes, check local storage for stored url pathname on component render - Populate state
   useEffect(() => {
     const urlParams = localStorage.getItem('storageObj')
 
@@ -286,4 +286,4 @@ const AllGamesCards = () => {
   return <></>
 }
 
-export default AllGamesCards
+export default AllGamesContainer

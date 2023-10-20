@@ -17,19 +17,14 @@ import GameName from './GameName'
 
 const ResultsCard = ({ game } : { game: GameObject }) => {
   const isMobile = useMobile()
-  
+
   return (
     <figure
       className='game-card-component'
-      style={ window.innerWidth >= 786 ? {
+      style={{
         height: 'inherit',
         width: 'inherit', 
-        pointerEvents: 'none',
-      } : {
-        height: 'inherit',
-        width: 'inherit', 
-        pointerEvents: 'none',
-        marginBottom: '1rem',
+        pointerEvents: 'none'
       }}
     >
       <Card 
@@ -59,8 +54,9 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
           gridTemplateColumns: '2fr 1fr 1.5fr'
         } : undefined}
       >
+        
         {/* DESKTOP BREAKPOINT */}
-        {window.innerWidth >= 786 && (
+        { window.innerWidth >= 786 && (
           <>
             {/* GAME IMAGE */}
             <Image game={game} isSafari={isSafari}/>
@@ -113,7 +109,7 @@ const ResultsCard = ({ game } : { game: GameObject }) => {
         )}
 
         {/* MOBILE + TABLET BREAKPOINT */}
-        {window.innerWidth < 786 && (
+        { window.innerWidth < 786 && (
           <>
             <Image game={game} isSafari={isSafari}/>
             <GameName

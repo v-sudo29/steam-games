@@ -15,7 +15,7 @@ import SkeletonCard from "./skeleton-card/SkeletonCard"
 import sortGames from "../../helpers/sortGames"
 import axios from "axios"
 
-const WishlistCards = () => {
+const WishlistContainer = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { wishlistLoading, wishlistError, wishlistData, currentResults, currentResultsWL } = useDefaultData()
   const { pageNumberWL } = usePage()
@@ -250,4 +250,4 @@ const WishlistCards = () => {
   return <></>
 }
 
-export default WishlistCards
+export default WishlistContainer

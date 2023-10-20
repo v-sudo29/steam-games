@@ -1,8 +1,12 @@
-import React from 'react'
 import { Image as ChakraImage } from '@chakra-ui/react'
 import { GameObject } from '../../../interface/GameObject'
 
-const Image = ({ game, isSafari } : { game: GameObject, isSafari: boolean }) => {
+interface ImageProps {
+  game: GameObject
+  isSafari: boolean
+}
+
+const Image = ({ game, isSafari } : ImageProps) => {
   return (
     <ChakraImage
       className='game-card-component'

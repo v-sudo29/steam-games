@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface GameNameProps {
   name: string
   isSafari: boolean
