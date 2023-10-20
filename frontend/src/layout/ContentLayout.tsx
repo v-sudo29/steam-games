@@ -1,4 +1,4 @@
-import { Box, HStack, Link, VStack } from "@chakra-ui/react"
+import { Box, Button, HStack, Link, VStack } from "@chakra-ui/react"
 import { useFilter } from "../context/filterContext"
 import { useMobile } from "../context/useMobileContext"
 import { Outlet } from "react-router-dom"
@@ -11,6 +11,7 @@ import SortMenu from "../components/common/header/SortMenu"
 import TwoTabs from "../components/common/header/TwoTabs"
 import { useSearch } from "../context/searchContext"
 import SearchBar from "../components/common/header/SearchBar"
+import CarrotLeftIcon from "../assets/icons/CarrotLeftIcon"
 
 export default function ContentLayout() {
   const { expanded } = useFilter()
@@ -19,31 +20,50 @@ export default function ContentLayout() {
 
   return (
     <VStack align='start' flex='auto'>
+
+      {/* OVERLAY */}
+      {searchExpanded && (
+        <Box
+          pos='fixed'
+          h='500vh'
+          w='200vw'
+          zIndex={10}
+          backgroundColor='#14191F'
+        >
+        </Box>
+      )}
+
+      {/* MOBILE */}
       {isMobile && (
         <>
           <HStack p='0rem 1rem' mb='1rem' gap='0.8rem' w='100%'>
             <Link onClick={() => localStorage.clear()} href='/'>
               <LogoAndName/>
             </Link>
+
+            {/* MOBILE SEARCH BAR */}
             {searchExpanded && (
               <>
-                {/* MOBILE SEARCH BAR */}
-                <Box pos='absolute' w='95vw'>
-                  <SearchBar/>
-                </Box>
-
-                {/* OVERLAY */}
                 <Box
                   pos='absolute'
-                  height='500vh'
-                  width='100vw'
-                  border='1px solid white'
-                  zIndex={30}
+                  display='flex'
+                  w='95vw'
+                  zIndex={20}
+                  alignItems='center'
+                  justifyContent='center'
                 >
-
+                  <Button
+                    bg='null'
+                    _hover={{ backgroundColor: 'transparent' }}
+                    onClick={() => setSearchExpanded(false)}
+                  >
+                    <CarrotLeftIcon />
+                  </Button>
+                  <SearchBar/>
                 </Box>
               </>
             )}
+            
             <Box
               ml='auto'
               onClick={() => setSearchExpanded(true)}
@@ -62,6 +82,7 @@ export default function ContentLayout() {
         </>
       )}
 
+      {/* DESKTOP */}
       {!isMobile && (
         <HStack gap='2rem' w='100%'>
           <FilterButton/>
@@ -69,6 +90,7 @@ export default function ContentLayout() {
           <SortMenu/>
         </HStack>
       )}
+
       <HStack 
         flex='auto'
         gap='1rem'
@@ -77,6 +99,7 @@ export default function ContentLayout() {
         w='100%'
         align='start'
       >
+        {/* GENRE TAGS */}
         <GenreTags/>
         <VStack
           h={'100%'}
