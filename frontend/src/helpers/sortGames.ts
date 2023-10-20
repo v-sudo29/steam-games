@@ -8,6 +8,7 @@ const sortOptions = {
 }
 
 export default function sortGames( gamesArr: GameObject[], sortType: string ): GameObject[] | null {
+  
   // If sortType is DISCOUNT, sort games by DISCOUNT - lowest to highest
   if (sortType === sortOptions.DISCOUNT) {
      return gamesArr.sort((a, b) => {

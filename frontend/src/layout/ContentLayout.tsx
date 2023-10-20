@@ -12,6 +12,8 @@ import TwoTabs from "../components/common/header/TwoTabs"
 import { useSearch } from "../context/searchContext"
 import SearchBar from "../components/common/header/SearchBar"
 import CarrotLeftIcon from "../assets/icons/CarrotLeftIcon"
+import CompleteOverlay from "../components/common/overlay/CompleteOverlay"
+import SeeThroughOverlay from "../components/common/overlay/SeeThroughOverlay"
 
 export default function ContentLayout() {
   const { expanded, setExpanded } = useFilter()
@@ -22,16 +24,7 @@ export default function ContentLayout() {
     <VStack align='start' flex='auto'>
 
       {/* OVERLAY */}
-      {searchExpanded && (
-        <Box
-          pos='fixed'
-          h='500vh'
-          w='200vw'
-          zIndex={10}
-          backgroundColor='#14191F'
-        >
-        </Box>
-      )}
+      {searchExpanded && <CompleteOverlay/>}
 
       {/* MOBILE */}
       {isMobile && (
@@ -43,32 +36,26 @@ export default function ContentLayout() {
 
             {/* MOBILE SEARCH BAR */}
             {searchExpanded && (
-              <>
-                <Box
-                  pos='absolute'
-                  display='flex'
-                  w='95vw'
-                  zIndex={20}
-                  alignItems='center'
-                  justifyContent='center'
+              <Box
+                pos='absolute'
+                display='flex'
+                w='95vw'
+                zIndex={20}
+                alignItems='center'
+                justifyContent='center'
+              >
+                <Button
+                  bg='null'
+                  _hover={{ backgroundColor: 'transparent' }}
+                  onClick={() => setSearchExpanded(false)}
                 >
-                  <Button
-                    bg='null'
-                    _hover={{ backgroundColor: 'transparent' }}
-                    onClick={() => setSearchExpanded(false)}
-                  >
-                    <CarrotLeftIcon />
-                  </Button>
-                  <SearchBar/>
-                </Box>
-              </>
+                  <CarrotLeftIcon />
+                </Button>
+                <SearchBar/>
+              </Box>
             )}
 
-            <Box
-              ml='auto'
-              onClick={() => setSearchExpanded(true)}
-              cursor='pointer'
-            >
+            <Box ml='auto' onClick={() => setSearchExpanded(true)} cursor='pointer'>
               <SearchIcon/>
             </Box>
           </HStack>
@@ -87,28 +74,14 @@ export default function ContentLayout() {
             w='100%'
             align='start'
           >
-            <VStack
-              h={'100%'}
-              w={'100%'}
-              transition='all 200ms ease'
-            >
+            <VStack h={'100%'} w={'100%'} transition='all 200ms ease'>
+
               {/* OVERLAY */}
-              {expanded && (
-                <Box
-                  pos='fixed'
-                  h='500vh'
-                  w='200vw'
-                  opacity='0.9'
-                  top='0'
-                  zIndex={10}
-                  backgroundColor='#14191F'
-                  onClick={() => setExpanded(false)}
-                >
-                </Box>
-              )}
+              {expanded && <SeeThroughOverlay/>}
+
               <GenreTags/>
               <Outlet />
-            <Pagination/>
+              <Pagination/>
             </VStack>
           </HStack>
         </>
