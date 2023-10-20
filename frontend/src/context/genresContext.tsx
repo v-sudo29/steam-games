@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 interface GenresObject {
   genres: string[],

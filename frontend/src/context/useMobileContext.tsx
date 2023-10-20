@@ -10,13 +10,13 @@ export const MobileProvider = ({ children } : { children: ReactNode }) => {
   const [isMobile, setIsMobile] = useState<boolean>(false)
 
   const handleResize = (): void => {
-    if (window.innerWidth > 785) setIsMobile(false)
+    if (window.innerWidth >= 786) setIsMobile(false)
     else setIsMobile(true)
   }
 
-  // Handle window resizing for media queries
+  // Handle window resizing for responsiveness
   useEffect(() => {
-    if (window.innerWidth > 785) setIsMobile(false)
+    if (window.innerWidth >= 786) setIsMobile(false)
     else setIsMobile(true)
 
     window.addEventListener('resize', handleResize)
