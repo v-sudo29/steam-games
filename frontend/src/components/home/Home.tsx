@@ -16,6 +16,8 @@ const Home = () => {
         <span> favorite game</span>
         <Text color='#8439FF' as="span"> on sale</Text>
       </Heading>
+
+      {/* DESKTOP - include hero caption*/}
       {!isMobile && (
         <Text
           mb={isSafari ? '2rem' : 0}
@@ -27,6 +29,7 @@ const Home = () => {
           Tired of missing out on Steam sales? Dideals does the hard work for you by collecting amazing discounted games in one spot.
         </Text>
       )}
+
       <HStack gap='1rem' flexWrap='wrap' justifyContent='center'>
         <Button
           onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
