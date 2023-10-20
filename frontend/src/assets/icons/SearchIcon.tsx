@@ -20,6 +20,13 @@ export default function SearchIcon() {
       height: '15',
     }
   }
+
+  if (!isMobile) {
+    iconStyles = {
+      width: '15',
+      height: '15',
+    }
+  }
   
   const homeIconStyles = {
     width: '15',
