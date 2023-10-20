@@ -3,7 +3,7 @@ import { FaGithub } from "react-icons/fa"
 import { useMobile } from "../../../context/useMobileContext"
 import LogoAndName from "../../../assets/logo/LogoAndName"
 import SearchBar from "./SearchBar"
-import openNewTab from "../../../hooks/openNewTab"
+import openNewTab from "../../../helpers/openNewTab"
 
 const Header = () => {
   const isMobile = useMobile()

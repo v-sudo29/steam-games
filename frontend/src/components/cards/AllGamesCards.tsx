@@ -1,5 +1,5 @@
 import ResultsCard from './results-card/ResultsCard'
-import sortGames from '../../hooks/sortGames'
+import sortGames from '../../helpers/sortGames'
 import SkeletonCard from './skeleton-card/SkeletonCard'
 import { GameObject } from '../../interface/GameObject'
 import { useEffect, useRef } from 'react'

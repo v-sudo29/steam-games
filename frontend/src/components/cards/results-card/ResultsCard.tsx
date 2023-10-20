@@ -5,7 +5,7 @@ import {
   Stack,
   VStack
 } from '@chakra-ui/react'
-import openNewTab from '../../../hooks/openNewTab'
+import openNewTab from '../../../helpers/openNewTab'
 import { GameObject } from '../../../interface/GameObject'
 import { isSafari } from 'react-device-detect'
 import { useMobile } from '../../../context/useMobileContext'

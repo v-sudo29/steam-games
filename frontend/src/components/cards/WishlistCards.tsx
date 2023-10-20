@@ -12,7 +12,7 @@ import { useTabs } from "../../context/tabsContext"
 import { GameObject } from "../../interface/GameObject"
 import ResultsCard from "./results-card/ResultsCard"
 import SkeletonCard from "./skeleton-card/SkeletonCard"
-import sortGames from "../../hooks/sortGames"
+import sortGames from "../../helpers/sortGames"
 import axios from "axios"
 
 const WishlistCards = () => {
