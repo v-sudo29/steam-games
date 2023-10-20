@@ -1,6 +1,11 @@
 import { useMobile } from "../../context/useMobileContext"
 
-export default function CarrotDownIcon({ animate, setAnimate } : { animate: boolean, setAnimate: React.Dispatch<React.SetStateAction<boolean>> }) {
+interface CarrotDownIconProps {
+  animate: boolean
+  setAnimate: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function CarrotDownIcon({ animate, setAnimate } : CarrotDownIconProps) {
   const isMobile = useMobile()
 
   const carrotStyles = {

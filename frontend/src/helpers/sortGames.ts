@@ -7,8 +7,8 @@ const sortOptions = {
   FEEDBACK: 'Feedback'
 }
 
-export default function sortGames(gamesArr: GameObject[], sortType: string): GameObject[] | null {
-  
+export default function sortGames( gamesArr: GameObject[], sortType: string ): GameObject[] | null {
+  // If sortType is DISCOUNT, sort games by DISCOUNT - lowest to highest
   if (sortType === sortOptions.DISCOUNT) {
      return gamesArr.sort((a, b) => {
       const newA = a.discount.replace(/-/g, '').replace(/%/g, '')
@@ -19,6 +19,8 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       return 0
     })
   } 
+
+  // If sortType is PRICE, sort games by PRICE - lowest to highest
   if (sortType === sortOptions.PRICE) {
     return gamesArr.sort((a, b) => {
       const newA = Number(a.currentPrice.replace('$', ''))
@@ -28,7 +30,9 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       if (newB > newA) return -1
       return 0
     })
-  } 
+  }
+
+  // If sortType is RATING, sort games by RATING - highest to lowest
   if (sortType === sortOptions.RATING) {
     return gamesArr.sort((a, b) => {
       const newA = a.rating.replace(/%/g, '')
@@ -38,7 +42,9 @@ export default function sortGames(gamesArr: GameObject[], sortType: string): Gam
       if (newB > newA) return 1
       return 0
     })
-  } 
+  }
+
+  // If sortType is FEEDBACK, sort games by FEEDBACK - highest to lowest
   if (sortType === sortOptions.FEEDBACK) {
     const overwhelmPosArr = []
     const veryPosArr = []
