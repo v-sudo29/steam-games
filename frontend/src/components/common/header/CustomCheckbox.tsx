@@ -27,6 +27,9 @@ const CustomCheckbox = ({ genre }: { genre: string }) => {
 
   return (
     <Checkbox
+      _checked={{
+        "& .chakra-checkbox__control": { border: "1px solid #7E8B9B" }
+      }}   
       transition="none"
       colorScheme='#14191F'
       icon={<CheckboxIcon/>}

@@ -74,7 +74,7 @@ const GenreTags = () => {
             <Form id='filters' className='form' role="group" aria-label="Filter Options">
             {(!isSafari && genres.length > 0) ?
               <CheckboxGroup defaultValue={genres}>
-              {genreTags}
+                {genreTags}
               </CheckboxGroup> :
               <>{genreTags}</>
             }
