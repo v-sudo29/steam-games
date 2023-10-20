@@ -1,6 +1,7 @@
 import { Box, Button, HStack, Link, VStack } from "@chakra-ui/react"
 import { useFilter } from "../context/filterContext"
 import { useMobile } from "../context/useMobileContext"
+import { useSearch } from "../context/searchContext"
 import { Outlet } from "react-router-dom"
 import FilterButton from "../components/common/header/FilterButton"
 import GenreTags from "../components/common/header/GenreTags"
@@ -9,14 +10,13 @@ import LogoAndName from "../assets/logo/LogoAndName"
 import SearchIcon from "../assets/icons/SearchIcon"
 import SortMenu from "../components/common/header/SortMenu"
 import TwoTabs from "../components/common/header/TwoTabs"
-import { useSearch } from "../context/searchContext"
 import SearchBar from "../components/common/header/SearchBar"
 import CarrotLeftIcon from "../assets/icons/CarrotLeftIcon"
 import CompleteOverlay from "../components/common/overlay/CompleteOverlay"
 import SeeThroughOverlay from "../components/common/overlay/SeeThroughOverlay"
 
 export default function ContentLayout() {
-  const { expanded, setExpanded } = useFilter()
+  const { expanded } = useFilter()
   const { searchExpanded, setSearchExpanded } = useSearch()
   const isMobile = useMobile()
 
