@@ -42,7 +42,6 @@ const Home = () => {
           GitHub
         </Button>
         <Button
-          className="view-deals-button"
           onClick={() => navigate('/all-games')}
           border='none'
           mr={isSafari ? '1rem' : 0}
