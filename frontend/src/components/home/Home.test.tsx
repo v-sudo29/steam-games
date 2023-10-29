@@ -23,12 +23,12 @@ describe('Home', () => {
     expect(viewDealsButtonElement).toBeVisible()
   })
 
-  test('View Deals button hover color is visible on hover', () => {
+  test('View Deals button hover color is visible on hover', async () => {
     user.setup()
     render(<Home/>, { wrapper: routerWrapper })
     const viewDealsButtonElement = screen.getByRole('button', { name: /view deals/i })
     
-    user.hover(viewDealsButtonElement)
+    await user.hover(viewDealsButtonElement)
     const styles = getComputedStyle(viewDealsButtonElement)
     expect(styles.backgroundColor).toBe('rgb(99, 39, 195)')
   })
