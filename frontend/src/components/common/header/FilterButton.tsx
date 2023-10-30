@@ -41,7 +41,7 @@ const FilterButton = () => {
           _hover={{ backgroundColor: '#3b454f' }}
           zIndex={expanded ? 20 : 0}
         >
-          Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
+          Filter {(genres && genres.length > 0 && !expanded) && `(${genres.length})`}
         </Button>
       }
 
@@ -57,10 +57,10 @@ const FilterButton = () => {
           leftIcon={!expanded ? <FilterIcon/> : <ExitIcon/>}
           color='#F5F5F5'
           p='0rem 2rem'
-          pr={genres.length > 0 ? '2rem' : '2rem'}
+          pr={genres && genres.length > 0 ? '2rem' : '2rem'}
           _hover={{ backgroundColor: '#3b454f' }}
         >
-          Filter {(genres.length > 0 && !expanded) && `(${genres.length})`}
+          Filter {(genres && genres.length > 0 && !expanded) && `(${genres.length})`}
         </Button>
       }
     </>
