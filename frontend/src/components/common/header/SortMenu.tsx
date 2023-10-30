@@ -4,7 +4,6 @@ import { useSort } from "../../../context/sortContext"
 import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../../../context/searchContext"
 import { useGenres } from "../../../context/genresContext"
-import { useMobile } from "../../../context/useMobileContext"
 import CarrotDownIcon from "../../../assets/icons/CarrotDownIcon"
 
 const SortMenu = () => {
@@ -15,8 +14,9 @@ const SortMenu = () => {
   const { genres } = useGenres()
   const animateRef = useRef<boolean>()
 
-  const selected = sort[0]
+  const selected = sort && sort[0]
   animateRef.current = open
+  let optionCards
 
   // Handles user selecting a new sort
   const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -64,32 +64,34 @@ const SortMenu = () => {
   )
 
   // Other sort options not selected
-  const optionCards = Object.values(sortOptions).map(option => {
-    if (option === selected) return null
-    return (
-      <Box
-        key={option}
-        tabIndex={0}
-        className='optionCard'
-        onClick={(e) => handleSelection(e)}
-        fontWeight='400'
-        _hover={{ 
-          background: '#3b454f',
-          fontWeight: '600'
-        }}
-        cursor='pointer'
-        w='inherit'
-        p='0.4rem 1.4rem'
-        textAlign='left'
-        border='none'
-        _focusVisible={{
-          outline: '4px solid #3D668F'
-        }}
-      > 
-        {option}
-      </Box>
-    )
-  })
+  if (sortOptions) {
+    optionCards = Object.values(sortOptions).map(option => {
+      if (option === selected) return null
+      return (
+        <Box
+          key={option}
+          tabIndex={0}
+          className='optionCard'
+          onClick={(e) => handleSelection(e)}
+          fontWeight='400'
+          _hover={{ 
+            background: '#3b454f',
+            fontWeight: '600'
+          }}
+          cursor='pointer'
+          w='inherit'
+          p='0.4rem 1.4rem'
+          textAlign='left'
+          border='none'
+          _focusVisible={{
+            outline: '4px solid #3D668F'
+          }}
+        > 
+          {option}
+        </Box>
+      )
+    })
+  }
 
   // Close sort menu whenever user clicks outside of the sort menu
   useEffect(() => {
@@ -103,6 +105,7 @@ const SortMenu = () => {
       w='9rem'
       border='none'
       borderRadius='0.4rem'
+      role='sortmenu'
     >
       <Select display='none'>
         <option>Discount</option>
