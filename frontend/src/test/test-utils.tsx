@@ -1,15 +1,15 @@
 import { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { SearchProvider } from '../context/searchContext'
 
-const AllTheProviders = ({ children }: {children: React.ReactNode}) => {
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-    <BrowserRouter>
+    <MemoryRouter>
       <SearchProvider>
         {children}
       </SearchProvider>
-    </BrowserRouter>
+    </MemoryRouter>
   )
 }
 
