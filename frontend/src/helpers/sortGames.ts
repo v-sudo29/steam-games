@@ -1,13 +1,12 @@
 import { GameObject } from "../interface/GameObject"
 
-const sortOptions = {
-  DISCOUNT: 'Discount',
-  PRICE: 'Price',
-  RATING: 'Rating',
-  FEEDBACK: 'Feedback'
-}
-
-export default function sortGames( gamesArr: GameObject[], sortType: string ): GameObject[] | null {
+export default function sortGames(gamesArr: GameObject[], sortType: string): GameObject[] | null {
+  const sortOptions = {
+    DISCOUNT: 'Discount',
+    PRICE: 'Price',
+    RATING: 'Rating',
+    FEEDBACK: 'Feedback'
+  }
   
   // If sortType is DISCOUNT, sort games by DISCOUNT - lowest to highest
   if (sortType === sortOptions.DISCOUNT) {
