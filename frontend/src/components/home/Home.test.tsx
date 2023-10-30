@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import user from '@testing-library/user-event'
 import { BrowserRouter } from 'react-router-dom';
 import matchers from '@testing-library/jest-dom'
@@ -31,6 +31,10 @@ describe('Home', () => {
     await user.hover(viewDealsButtonElement)
     const styles = getComputedStyle(viewDealsButtonElement)
     expect(styles.backgroundColor).toBe('rgb(99, 39, 195)')
+  })
+
+  test('click handlers are called', () => {
+    const handleClick = vi.fn()
   })
 })
 
