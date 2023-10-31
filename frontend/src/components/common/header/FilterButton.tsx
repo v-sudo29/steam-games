@@ -7,12 +7,10 @@ import { useEffect } from "react"
 import FilterIcon from "../../../assets/icons/FilterIcon"
 import ExitIcon from "../../../assets/icons/ExitIcon"
 
-const FilterButton = () => {
+const FilterButton = ({ handleFilterBtnClick } : { handleFilterBtnClick: () => void }) => {
   const { expanded, setExpanded } = useFilter()
   const { genres } = useGenres()
   const isMobile = useMobile()
-  
-  const handleClick = (): void => setExpanded(prev => !prev)
 
   // Get expanded state from local storage if exists
   useEffect(() => {
@@ -29,7 +27,7 @@ const FilterButton = () => {
       {/* MOBILE */}
       {isMobile && 
         <Button
-          onClick={handleClick}
+          onClick={handleFilterBtnClick}
           aria-expanded={expanded}
           aria-controls='filters'
           mr={isSafari ? '2rem' : 0}
@@ -48,7 +46,7 @@ const FilterButton = () => {
       {/* DESKTOP */}
       {!isMobile && 
         <Button
-          onClick={handleClick}
+          onClick={handleFilterBtnClick}
           aria-expanded={expanded}
           aria-controls='filters'
           mr={isSafari ? '2rem' : '-1rem'}

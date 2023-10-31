@@ -16,9 +16,11 @@ import CompleteOverlay from "../components/common/overlay/CompleteOverlay"
 import SeeThroughOverlay from "../components/common/overlay/SeeThroughOverlay"
 
 export default function ContentLayout() {
-  const { expanded } = useFilter()
+  const { expanded, setExpanded } = useFilter()
   const { searchExpanded, setSearchExpanded } = useSearch()
   const isMobile = useMobile()
+
+  const handleFilterBtnClick = (): void => setExpanded(prev => !prev)
 
   return (
     <VStack align='start' flex='auto'>
@@ -60,7 +62,7 @@ export default function ContentLayout() {
             </Box>
           </HStack>
           <HStack p='0rem 1rem' mb='1rem'>
-            <FilterButton/>
+            <FilterButton handleFilterBtnClick={handleFilterBtnClick}/>
             <SortMenu/>
           </HStack>
           <HStack>
@@ -91,7 +93,7 @@ export default function ContentLayout() {
       {!isMobile && (
         <>
           <HStack gap='2rem' w='100%'>
-            <FilterButton/>
+            <FilterButton handleFilterBtnClick={handleFilterBtnClick}/>
             <TwoTabs/>
             <SortMenu/>
           </HStack>
