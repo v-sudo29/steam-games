@@ -35,7 +35,7 @@ const GenreTags = () => {
     }
   }, [genres])
 
-  // Handle checkboxes reset
+  // Handles resetting checkboxes
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
     formElement.reset()
@@ -50,8 +50,34 @@ const GenreTags = () => {
     if (!query && genres.length > 0 && sort.length > 0) setSearchParams({ sort: sort })
   }
 
+  // Handle genre tag click
+  const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    e.preventDefault()
+
+    // Get filters container and checkboxes
+    const filtersContainer = document.getElementById('filters') as HTMLFormElement
+    const labelElements = filtersContainer.querySelectorAll('label')
+    const selectedFilters: string[] = []
+
+    // Push active filters to array
+    labelElements.forEach(label => {
+      const filterName = label.innerText
+      const inputChecked = (label.querySelector('input') as HTMLInputElement).checked
+      if (inputChecked) selectedFilters.push(filterName)
+    })
+
+    // Set genres state to selectedFilters array
+    setGenres(selectedFilters)
+  }
+
   // SET GENRE FILTER TAGS
-  genreTags = genreFilters.map(genre => <CustomCheckbox key={`${genre}-genre-tag`} genre={genre}/>)
+  genreTags = genreFilters.map(genre => (
+    <CustomCheckbox
+      key={`${genre}-genre-tag`}
+      genre={genre}
+      handleGenreClick={handleGenreClick}
+    />
+  ))
 
   return (
     <>
