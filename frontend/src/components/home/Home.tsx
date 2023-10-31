@@ -1,13 +1,16 @@
-import { Button, Heading, HStack, Text, VStack } from "@chakra-ui/react"
-import { FaGithub } from 'react-icons/fa'
-import { BsArrowRightShort } from 'react-icons/bs'
+import { Heading, HStack, Text, VStack } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
 import { useMobile } from "../../context/useMobileContext"
+import GithubButton from "./GithubButton"
+import ViewDealsButton from "./ViewDealsButton"
 
 const Home = () => {
   const navigate = useNavigate()
   const isMobile = useMobile()
+
+  const openGithubTab = () => window.open('https://github.com/v-sudo29/steam-games','_blank')
+  const navigateToDeals = () => navigate('/all-games')
 
   return (
     <VStack textAlign='center' mt='8rem' gap='2rem'>
@@ -29,31 +32,9 @@ const Home = () => {
           Tired of missing out on Steam sales? Dideals does the hard work for you by collecting amazing discounted games in one spot.
         </Text>
       )}
-
       <HStack gap='1rem' flexWrap='wrap' justifyContent='center'>
-        <Button
-          onClick={() => window.open('https://github.com/v-sudo29/steam-games','_blank')}
-          border='none'
-          leftIcon={<FaGithub size={22}/>}
-          p='1.6rem 1.6rem'
-          fontSize='1.1rem'
-          _hover={{ backgroundColor: 'whiteAlpha.700'}}
-        >
-          GitHub
-        </Button>
-        <Button
-          onClick={() => navigate('/all-games')}
-          border='none'
-          mr={isSafari ? '1rem' : 0}
-          rightIcon={<BsArrowRightShort style={{ marginLeft: '-0.3rem'}} size={30}/>}
-          fontSize='1.1rem'
-          p='1.6rem 1.6rem'
-          bg='#8439FF'
-          color='#F5F5F5'
-          _hover={{ backgroundColor: '#6327c3'}}
-        >
-          View Deals
-        </Button>
+        <GithubButton openGithubTab={openGithubTab}/>
+        <ViewDealsButton navigateToDeals={navigateToDeals}/>
       </HStack>
     </VStack>
   )
