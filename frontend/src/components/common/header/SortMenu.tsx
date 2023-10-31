@@ -1,4 +1,4 @@
-import { Box, Button, Select, VStack } from "@chakra-ui/react"
+import { Box, Button, VStack } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
 import { useSort } from "../../../context/sortContext"
 import { useSearchParams } from "react-router-dom"
@@ -17,6 +17,7 @@ const SortMenu = () => {
   const selected = sort && sort[0]
   animateRef.current = open
   let optionCards
+  let selectedCard
 
   // Handles user selecting a new sort
   const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -43,25 +44,27 @@ const SortMenu = () => {
   }
 
   // Current selected sort option
-  const selectedCard = (
-    <Button
-      tabIndex={0}
-      id='selectedCard'
-      pos='relative'
-      w='inherit'
-      onClick={() => setOpen(prev => !prev)}
-      cursor='pointer'
-      rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
-      fontWeight='600'
-      border='none'
-      borderRadius='0.4rem'
-      color='#F5F5F5'
-      bg='#2F3740'
-      _hover={{ backgroundColor: '#3b454f' }}
-    >
-      {selected}
-    </Button>
-  )
+  if (selected && selected.length > 1) {
+    selectedCard = (
+      <Button
+        tabIndex={0}
+        id='selectedCard'
+        pos='relative'
+        w='inherit'
+        onClick={() => setOpen(prev => !prev)}
+        cursor='pointer'
+        rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
+        fontWeight='600'
+        border='none'
+        borderRadius='0.4rem'
+        color='#F5F5F5'
+        bg='#2F3740'
+        _hover={{ backgroundColor: '#3b454f' }}
+      >
+        {selected}
+      </Button>
+    )
+  }
 
   // Other sort options not selected
   if (sortOptions) {
@@ -105,15 +108,8 @@ const SortMenu = () => {
       w='9rem'
       border='none'
       borderRadius='0.4rem'
-      role='sortmenu'
     >
-      <Select display='none'>
-        <option>Discount</option>
-        <option>Rating</option>
-        <option>Feedback</option>
-        <option>Price</option>
-      </Select>
-        {selectedCard}
+      {selectedCard}
       <VStack
         display={open ? 'flex' : 'none'}
         pos='absolute'

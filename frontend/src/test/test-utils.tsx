@@ -2,12 +2,18 @@ import { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { SearchProvider } from '../context/searchContext'
+import { GenresProvider } from '../context/genresContext'
+import { SortProvider } from '../context/sortContext'
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <MemoryRouter>
       <SearchProvider>
-        {children}
+        <GenresProvider>
+          <SortProvider>
+            {children}
+          </SortProvider>
+        </GenresProvider>
       </SearchProvider>
     </MemoryRouter>
   )
