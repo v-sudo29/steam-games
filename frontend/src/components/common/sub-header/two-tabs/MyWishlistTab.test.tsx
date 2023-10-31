@@ -51,8 +51,7 @@ describe('MyWishlistTab component', () => {
         />
       </Tabs>
     )
-    const wishlistTab = await screen.getByRole('tab', { name: /my wishlist/i })
-    screen.debug()
+    const wishlistTab = screen.getByRole('tab', { name: /my wishlist/i })
     expect(wishlistTab).toHaveAttribute('aria-selected', 'false')
   })
 })
