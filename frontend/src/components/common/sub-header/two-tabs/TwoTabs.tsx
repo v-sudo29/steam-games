@@ -7,6 +7,7 @@ import { useTabs } from "../../../../context/tabsContext"
 import { useNavigate } from "react-router-dom"
 import { useDefaultData } from "../../../../context/defaultDataContext"
 import { AllGamesTab } from "./AllGamesTab"
+import MyWishlistTab from "./MyWishlistTab"
 
 const TwoTabs = () => {
   const { gamesTabActive, wishlistTabActive, setGamesTabActive, setWishlistTabActive } = useTabs()
@@ -30,27 +31,19 @@ const TwoTabs = () => {
   }
 
   return (
-    <>
-      <Tabs index={location.pathname.includes('all-games') ? 0 : 1} variant='unstyled'>
-        <TabList>
-          <AllGamesTab
-            handleTabsChange={handleTabsChange}
-            gamesTabActive={gamesTabActive}
-          />
-          <Tab
-            onClick={(e) => handleTabsChange(e)}
-            border='none'
-            _selected={{ color: '#F5F5F5' }}
-            _hover={!wishlistTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
-            color='#5C5F63'
-            fontWeight='700'
-            fontSize='1.3rem'
-          >
-            My Wishlist {wishlistData && `(${wishlistData.length})`}
-          </Tab>
-        </TabList>
-      </Tabs>
-    </>
+    <Tabs index={location.pathname.includes('all-games') ? 0 : 1} variant='unstyled'>
+      <TabList>
+        <AllGamesTab
+          handleTabsChange={handleTabsChange}
+          gamesTabActive={gamesTabActive}
+        />
+        <MyWishlistTab
+          handleTabsChange={handleTabsChange}
+          wishlistTabActive={wishlistTabActive}
+          wishlistData={wishlistData}
+        />
+      </TabList>
+    </Tabs>
   )
 }
 

@@ -18,7 +18,7 @@ const MyWishlistTab = ({
       border='none'
       _selected={{ color: '#F5F5F5' }}
       _hover={!wishlistTabActive ? { color: 'whiteAlpha.700' } : { color: '#F5F5F5' }}
-      color='#5C5F63'
+      color={!wishlistTabActive ? '#5C5F63' : '#F5F5F5'}
       fontWeight='700'
       fontSize='1.3rem'
     >

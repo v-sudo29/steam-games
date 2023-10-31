@@ -42,7 +42,7 @@ describe('MyWishlistTab component', () => {
       return <Tab></Tab>
     }
     render(
-      <Tabs defaultIndex={0}>
+      <Tabs index={0}>
         <SampleTab/>
         <MyWishlistTab
           handleTabsChange={mockFn}
