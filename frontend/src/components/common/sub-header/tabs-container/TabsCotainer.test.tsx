@@ -1,5 +1,5 @@
 import { render, screen } from '../../../../test/test-utils'
-import TwoTabs from './TwoTabs'
+import TwoTabs from './TabsContainer'
 
 describe('TwoTabs component', () => {
   test('renders both tabs', () => {
