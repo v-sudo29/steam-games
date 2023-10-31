@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor } from '../../../test/test-utils'
+import { render, screen, act } from '../../../../test/test-utils'
 import user from '@testing-library/user-event'
 import matchers from '@testing-library/jest-dom'
 import SortMenu from './SortMenu'

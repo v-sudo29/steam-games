@@ -4,17 +4,23 @@ import { MemoryRouter } from 'react-router-dom'
 import { SearchProvider } from '../context/searchContext'
 import { GenresProvider } from '../context/genresContext'
 import { SortProvider } from '../context/sortContext'
+import { TabsProvider } from '../context/tabsContext'
+import { DefaultDataProvider } from '../context/defaultDataContext'
 
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+const AllTheProviders = ({ children } : { children: React.ReactNode }) => {
   return (
     <MemoryRouter>
-      <SearchProvider>
-        <GenresProvider>
-          <SortProvider>
-            {children}
-          </SortProvider>
-        </GenresProvider>
-      </SearchProvider>
+      <DefaultDataProvider>
+        <TabsProvider>
+          <SearchProvider>
+            <GenresProvider>
+              <SortProvider>
+                {children}
+              </SortProvider>
+            </GenresProvider>
+          </SearchProvider>
+        </TabsProvider>
+      </DefaultDataProvider>
     </MemoryRouter>
   )
 }
