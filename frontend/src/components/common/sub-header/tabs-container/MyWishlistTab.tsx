@@ -7,7 +7,7 @@ interface MyWishlistTabProps {
   wishlistData: GameObject[] | null
 }
 
-const MyWishlistTab = ({
+export const MyWishlistTab = ({
   handleTabsChange,
   wishlistTabActive,
   wishlistData
@@ -26,5 +26,3 @@ const MyWishlistTab = ({
     </Tab>
   )
 }
-
-export default MyWishlistTab
