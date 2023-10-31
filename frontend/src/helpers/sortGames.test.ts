@@ -1,80 +1,40 @@
 import { GameObject } from "../interface/GameObject";
 import sortGames from "./sortGames";
 
+const defaultGameObject = {
+  appId: '',
+  currentPrice: '',
+  discount: '',
+  genres: [''],
+  historicalLow: false,
+  id: '',
+  imgUrl: '',
+  name: '',
+  originalPrice: '',
+  rating: '',
+  reviewsType: '',
+  saleEnds: '',
+  url: ''
+}
+
 const randomPrices = ['$4.00', '$1.00', '$9.00']
 const gamesArrayPrice = randomPrices.map(price => (
-  {
-    appId: '',
-    currentPrice: price,
-    discount: '',
-    genres: [''],
-    historicalLow: false,
-    id: '',
-    imgUrl: '',
-    name: '',
-    originalPrice: '',
-    rating: '',
-    reviewsType: '',
-    saleEnds: '',
-    url: ''
-  }
+  { ...defaultGameObject, currentPrice: price }
 ))
 
 const randomDiscounts = ['-50%', '-20%', '-99%']
 const gamesArrayDiscount = randomDiscounts.map(discount => (
-  {
-    appId: '',
-    currentPrice: '',
-    discount: discount,
-    genres: [''],
-    historicalLow: false,
-    id: '',
-    imgUrl: '',
-    name: '',
-    originalPrice: '',
-    rating: '',
-    reviewsType: '',
-    saleEnds: '',
-    url: ''
-  }
+  { ...defaultGameObject, discount: discount }
 ))
 
 const randomRatings = ['50%', '2%', '80%']
 const gamesArrayRating = randomRatings.map(rating => (
-  {
-    appId: '',
-    currentPrice: '',
-    discount: '',
-    genres: [''],
-    historicalLow: false,
-    id: '',
-    imgUrl: '',
-    name: '',
-    originalPrice: '',
-    rating: rating,
-    reviewsType: '',
-    saleEnds: '',
-    url: ''
-  }
+  { ...defaultGameObject, rating: rating}
 ))
 
 const randomFeedback = ['Mostly Positive', 'Overwhelmingly Positive', 'Very Positive']
 const gamesArrayFeedback = randomFeedback.map(feedback => (
-  {
-    appId: '',
-    currentPrice: '',
-    discount: '',
-    genres: [''],
-    historicalLow: false,
-    id: '',
-    imgUrl: '',
-    name: '',
-    originalPrice: '',
-    rating: '',
-    reviewsType: feedback,
-    saleEnds: '',
-    url: ''
-  }
+  { ...defaultGameObject, reviewsType: feedback}
 ))
 
 describe('sortGames helper function', () => {
