@@ -1,10 +1,10 @@
 import { Box, Button, VStack } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { useSort } from "../../../context/sortContext"
+import { useSort } from "../../../../context/sortContext"
 import { useSearchParams } from "react-router-dom"
-import { useSearch } from "../../../context/searchContext"
-import { useGenres } from "../../../context/genresContext"
-import CarrotDownIcon from "../../../assets/icons/CarrotDownIcon"
+import { useSearch } from "../../../../context/searchContext"
+import { useGenres } from "../../../../context/genresContext"
+import CarrotDownIcon from "../../../../assets/icons/CarrotDownIcon"
 
 const SortMenu = () => {
   const [open, setOpen] = useState<boolean>(false)

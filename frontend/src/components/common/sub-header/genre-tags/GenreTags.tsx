@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
-import { useGenres } from '../../../context/genresContext'
-import { useFilter } from '../../../context/filterContext'
+import { useGenres } from '../../../../context/genresContext'
+import { useFilter } from '../../../../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form, useNavigate, useSearchParams  } from 'react-router-dom'
-import { useSearch } from '../../../context/searchContext'
-import { useSort } from '../../../context/sortContext'
-import { useMobile } from '../../../context/useMobileContext'
-import CustomCheckbox from './CustomCheckbox'
+import { useSearch } from '../../../../context/searchContext'
+import { useSort } from '../../../../context/sortContext'
+import { useMobile } from '../../../../context/useMobileContext'
+import CustomCheckbox from '../custom-checkbox/CustomCheckbox'
 
 const GenreTags = () => {
   const { expanded } = useFilter()

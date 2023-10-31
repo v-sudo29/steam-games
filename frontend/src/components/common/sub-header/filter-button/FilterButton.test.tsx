@@ -1,4 +1,4 @@
-import { render, screen } from "../../../test/test-utils";
+import { render, screen } from "../../../../test/test-utils";
 import { vi } from "vitest";
 import FilterButton from "./FilterButton";
 import matchers from '@testing-library/jest-dom'
