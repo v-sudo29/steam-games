@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react"
-import CarrotDownIcon from "../../../../assets/icons/CarrotDownIcon"
+import CarrotDownIcon from "../../../../../assets/icons/CarrotDownIcon"
 
 interface SelectedOptionProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>

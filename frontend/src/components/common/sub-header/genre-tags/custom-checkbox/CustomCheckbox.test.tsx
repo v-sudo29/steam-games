@@ -1,4 +1,4 @@
-import { render, screen, act } from '../../../../test/test-utils'
+import { render, screen, act } from '../../../../../test/test-utils'
 import { vi } from 'vitest'
 import CustomCheckbox from './CustomCheckbox'
 import matchers from '@testing-library/jest-dom'

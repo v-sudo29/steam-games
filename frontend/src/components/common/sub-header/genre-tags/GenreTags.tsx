@@ -7,7 +7,7 @@ import { Form, useNavigate, useSearchParams  } from 'react-router-dom'
 import { useSearch } from '../../../../context/searchContext'
 import { useSort } from '../../../../context/sortContext'
 import { useMobile } from '../../../../context/useMobileContext'
-import CustomCheckbox from '../custom-checkbox/CustomCheckbox'
+import CustomCheckbox from './custom-checkbox/CustomCheckbox'
 
 const GenreTags = () => {
   const { expanded } = useFilter()

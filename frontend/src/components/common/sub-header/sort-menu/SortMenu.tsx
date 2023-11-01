@@ -4,8 +4,8 @@ import { useSort } from "../../../../context/sortContext"
 import { useSearchParams } from "react-router-dom"
 import { useSearch } from "../../../../context/searchContext"
 import { useGenres } from "../../../../context/genresContext"
-import SelectedOption from "./SelectedOption"
-import Option from "./Option"
+import SelectedOption from "./selected-option/SelectedOption"
+import Option from "./option/Option"
 
 const SortMenu = () => {
   const [open, setOpen] = useState<boolean>(false)

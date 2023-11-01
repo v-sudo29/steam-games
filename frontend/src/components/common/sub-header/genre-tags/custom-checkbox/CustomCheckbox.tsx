@@ -1,5 +1,5 @@
 import { Checkbox } from "@chakra-ui/react";
-import CheckboxIcon from "../../../../assets/icons/CheckboxIcon";
+import CheckboxIcon from "../../../../../assets/icons/CheckboxIcon";
 
 interface CustomCheckboxProps {
   genre: string

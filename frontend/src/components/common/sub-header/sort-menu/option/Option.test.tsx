@@ -1,4 +1,4 @@
-import { render, screen } from "../../../../test/test-utils";
+import { render, screen } from "../../../../../test/test-utils";
 import { vi } from "vitest";
 import user from '@testing-library/user-event'
 import Option from "./Option";

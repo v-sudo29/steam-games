@@ -1,4 +1,4 @@
-import { render, screen } from "../../test/test-utils";
+import { render, screen } from "../../../test/test-utils";
 import GithubButton from "./GithubButton";
 import user from '@testing-library/user-event'
 import matchers from '@testing-library/jest-dom'

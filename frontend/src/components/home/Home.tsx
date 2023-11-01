@@ -2,8 +2,8 @@ import { Heading, HStack, Text, VStack } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 import { isSafari } from "react-device-detect"
 import { useMobile } from "../../context/useMobileContext"
-import GithubButton from "./GithubButton"
-import ViewDealsButton from "./ViewDealsButton"
+import GithubButton from "./github-button/GithubButton"
+import ViewDealsButton from "./view-deals-button/ViewDealsButton"
 
 const Home = () => {
   const navigate = useNavigate()
