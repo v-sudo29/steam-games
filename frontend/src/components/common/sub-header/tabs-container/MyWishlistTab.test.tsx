@@ -2,7 +2,7 @@ import { render, screen } from "../../../../test/test-utils";
 import { vi } from "vitest";
 import { Tab, Tabs } from "@chakra-ui/react";
 import { GameObject } from "../../../../interface/GameObject";
-import { MyWishlistTab } from "./MyWishlistTab";
+import MyWishlistTab from "./MyWishlistTab";
 import user from '@testing-library/user-event'
 
 describe('MyWishlistTab component', () => {
