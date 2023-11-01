@@ -2,7 +2,6 @@ import { render, screen } from "../../../test/test-utils";
 import ViewDealsButton from "./ViewDealsButton";
 import user from '@testing-library/user-event'
 import matchers from '@testing-library/jest-dom'
-import { vi } from 'vitest'
 
 expect.extend(matchers)
 
@@ -22,5 +21,15 @@ describe('ViewDealsButton component', () => {
 
     await user.click(buttonElement)
     expect(mockFn).toHaveBeenCalledTimes(1)
+  })
+
+  test('button hover color is visible on hover', async () => {
+    user.setup()
+    render(<ViewDealsButton navigateToDeals={mockFn}/>)
+    const viewDealsButtonElement = screen.getByRole('button', { name: /view deals/i })
+    
+    await user.hover(viewDealsButtonElement)
+    const styles = getComputedStyle(viewDealsButtonElement)
+    expect(styles.backgroundColor).toBe('rgb(99, 39, 195)')
   })
 })
