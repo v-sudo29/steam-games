@@ -1,11 +1,11 @@
-import { Box, Button, Select, VStack } from "@chakra-ui/react"
+import { Box, VStack } from "@chakra-ui/react"
 import { useEffect, useRef, useState } from "react"
-import { useSort } from "../../../context/sortContext"
+import { useSort } from "../../../../context/sortContext"
 import { useSearchParams } from "react-router-dom"
-import { useSearch } from "../../../context/searchContext"
-import { useGenres } from "../../../context/genresContext"
-import { useMobile } from "../../../context/useMobileContext"
-import CarrotDownIcon from "../../../assets/icons/CarrotDownIcon"
+import { useSearch } from "../../../../context/searchContext"
+import { useGenres } from "../../../../context/genresContext"
+import SelectedOption from "./selected-option/SelectedOption"
+import Option from "./option/Option"
 
 const SortMenu = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -15,8 +15,10 @@ const SortMenu = () => {
   const { genres } = useGenres()
   const animateRef = useRef<boolean>()
 
-  const selected = sort[0]
+  const selected = sort && sort[0]
   animateRef.current = open
+  let optionCards
+  let selectedCard
 
   // Handles user selecting a new sort
   const handleSelection = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -35,6 +37,9 @@ const SortMenu = () => {
     setOpen(false)
   }
 
+  // Handle opening sort menu
+  const openSelectMenu = (): void => setOpen(true)
+
   // Handle closing sort menu
   const closeSelectMenu = (e: MouseEvent): void => {
     const element = e.target as HTMLElement
@@ -43,53 +48,30 @@ const SortMenu = () => {
   }
 
   // Current selected sort option
-  const selectedCard = (
-    <Button
-      tabIndex={0}
-      id='selectedCard'
-      pos='relative'
-      w='inherit'
-      onClick={() => setOpen(prev => !prev)}
-      cursor='pointer'
-      rightIcon={<CarrotDownIcon animate={open} setAnimate={setOpen}/>}
-      fontWeight='600'
-      border='none'
-      borderRadius='0.4rem'
-      color='#F5F5F5'
-      bg='#2F3740'
-      _hover={{ backgroundColor: '#3b454f' }}
-    >
-      {selected}
-    </Button>
-  )
+  if (selected && selected.length > 1) {
+    selectedCard = (
+      <SelectedOption
+        open={open}
+        openSelectMenu={openSelectMenu}
+        setOpen={setOpen}
+        selected={selected}
+      />
+    )
+  }
 
   // Other sort options not selected
-  const optionCards = Object.values(sortOptions).map(option => {
-    if (option === selected) return null
-    return (
-      <Box
-        key={option}
-        tabIndex={0}
-        className='optionCard'
-        onClick={(e) => handleSelection(e)}
-        fontWeight='400'
-        _hover={{ 
-          background: '#3b454f',
-          fontWeight: '600'
-        }}
-        cursor='pointer'
-        w='inherit'
-        p='0.4rem 1.4rem'
-        textAlign='left'
-        border='none'
-        _focusVisible={{
-          outline: '4px solid #3D668F'
-        }}
-      > 
-        {option}
-      </Box>
-    )
-  })
+  if (sortOptions) {
+    optionCards = Object.values(sortOptions).map(option => {
+      if (option === selected) return null
+      return (
+        <Option
+          key={`${option}-sort-option`}
+          option={option}
+          handleSelection={handleSelection}
+        />
+      )
+    })
+  }
 
   // Close sort menu whenever user clicks outside of the sort menu
   useEffect(() => {
@@ -104,13 +86,7 @@ const SortMenu = () => {
       border='none'
       borderRadius='0.4rem'
     >
-      <Select display='none'>
-        <option>Discount</option>
-        <option>Rating</option>
-        <option>Feedback</option>
-        <option>Price</option>
-      </Select>
-        {selectedCard}
+      {selectedCard}
       <VStack
         display={open ? 'flex' : 'none'}
         pos='absolute'

@@ -3,22 +3,24 @@ import { useFilter } from "../context/filterContext"
 import { useMobile } from "../context/useMobileContext"
 import { useSearch } from "../context/searchContext"
 import { Outlet } from "react-router-dom"
-import FilterButton from "../components/common/header/FilterButton"
-import GenreTags from "../components/common/header/GenreTags"
+import FilterButton from "../components/common/sub-header/filter-button/FilterButton"
+import GenreTags from "../components/common/sub-header/genre-tags/GenreTags"
 import Pagination from "../components/common/pagination/Pagination"
 import LogoAndName from "../assets/logo/LogoAndName"
 import SearchIcon from "../assets/icons/SearchIcon"
-import SortMenu from "../components/common/header/SortMenu"
-import TwoTabs from "../components/common/header/TwoTabs"
+import SortMenu from "../components/common/sub-header/sort-menu/SortMenu"
+import TwoTabs from "../components/common/sub-header/tabs-container/TabsContainer"
 import SearchBar from "../components/common/header/SearchBar"
 import CarrotLeftIcon from "../assets/icons/CarrotLeftIcon"
 import CompleteOverlay from "../components/common/overlay/CompleteOverlay"
 import SeeThroughOverlay from "../components/common/overlay/SeeThroughOverlay"
 
 export default function ContentLayout() {
-  const { expanded } = useFilter()
+  const { expanded, setExpanded } = useFilter()
   const { searchExpanded, setSearchExpanded } = useSearch()
   const isMobile = useMobile()
+
+  const handleFilterBtnClick = (): void => setExpanded(prev => !prev)
 
   return (
     <VStack align='start' flex='auto'>
@@ -60,7 +62,7 @@ export default function ContentLayout() {
             </Box>
           </HStack>
           <HStack p='0rem 1rem' mb='1rem'>
-            <FilterButton/>
+            <FilterButton handleFilterBtnClick={handleFilterBtnClick}/>
             <SortMenu/>
           </HStack>
           <HStack>
@@ -91,7 +93,7 @@ export default function ContentLayout() {
       {!isMobile && (
         <>
           <HStack gap='2rem' w='100%'>
-            <FilterButton/>
+            <FilterButton handleFilterBtnClick={handleFilterBtnClick}/>
             <TwoTabs/>
             <SortMenu/>
           </HStack>

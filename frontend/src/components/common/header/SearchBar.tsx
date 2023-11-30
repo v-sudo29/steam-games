@@ -30,7 +30,7 @@ const SearchBar = () => {
 
   // Handle search when 'Enter' key is pressed
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter' && searchRef.current && searchRef.current.value !== '') {
+    if (e.key === 'Enter' && searchRef && searchRef.current && searchRef.current.value !== '') {
         const searchParam = searchRef.current.value
         axios.get(`https://steam-games-server.onrender.com/search?q=${searchParam}`)
           .then(res => {
@@ -52,7 +52,7 @@ const SearchBar = () => {
           .catch(err => console.error(err))
         return
     }
-    if (e.key === 'Enter' && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
+    if (e.key === 'Enter' && searchRef && searchRef.current && searchRef.current.value === '') setEmptyError(true)      
   }
 
   // Handle clear search
@@ -105,17 +105,21 @@ const SearchBar = () => {
         pl='3rem'
         onKeyDown={(e) => handleEnter(e)}
         onChange={() => {
-          if (searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
+          if (searchRef && searchRef.current && searchRef.current.value !== '' && emptyError) setEmptyError(false)
         }}
       />
       {searchData && (
         <InputRightElement
+          pos='relative'
+          right='6.8rem'
           display='flex'
           justifyContent='end'
-          w='inherit'
+          w='max-content'
           pointerEvents='none'
         >
           <HStack
+            pos='absolute'
+            left='0rem'
             bg='#8439FF'
             borderRadius='10rem'
             p='0.25rem 1rem'
@@ -123,7 +127,7 @@ const SearchBar = () => {
             pointerEvents='visible'
           >
             <Text fontWeight='700'>{searchData && query}</Text>
-            <Box onClick={handleClearSearch} cursor='pointer'><ExitIcon size={16}/></Box>
+            <Box onClick={handleClearSearch} cursor='pointer' data-testid='tag-exit-icon'><ExitIcon size={16}/></Box>
           </HStack>
         </InputRightElement>
       )}

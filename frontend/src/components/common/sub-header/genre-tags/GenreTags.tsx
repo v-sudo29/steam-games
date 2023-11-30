@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { VStack, Text, HStack, CheckboxGroup } from '@chakra-ui/react'
-import { useGenres } from '../../../context/genresContext'
-import { useFilter } from '../../../context/filterContext'
+import { useGenres } from '../../../../context/genresContext'
+import { useFilter } from '../../../../context/filterContext'
 import { isSafari } from 'react-device-detect'
 import { Form, useNavigate, useSearchParams  } from 'react-router-dom'
-import { useSearch } from '../../../context/searchContext'
-import { useSort } from '../../../context/sortContext'
-import { useMobile } from '../../../context/useMobileContext'
-import CustomCheckbox from './CustomCheckbox'
+import { useSearch } from '../../../../context/searchContext'
+import { useSort } from '../../../../context/sortContext'
+import { useMobile } from '../../../../context/useMobileContext'
+import CustomCheckbox from './custom-checkbox/CustomCheckbox'
 
 const GenreTags = () => {
   const { expanded } = useFilter()
@@ -35,7 +35,7 @@ const GenreTags = () => {
     }
   }, [genres])
 
-  // Handle checkboxes reset
+  // Handles resetting checkboxes
   const handleReset = (): void => {
     const formElement = document.querySelector('.form') as HTMLFormElement
     formElement.reset()
@@ -50,8 +50,34 @@ const GenreTags = () => {
     if (!query && genres.length > 0 && sort.length > 0) setSearchParams({ sort: sort })
   }
 
+  // Handle genre tag click
+  const handleGenreClick = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    e.preventDefault()
+
+    // Get filters container and checkboxes
+    const filtersContainer = document.getElementById('filters') as HTMLFormElement
+    const labelElements = filtersContainer.querySelectorAll('label')
+    const selectedFilters: string[] = []
+
+    // Push active filters to array
+    labelElements.forEach(label => {
+      const filterName = label.innerText
+      const inputChecked = (label.querySelector('input') as HTMLInputElement).checked
+      if (inputChecked) selectedFilters.push(filterName)
+    })
+
+    // Set genres state to selectedFilters array
+    setGenres(selectedFilters)
+  }
+
   // SET GENRE FILTER TAGS
-  genreTags = genreFilters.map(genre => <CustomCheckbox key={`${genre}-genre-tag`} genre={genre}/>)
+  genreTags = genreFilters.map(genre => (
+    <CustomCheckbox
+      key={`${genre}-genre-tag`}
+      genre={genre}
+      handleGenreClick={handleGenreClick}
+    />
+  ))
 
   return (
     <>
