@@ -10,17 +10,7 @@ import { DefaultDataProvider } from '../context/defaultDataContext'
 const AllTheProviders = ({ children } : { children: React.ReactNode }) => {
   return (
     <MemoryRouter>
-      <DefaultDataProvider>
-        <TabsProvider>
-          <SearchProvider>
-            <GenresProvider>
-              <SortProvider>
-                {children}
-              </SortProvider>
-            </GenresProvider>
-          </SearchProvider>
-        </TabsProvider>
-      </DefaultDataProvider>
+      {children}
     </MemoryRouter>
   )
 }

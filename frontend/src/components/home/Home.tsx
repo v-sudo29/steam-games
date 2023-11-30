@@ -20,7 +20,7 @@ const Home = () => {
         <Text color='#8439FF' as="span"> on sale</Text>
       </Heading>
 
-      {/* DESKTOP - include hero caption*/}
+      {/* DESKTOP - include hero caption */}
       {!isMobile && (
         <Text
           mb={isSafari ? '2rem' : 0}

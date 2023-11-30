@@ -2,7 +2,7 @@ import { Box, Stack, Text } from "@chakra-ui/react"
 import { useDefaultData } from "../../../context/defaultDataContext"
 import { usePage } from "../../../context/pageContext"
 import { useLocation } from "react-router-dom"
-import PageNumber from "./PageNumber"
+import PageNumber from "./page-number/PageNumber"
 
 const Pagination = () => {
   const { currentResults, wishlistData } = useDefaultData()
@@ -264,7 +264,7 @@ const Pagination = () => {
         </>
       }
 
-      {/* Render carrots if pathname is WISHLIST */}
+      {/* Render increment and decrement carrots if pathname is WISHLIST */}
       {location.pathname.includes('wishlist') &&
       <>
         {totalPages > 1 && 

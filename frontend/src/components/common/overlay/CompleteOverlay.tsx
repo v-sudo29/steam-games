@@ -9,7 +9,7 @@ const CompleteOverlay = () => {
       zIndex={10}
       backgroundColor='#14191F'
     >
-  </Box>
+    </Box>
   )
 }
 

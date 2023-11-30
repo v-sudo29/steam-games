@@ -8,9 +8,11 @@ describe('Option component', () => {
   const mockFn = vi.fn()
 
   test('renders', () => {
-    render(<Option
-      option={mockOption}
-      handleSelection={mockFn}/>
+    render(
+      <Option
+        option={mockOption}
+        handleSelection={mockFn}
+      />
     )
     const optionElement = screen.getByRole('option', { name: 'Discount' })
     expect(optionElement).toBeVisible()
@@ -18,9 +20,11 @@ describe('Option component', () => {
 
   test('handles selection on user click', async () => {
     user.setup()
-    render(<Option
-      option={mockOption}
-      handleSelection={mockFn}/>
+    render(
+      <Option
+        option={mockOption}
+        handleSelection={mockFn}
+      />
     )
     const optionElement = screen.getByRole('option', { name: 'Discount' })
     await user.click(optionElement)

@@ -14,8 +14,8 @@ export const useTabs = () => {
 }
 
 export const TabsProvider = ({ children } : { children: ReactNode}) => {
-  const [gamesTabActive, setGamesTabActive] = useState<boolean>(false)
-  const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(true)
+  const [gamesTabActive, setGamesTabActive] = useState<boolean>(true)
+  const [wishlistTabActive, setWishlistTabActive] = useState<boolean>(false)
 
   const tabsValues = {
     gamesTabActive,

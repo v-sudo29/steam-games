@@ -9,7 +9,7 @@ interface PageNumberProps {
 const PageNumber = ({ i, pageNumber, handleClick } : PageNumberProps) => {
   return (
     <Text 
-      onClick={(e) => handleClick(e)}
+      onClick={(handleClick)}
       className={i === pageNumber ? 'active-page' : ''}
       cursor={i !== pageNumber ? 'pointer' : 'default'} 
       fontSize='1.2rem'

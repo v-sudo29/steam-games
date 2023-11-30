@@ -9,7 +9,7 @@ expect.extend(matchers)
 describe('CustomCheckbox component', () => {
   const mockFn = vi.fn()
 
-  test('renders and passes in correct props', () => {
+  test('renders and passes in correct props', async () => {
     render(
       <CustomCheckbox
         genre={'testGenre'}
@@ -17,7 +17,10 @@ describe('CustomCheckbox component', () => {
       />
     )
     const checkboxElement = screen.getByRole('checkbox', { name: 'testGenre' })
+    const textElement = await screen.findByText('testGenre')
+
     expect(checkboxElement).toBeVisible()
+    expect(textElement).toBeVisible()
   })
 
   test('handles user click to update selected genres', async () => {
